@@ -18,8 +18,7 @@
 require_once __DIR__ . '/../common.php';
 ?>
 
-<div id="students" class="section">
-    <div class="card">
+<div class="card">
         <h2>🧑‍🎓 Student Management</h2>
         
         <!-- Search Box -->
@@ -128,8 +127,8 @@ require_once __DIR__ . '/../common.php';
         <?php endif; ?>
     </div>
 
-    <!-- Student List Table -->
-    <div class="card">
+<!-- Student List Table -->
+<div class="card">
         <h3>📋 Student List <?php echo $search_term ? '(Search Results)' : ''; ?></h3>
         <table>
             <thead>
@@ -176,4 +175,3 @@ require_once __DIR__ . '/../common.php';
             </tbody>
         </table>
     </div>
-</div>

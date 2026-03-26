@@ -16,8 +16,7 @@
  */
 ?>
 
-<div id="elections" class="section">
-    <div class="card">
+<div class="card">
         <h2>🗳️ Manage Elections</h2>
         
         <!-- Display messages -->
@@ -137,6 +136,5 @@
             </tbody>
         </table>
     </div>
-</div>
 
 <?php require_once __DIR__ . '/../common.php'; ?>

@@ -18,8 +18,7 @@
 require_once __DIR__ . '/../common.php';
 ?>
 
-<div id="audit" class="section">
-    <div class="card">
+<div class="card">
         <h2>🗞️ Audit Log</h2>
         
         <!-- Audit Log Statistics -->
@@ -84,4 +83,3 @@ require_once __DIR__ . '/../common.php';
             </tbody>
         </table>
     </div>
-</div>

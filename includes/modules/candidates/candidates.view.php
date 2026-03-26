@@ -17,8 +17,7 @@
 require_once __DIR__ . '/../common.php';
 ?>
 
-<div id="candidates" class="section">
-    <div class="card">
+<div class="card">
         <h2>👥 Manage Candidates</h2>
         
         <!-- Display messages -->
@@ -144,4 +143,3 @@ require_once __DIR__ . '/../common.php';
             </tbody>
         </table>
     </div>
-</div>

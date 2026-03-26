@@ -15,8 +15,7 @@
 require_once __DIR__ . '/../common.php';
 ?>
 
-<div id="feedback" class="section">
-    <div class="card">
+<div class="card">
         <h2>💬 Student Feedback</h2>
         
         <!-- Feedback Statistics -->
@@ -68,4 +67,3 @@ require_once __DIR__ . '/../common.php';
             </tbody>
         </table>
     </div>
-</div>
