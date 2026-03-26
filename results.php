@@ -1,0 +1,135 @@
+<?php
+include 'db_connection.php';
+session_start();
+
+// Check if user is logged in
+if (!isset($_SESSION['student_id'])) {
+    header("Location: index.html?error=Please login first");
+    exit();
+}
+
+// If session doesn't have has_voted, fetch from DB
+if (!isset($_SESSION['has_voted'])) {
+    $student_id = $_SESSION['student_id'];
+    $check_voted = $conn->prepare("SELECT has_voted FROM students WHERE student_id = ?");
+    $check_voted->bind_param("s", $student_id);
+    $check_voted->execute();
+    $check_voted->bind_result($_SESSION['has_voted']);
+    $check_voted->fetch();
+    $check_voted->close();
+}
+
+// Get election results
+$results_query = "
+    SELECT c.position, c.candidate_id, c.first_name, c.last_name, c.faculty, c.votes, 
+           (c.votes / total.total_votes * 100) as percentage
+    FROM candidates c
+    JOIN (
+        SELECT position, SUM(votes) as total_votes
+        FROM candidates
+        GROUP BY position
+    ) total ON c.position = total.position
+    ORDER BY c.position, c.votes DESC
+";
+$results = $conn->query($results_query);
+
+// Check if user has voted to show appropriate message
+$student_id = $_SESSION['student_id'];
+$check_voted = $conn->prepare("SELECT has_voted FROM students WHERE student_id = ?");
+$check_voted->bind_param("s", $student_id);
+$check_voted->execute();
+$check_voted->bind_result($has_voted);
+$check_voted->fetch();
+$check_voted->close();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kyambogo University - Election Results</title>
+    <style>
+        <?php include 'styles/results.css'; ?>
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="images/image.png" alt="Kyambogo University Logo">
+            <div class="university-name">KYAMBOGO UNIVERSITY ONLINE VOTING SYSTEM</div>
+        </div>
+        <div class="user-info">
+            Welcome, <?php echo $_SESSION['first_name']; ?>
+            <form action="logout.php" method="POST">
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+        </div>
+    </header>
+    
+    <div class="container">
+        <h1>Election Results</h1>
+        
+        <div class="vote-message <?php echo $has_voted ? 'voted' : 'not-voted'; ?>">
+            <?php 
+            if ($has_voted) {
+                echo "Thank you for participating in the election. Your vote has been recorded.";
+            } else {
+                // Redirect to voting page instead of showing error message
+                header("Location: voting.php");
+                exit();
+            }
+            ?>
+        </div>
+        
+        <?php
+        $current_position = "";
+        while ($row = $results->fetch_assoc()) {
+            if ($row['position'] != $current_position) {
+                // Close previous position section if exists
+                if ($current_position != "") {
+                    echo '</table></div>';
+                }
+                // Start new position section
+                $current_position = $row['position'];
+                echo '<div class="position-section">';
+                echo '<h2 class="position-title">' . htmlspecialchars($current_position) . '</h2>';
+                echo '<table class="results-table">';
+                echo '<thead><tr><th>Candidate</th><th>Faculty</th><th>Votes</th><th>Percentage</th></tr></thead>';
+                echo '<tbody>';
+            }
+            
+            $is_winner = false;
+            // Simple logic to highlight winner (first row in each position group is the winner due to ORDER BY votes DESC)
+            if ($current_position == $row['position'] && !isset($winner_shown[$current_position])) {
+                $is_winner = true;
+                $winner_shown[$current_position] = true;
+            }
+            
+            echo '<tr' . ($is_winner ? ' class="winner"' : '') . '>';
+            echo '<td>' . htmlspecialchars($row['first_name'] . ' ' . $row['last_name']) . '</td>';
+            echo '<td>' . htmlspecialchars($row['faculty']) . '</td>';
+            echo '<td>' . htmlspecialchars($row['votes']) . '</td>';
+            echo '<td>';
+            echo '<div class="percentage-bar-container">';
+            echo '<div class="percentage-bar" style="width: ' . round($row['percentage']) . '%;">' . round($row['percentage'], 1) . '%</div>';
+            echo '</div>';
+            echo '</td>';
+            echo '</tr>';
+        }
+        // Close the last position section
+        if ($current_position != "") {
+            echo '</tbody></table></div>';
+        }
+        ?>
+    </div>
+    <div class="feedback">
+        <h2>Feedback</h2>
+        <a href="feedback.php"><button type="button" class="feedback-btn">Share your experience with the online voting process.</button></a>
+        <footer style="text-align: center; background-color: rgb(1, 1, 51); color: gold; padding: 20px; margin-top: 50px;">
+        <p >Designed and Developed by the Kyambogo University BITC students Class Of 2023</p>
+        <p">&copy; <?php echo date("Y"); ?> Kyambogo University. All rights reserved.</p>
+    </footer>
+    </div>
+</body>
+</html>

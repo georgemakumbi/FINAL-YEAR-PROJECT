@@ -1,0 +1,120 @@
+
+*{
+    text-align: center;
+    margin: 0;
+}
+
+header{
+    display: flex;
+}
+img{
+    height: 20vh;
+}
+.sidebar {
+    height: 100%; /* 100% Full-height */
+    width: 0; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0;
+    left: 0;
+    background-color: rgb(1, 1, 51); 
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
+}
+
+/* The sidebar links */
+.sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: gold;
+    display: block;
+    transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidebar a:hover {
+    color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+/* The button used to open the sidebar */
+.openbtn {
+    font-size: 16px;
+    background-color: #0047AB;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.openbtn:hover {
+    background-color: #444;
+}
+.header{
+    text-align: center;
+}
+.header h1{
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bolder;
+    font-size: 40px;
+    color: rgb(0,52, 104);
+}
+.header h3{
+    font-style: italic;
+    font-size: 25px;
+    counter-reset: #000;
+}
+.pre{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.6em;
+}
+h2{
+    background-color: rgb(1, 1, 51);
+    color: gold;
+}
+#schedule{
+    font-size: 20px;
+}
+.voting-steps{
+    list-style-type: none;
+    font-size: 25px;
+}
+.btn-login button{
+    padding: 10px;
+}
+button:hover{
+    background-color: rgb(1, 1, 51);;
+    color: #fff;
+}
+footer{
+    background-color: rgb(1, 1, 51);
+    color: gold;
+}
+.quick-links a{
+    text-decoration: none;
+    padding: 10px;
+    color: goldenrod;
+}
+footer {
+    margin-top: 50px;
+    padding: 40px 20px;
+    background: rgb(1, 1, 51);
+    color: gold;
+    text-align: center;
+}
+@media (max-width: 768px) {
+    *{
+        text-align: center;
+    }
+
+}

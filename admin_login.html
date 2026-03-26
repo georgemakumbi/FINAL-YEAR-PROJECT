@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Login - Kyambogo Voting</title>
+    <link rel="icon" href="images/image.png" type="png">
+    <style>
+        body { 
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .login-container { 
+            max-width: 500px; 
+            margin: 50px auto; 
+            padding: 30px; background: #fff; 
+            border-radius: 5px; 
+            box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+        }
+        .logo{ text-align: center;}
+        .logo img{ height: 20vh;}
+        h1,h2 { text-align: center; color: #003366; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
+        input { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+        button { width: 100%; padding: 10px; background: #003366; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        .error { color: red; text-align: center; }
+        @media (max-width: 768px){
+            .logo img{
+                height: auto;
+            }
+            .login-container{
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <img src="images/image.png" alt="Kyambogo University Logo">
+        </div>
+        <div class="university-name">
+            <h1>KYAMBOGO UNIVERSITY</h1>
+        </div>
+        <h2>Online Voting System</h2>
+        
+        <div id="error-message" class="error-message"></div>
+        <h2>Admin Login</h2>
+        <div id="error" class="error"></div>
+        <form id="adminLoginForm" action="admin_authenticate.php" method="post">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</body>
+</html>

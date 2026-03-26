@@ -1,0 +1,100 @@
+Student_ID,First_Name,Last_Name,Email,Password,Faculty,Department
+230080102,Martin,Byaruhanga,230080102@std.kyu.ac.ug,Martin@871,Faculty of Science,Information Technology
+230080003,Kenneth,Ssempala,230080003@std.kyu.ac.ug,Kenneth@344,Faculty of Science,Computer Science
+230080004,Peter,Kintu,230080004@std.kyu.ac.ug,Peter@993,Faculty of Education,Curriculum Studies
+230080005,David,Makumbi,230080005@std.kyu.ac.ug,David@749,Faculty of Education,Educational Psychology
+230080006,Grace,Mutesi,230080006@std.kyu.ac.ug,Grace@423,Faculty of Social Sciences,Public Administration
+230080007,Gloria,Nabirye,230080007@std.kyu.ac.ug,Gloria@369,Faculty of Social Sciences,Economics
+230080008,Ruth,Anyango,230080008@std.kyu.ac.ug,Ruth@312,Faculty of Business Administration,Accounting
+230080009,Joan,Makumbi,230080009@std.kyu.ac.ug,Joan@123,Faculty of Business Administration,Procurement & Logistics
+230080010,Juliet,Mugisha,230080010@std.kyu.ac.ug,Juliet@829,Faculty of Engineering,Computer Engineering
+230080011,Isaac,Nantongo,230080011@std.kyu.ac.ug,Isaac@313,Faculty of Engineering,Electrical Engineering
+230080012,Joan,Ssempala,230080012@std.kyu.ac.ug,Joan@809,Faculty of Science,Information Technology
+230080013,Daniel,Ssenyonga,230080013@std.kyu.ac.ug,Daniel@271,Faculty of Science,Computer Science
+230080014,Lydia,Kato,230080014@std.kyu.ac.ug,Lydia@460,Faculty of Education,Curriculum Studies
+230080015,Brian,Anyango,230080015@std.kyu.ac.ug,Brian@981,Faculty of Education,Educational Psychology
+230080016,Lydia,Byaruhanga,230080016@std.kyu.ac.ug,Lydia@910,Faculty of Social Sciences,Public Administration
+230080017,Michael,Okello,230080017@std.kyu.ac.ug,Michael@394,Faculty of Social Sciences,Economics
+230080018,Martin,Ssenyonga,230080018@std.kyu.ac.ug,Martin@123,Faculty of Business Administration,Accounting
+230080019,Hellen,Najjemba,230080019@std.kyu.ac.ug,Hellen@400,Faculty of Business Administration,Procurement & Logistics
+230080020,Michael,Byaruhanga,230080020@std.kyu.ac.ug,Michael@248,Faculty of Engineering,Computer Engineering
+230080021,Gloria,Nantongo,230080021@std.kyu.ac.ug,Gloria@337,Faculty of Engineering,Electrical Engineering
+230080022,Patricia,Mugisha,230080022@std.kyu.ac.ug,Patricia@248,Faculty of Science,Information Technology
+230080023,Mercy,Okello,230080023@std.kyu.ac.ug,Mercy@592,Faculty of Science,Computer Science
+230080024,Mercy,Kiconco,230080024@std.kyu.ac.ug,Mercy@459,Faculty of Education,Curriculum Studies
+230080025,Sandra,Ssenyonga,230080025@std.kyu.ac.ug,Sandra@910,Faculty of Education,Educational Psychology
+230080026,Brenda,Muwonge,230080026@std.kyu.ac.ug,Brenda@393,Faculty of Social Sciences,Public Administration
+230080027,Brenda,Balikuddembe,230080027@std.kyu.ac.ug,Brenda@629,Faculty of Social Sciences,Economics
+230080028,Brian,Kato,230080028@std.kyu.ac.ug,Brian@295,Faculty of Business Administration,Accounting
+230080029,Emmanuel,Tumusiime,230080029@std.kyu.ac.ug,Emmanuel@548,Faculty of Business Administration,Procurement & Logistics
+230080030,Joseph,Kaggwa,230080030@std.kyu.ac.ug,Joseph@120,Faculty of Engineering,Computer Engineering
+230080031,Joel,Anyango,230080031@std.kyu.ac.ug,Joel@680,Faculty of Engineering,Electrical Engineering
+230080032,Patrick,Twinomugisha,230080032@std.kyu.ac.ug,Patrick@681,Faculty of Science,Information Technology
+230080033,Faith,Mugisha,230080033@std.kyu.ac.ug,Faith@414,Faculty of Science,Computer Science
+230080034,Peter,Kiconco,230080034@std.kyu.ac.ug,Peter@646,Faculty of Education,Curriculum Studies
+230080035,Patricia,Mutesi,230080035@std.kyu.ac.ug,Patricia@146,Faculty of Education,Educational Psychology
+230080036,Peter,Nansubuga,230080036@std.kyu.ac.ug,Peter@555,Faculty of Social Sciences,Public Administration
+230080037,Mercy,Ssemanda,230080037@std.kyu.ac.ug,Mercy@898,Faculty of Social Sciences,Economics
+230080038,Annet,Achan,230080038@std.kyu.ac.ug,Annet@170,Faculty of Business Administration,Accounting
+230080039,Michael,Muwonge,230080039@std.kyu.ac.ug,Michael@652,Faculty of Business Administration,Procurement & Logistics
+230080040,James,Anyango,230080040@std.kyu.ac.ug,James@439,Faculty of Engineering,Computer Engineering
+230080041,Joan,Kiconco,230080041@std.kyu.ac.ug,Joan@750,Faculty of Engineering,Electrical Engineering
+230080042,Lydia,Achan,230080042@std.kyu.ac.ug,Lydia@800,Faculty of Science,Information Technology
+230080043,Ruth,Ochen,230080043@std.kyu.ac.ug,Ruth@996,Faculty of Science,Computer Science
+230080044,Christine,Achan,230080044@std.kyu.ac.ug,Christine@121,Faculty of Education,Curriculum Studies
+230080045,Sarah,Nantongo,230080045@std.kyu.ac.ug,Sarah@707,Faculty of Education,Educational Psychology
+230080046,Patrick,Nabirye,230080046@std.kyu.ac.ug,Patrick@762,Faculty of Social Sciences,Public Administration
+230080047,Sandra,Kaggwa,230080047@std.kyu.ac.ug,Sandra@221,Faculty of Social Sciences,Economics
+230080048,Allan,Ssenyonga,230080048@std.kyu.ac.ug,Allan@582,Faculty of Business Administration,Accounting
+230080049,George,Mutesi,230080049@std.kyu.ac.ug,George@346,Faculty of Business Administration,Procurement & Logistics
+230080050,Gloria,Nabirye,230080050@std.kyu.ac.ug,Gloria@762,Faculty of Engineering,Computer Engineering
+230080051,Annet,Kiconco,230080051@std.kyu.ac.ug,Annet@945,Faculty of Engineering,Electrical Engineering
+230080052,Mercy,Mugisha,230080052@std.kyu.ac.ug,Mercy@887,Faculty of Science,Information Technology
+230080053,Christine,Mugisha,230080053@std.kyu.ac.ug,Christine@747,Faculty of Science,Computer Science
+230080054,Michael,Balikuddembe,230080054@std.kyu.ac.ug,Michael@431,Faculty of Education,Curriculum Studies
+230080055,Hellen,Muwonge,230080055@std.kyu.ac.ug,Hellen@623,Faculty of Education,Educational Psychology
+230080056,Martin,Makumbi,230080056@std.kyu.ac.ug,Martin@501,Faculty of Social Sciences,Public Administration
+230080057,Paul,Ssempala,230080057@std.kyu.ac.ug,Paul@772,Faculty of Social Sciences,Economics
+230080058,Hellen,Makumbi,230080058@std.kyu.ac.ug,Hellen@595,Faculty of Business Administration,Accounting
+230080059,Daniel,Twinomugisha,230080059@std.kyu.ac.ug,Daniel@412,Faculty of Business Administration,Procurement & Logistics
+230080060,Ivan,Nantongo,230080060@std.kyu.ac.ug,Ivan@404,Faculty of Engineering,Computer Engineering
+230080061,Lydia,Odongo,230080061@std.kyu.ac.ug,Lydia@451,Faculty of Engineering,Electrical Engineering
+230080062,Paul,Ochen,230080062@std.kyu.ac.ug,Paul@365,Faculty of Science,Information Technology
+230080063,Hellen,Ochen,230080063@std.kyu.ac.ug,Hellen@361,Faculty of Science,Computer Science
+230080064,Sarah,Mutesi,230080064@std.kyu.ac.ug,Sarah@686,Faculty of Education,Curriculum Studies
+230080065,George,Nabirye,230080065@std.kyu.ac.ug,George@739,Faculty of Education,Educational Psychology
+230080066,Ronald,Nsubuga,230080066@std.kyu.ac.ug,Ronald@895,Faculty of Social Sciences,Public Administration
+230080067,Prossy,Ssempala,230080067@std.kyu.ac.ug,Prossy@513,Faculty of Social Sciences,Economics
+230080068,Isaac,Ssenyonga,230080068@std.kyu.ac.ug,Isaac@180,Faculty of Business Administration,Accounting
+230080069,Gloria,Nansubuga,230080069@std.kyu.ac.ug,Gloria@639,Faculty of Business Administration,Procurement & Logistics
+230080070,Brenda,Makumbi,230080070@std.kyu.ac.ug,Brenda@526,Faculty of Engineering,Computer Engineering
+230080071,Grace,Makumbi,230080071@std.kyu.ac.ug,Grace@465,Faculty of Engineering,Electrical Engineering
+230080072,Mercy,Kiconco,230080072@std.kyu.ac.ug,Mercy@840,Faculty of Science,Information Technology
+230080073,Mercy,Kakooza,230080073@std.kyu.ac.ug,Mercy@554,Faculty of Science,Computer Science
+230080074,Annet,Kiconco,230080074@std.kyu.ac.ug,Annet@199,Faculty of Education,Curriculum Studies
+230080075,Sharon,Nansubuga,230080075@std.kyu.ac.ug,Sharon@510,Faculty of Education,Educational Psychology
+230080076,Irene,Nakato,230080076@std.kyu.ac.ug,Irene@142,Faculty of Social Sciences,Public Administration
+230080077,Sarah,Nansubuga,230080077@std.kyu.ac.ug,Sarah@968,Faculty of Social Sciences,Economics
+230080078,Ruth,Nabirye,230080078@std.kyu.ac.ug,Ruth@421,Faculty of Business Administration,Accounting
+230080079,Sharon,Nansubuga,230080079@std.kyu.ac.ug,Sharon@627,Faculty of Business Administration,Procurement & Logistics
+230080080,Esther,Kisembo,230080080@std.kyu.ac.ug,Esther@270,Faculty of Engineering,Computer Engineering
+230080081,Brian,Ssempala,230080081@std.kyu.ac.ug,Brian@666,Faculty of Engineering,Electrical Engineering
+230080082,Ivan,Kato,230080082@std.kyu.ac.ug,Ivan@183,Faculty of Science,Information Technology
+230080083,Brenda,Najjemba,230080083@std.kyu.ac.ug,Brenda@789,Faculty of Science,Computer Science
+230080084,Joseph,Ssempala,230080084@std.kyu.ac.ug,Joseph@876,Faculty of Education,Curriculum Studies
+230080085,Faith,Kaggwa,230080085@std.kyu.ac.ug,Faith@236,Faculty of Education,Educational Psychology
+230080086,Kenneth,Balikuddembe,230080086@std.kyu.ac.ug,Kenneth@564,Faculty of Social Sciences,Public Administration
+230080087,George,Ssenyonga,230080087@std.kyu.ac.ug,George@747,Faculty of Social Sciences,Economics
+230080088,Ronald,Kato,230080088@std.kyu.ac.ug,Ronald@496,Faculty of Business Administration,Accounting
+230080089,Hellen,Balikuddembe,230080089@std.kyu.ac.ug,Hellen@633,Faculty of Business Administration,Procurement & Logistics
+230080090,David,Twinomugisha,230080090@std.kyu.ac.ug,david@90,Faculty of Engineering,Computer Engineering
+230080091,Faith,Nantongo,230080091@std.kyu.ac.ug,Faith@221,Faculty of Engineering,Electrical Engineering
+230080092,Sharon,Okello,230080092@std.kyu.ac.ug,Sharon@161,Faculty of Science,Information Technology
+230080093,Annet,Achan,230080093@std.kyu.ac.ug,Annet@603,Faculty of Science,Computer Science
+230080094,Peter,Ochen,230080094@std.kyu.ac.ug,Peter@499,Faculty of Education,Curriculum Studies
+230080095,Juliet,Najjemba,230080095@std.kyu.ac.ug,Juliet@276,Faculty of Education,Educational Psychology
+230080096,Gloria,Ssenyonga,230080096@std.kyu.ac.ug,Gloria@667,Faculty of Social Sciences,Public Administration
+230080097,Sarah,Ssempala,230080097@std.kyu.ac.ug,Sarah@869,Faculty of Social Sciences,Economics
+230080098,Kenneth,Kato,230080098@std.kyu.ac.ug,Kenneth@646,Faculty of Business Administration,Accounting
+230080099,Ruth,Muwonge,230080099@std.kyu.ac.ug,Ruth@909,Faculty of Business Administration,Procurement & Logistics
+230080100,Sandra,Muwonge,230080100@std.kyu.ac.ug,sandra@1000,Faculty of Engineering,Computer Engineering

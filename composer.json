@@ -1,0 +1,12 @@
+{
+  "name": "kyambogo/online-voting-project",
+  "description": "Online voting system for Kyambogo University.",
+  "type": "project",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.4"
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

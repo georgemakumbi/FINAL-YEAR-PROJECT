@@ -1,0 +1,105 @@
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                        url("kyu_background.jpg");
+            background-size: cover;
+            background-position: center;
+        }
+
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        h2 {
+            text-align: center;
+            color: #003366;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.7rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.8rem;
+            background: #003366;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #002244;
+            color: rgb(185, 194, 55);
+        }
+
+        .link-btn {
+            background: none;
+            color: #003366;
+            border: none;
+            margin-top: 10px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .message {
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .message.error {
+            background: #fde8e8;
+            color: #9b1c1c;
+            border: 1px solid #f8b4b4;
+        }
+
+        .message.success {
+            background: #e8f8ef;
+            color: #166534;
+            border: 1px solid #86efac;
+        }
+
+        footer {
+            margin-top: 50px;
+            padding: 40px 20px;
+            background: rgb(1, 1, 51);
+            color: gold;
+            text-align: center;
+        }

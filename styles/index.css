@@ -1,0 +1,168 @@
+:root {
+            --primary: #4B0082; /* Indigo */
+            --secondary: #FF8C00; /* Dark Orange */
+            --bg: #94b3c9;
+            --text: #333;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding-bottom: 50px;
+        }
+
+        /* Header Styling */
+        .header {
+            background: var(--white);
+            padding: 40px 20px;
+            border-bottom: 5px solid var(--secondary);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .logo img {
+            max-width: 120px;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        /* Main Layout */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        /* Countdown Style */
+        .countdown-container {
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary), #6a1b9a);
+            color: white;
+        }
+
+        .countdown {
+            font-size: 2.5rem;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 2px;
+            margin-top: 10px;
+        }
+
+        /* List Styling */
+        .voting-steps {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .voting-steps li {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+
+        .voting-steps li::before {
+            content: "✓";
+            color: var(--secondary);
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        /* Buttons */
+        .login-section {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-student {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-admin {
+            background-color: #eee;
+            color: var(--text);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.1);
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 50px;
+            padding: 40px 20px;
+            background: #222;
+            color: #ccc;
+            text-align: center;
+        }
+
+        .quick-links a {
+            color: var(--secondary);
+            margin: 0 10px;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .inactive {
+            opacity: 0.6;
+            filter: grayscale(1);
+            pointer-events: none;
+        }
+
+        footer {
+            margin-top: 50px;
+            padding: 40px 20px;
+            background: rgb(1, 1, 51);
+            color: gold;
+            text-align: center;
+        }
+        
+        @media (max-width: 600px) {
+            h1 { font-size: 1.6rem; }
+            .countdown { font-size: 1.5rem; }
+        }
