@@ -5,8 +5,8 @@
 body {
     margin: 0;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    background: #f4f6f8;
-    color: #1f2d3d;
+    background: var(--app-bg);
+    color: var(--text);
 }
 
 .container {
@@ -22,25 +22,25 @@ body {
 }
 
 .report-card {
-    background: #ffffff;
+    background: var(--surface);
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--shadow);
     padding: 24px;
 }
 
 h1 {
     margin: 0 0 5px;
-    color: #1d3557;
+    color: var(--text);
 }
 
 h2 {
     margin: 26px 0 12px;
-    color: #1d3557;
+    color: var(--text);
 }
 
 .subtitle {
     margin: 0 0 18px;
-    color: #657786;
+    color: var(--text-muted);
     font-size: 14px;
 }
 
@@ -48,8 +48,8 @@ h2 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 10px;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
     border-radius: 8px;
     padding: 14px;
 }
@@ -62,15 +62,15 @@ h2 {
 }
 
 .stat {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
     border-radius: 8px;
     padding: 14px;
 }
 
 .stat .label {
     font-size: 13px;
-    color: #64748b;
+    color: var(--text-muted);
 }
 
 .stat .value {
@@ -100,19 +100,19 @@ table {
 
 th,
 td {
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid var(--border);
     padding: 10px;
     text-align: left;
 }
 
 th {
-    background: #f8fafc;
-    color: #374151;
+    background: var(--surface-2);
+    color: var(--text);
 }
 
 .empty {
     text-align: center;
-    color: #64748b;
+    color: var(--text-muted);
 }
 
 .status-badge {
@@ -149,7 +149,7 @@ th {
 }
 
 .btn-primary {
-    background: #2563eb;
+    background: var(--link);
 }
 
 .btn-secondary {
@@ -163,8 +163,8 @@ th {
 footer {
     margin-top: 50px;
     padding: 40px 20px;
-    background: rgb(1, 1, 51);
-    color: gold;
+    background: var(--footer-bg);
+    color: var(--footer-text);
     text-align: center;
 }
 

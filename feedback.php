@@ -50,6 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['Submit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feedback - Kyambogo University Voting System</title>
     <style>
+        <?php include 'styles/theme.css'; ?>
         <?php include 'styles/feedback.css'; ?>
     </style>
 </head>
@@ -84,5 +85,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['Submit'])) {
             <p>&copy; <?php echo date("Y"); ?> Kyambogo University. All rights reserved.</p>
         </footer>
     </div>
+    <script src="includes/theme.js" defer></script>
 </body>
 </html>

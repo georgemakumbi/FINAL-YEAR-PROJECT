@@ -113,16 +113,19 @@ require_once __DIR__ . '/../common.php';
                             <code>
                                 student_id,first_name,last_name,email,password,faculty,department<br>
                                 23/U/1001,John,Doe,john.doe@student.kyu.ac.ug,SecurePass123,Science,Computer Science<br>
-                                23/U/1002,Jane,Smith,jane.smith@student.kyu.ac.ug,SecurePass456,Engineering,Software Engineering
                             </code>
                         </div>
                     </details>
                     <button type="submit" name="import_students" class="btn btn-success" style="width: 100%;">Import Students</button>
-                    <a href="sample_students.csv" class="btn btn-secondary" style="width: 100%; margin-top: 8px; text-align: center; display: inline-block;">
-                        ⬇️ Download Sample CSV
-                    </a>
                 </form>
             </div>
+        </div>
+        <?php else: ?>
+        <div style="margin-top: 20px; padding: 16px; background: var(--surface-2); border: 1px dashed var(--border); border-radius: 8px;">
+            <h3>CSV Import Restricted</h3>
+            <p style="color: var(--text-muted);">
+                Bulk student import is available only to super administrators.
+            </p>
         </div>
         <?php endif; ?>
     </div>

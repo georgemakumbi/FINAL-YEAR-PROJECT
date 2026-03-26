@@ -6,11 +6,12 @@
         }
         
         body {
-            background-color: #f5f5f5;
+            background-color: var(--app-bg);
+            color: var(--text);
         }
         
         header {
-            background-color: #003366;
+            background-color: var(--brand-primary);
             color: white;
             padding: 1rem 2rem;
             display: flex;
@@ -39,7 +40,7 @@
         }
         
         .logout-btn {
-            background-color: #d9534f;
+            background-color: var(--brand-danger);
             color: white;
             border: none;
             padding: 0.5rem 1rem;
@@ -55,22 +56,22 @@
         }
         
         h1 {
-            color: #003366;
+            color: var(--brand-primary);
             margin-bottom: 1.5rem;
             text-align: center;
         }
         
         .position-section {
             margin-bottom: 2.5rem;
-            background-color: white;
+            background-color: var(--surface);
             padding: 1.5rem;
             border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow);
         }
         
         .position-title {
-            color: #003366;
-            border-bottom: 2px solid #003366;
+            color: var(--brand-primary);
+            border-bottom: 2px solid var(--brand-primary);
             padding-bottom: 0.5rem;
             margin-bottom: 1.5rem;
         }
@@ -82,11 +83,13 @@
         }
         
         .candidate-card {
-            border: 1px solid #ddd;
+            border: 1px solid var(--border);
             border-radius: 8px;
             padding: 1rem;
             transition: transform 0.3s, box-shadow 0.3s;
             cursor: pointer;
+            background: var(--surface);
+            color: var(--text);
         }
         
         .candidate-card:hover {
@@ -95,8 +98,8 @@
         }
         
         .candidate-card.selected {
-            border: 2px solid #003366;
-            background-color: #f0f7ff;
+            border: 2px solid var(--brand-primary);
+            background-color: var(--surface-2);
         }
         
         .candidate-image {
@@ -111,16 +114,16 @@
             font-weight: bold;
             font-size: 1.1rem;
             margin-bottom: 0.5rem;
-            color: #003366;
+            color: var(--brand-primary);
         }
         
         .candidate-position {
-            color: #666;
+            color: var(--text-muted);
             margin-bottom: 0.5rem;
         }
         
         .candidate-faculty,.candidate-manifesto {
-            color: #888;
+            color: var(--text-muted);
             font-size: 0.9rem;
             margin-bottom: 1rem;
         }
@@ -129,7 +132,7 @@
             display: block;
             width: 100%;
             padding: 0.8rem;
-            background-color: #003366;
+            background-color: var(--brand-primary);
             color: white;
             border: none;   
             border-radius: 4px;
@@ -141,7 +144,7 @@
         }
         
         .vote-btn:hover {
-            background-color: #002244;
+            background-color: var(--brand-primary-hover);
         }
         
         .vote-btn:disabled {
@@ -150,11 +153,11 @@
         }
         
         .instructions {
-            background-color: #fff8e1;
+            background-color: var(--surface-2);
             padding: 1rem;
             border-radius: 8px;
             margin-bottom: 2rem;
-            border-left: 4px solid #ffc107;
+            border-left: 4px solid var(--brand-accent);
         }
         
         .hidden { 
@@ -164,8 +167,8 @@
         footer {
             margin-top: 50px;
             padding: 40px 20px;
-            background: rgb(1, 1, 51);
-            color: gold;
+            background: var(--footer-bg);
+            color: var(--footer-text);
             text-align: center;
         }
         

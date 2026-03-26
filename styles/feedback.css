@@ -7,8 +7,8 @@
 
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg, #0b1f4d, #123e8a);
-            color: #10203a;
+            background: linear-gradient(135deg, var(--brand-primary), #123e8a);
+            color: var(--text);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -18,15 +18,15 @@
         .feedback-card {
             width: 100%;
             max-width: 720px;
-            background: #ffffff;
+            background: var(--surface);
             border-radius: 14px;
-            box-shadow: 0 14px 38px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--shadow);
             overflow: hidden;
         }
 
         .card-header {
-            background: #0b1f4d;
-            color: #f2c94c;
+            background: var(--brand-primary);
+            color: var(--footer-text);
             padding: 22px 26px;
         }
 
@@ -36,7 +36,7 @@
         }
 
         .card-header p {
-            color: #d9e4ff;
+            color: var(--text-muted);
             font-size: 0.95rem;
         }
 
@@ -67,13 +67,13 @@
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            color: #1b2d4a;
+            color: var(--text);
         }
 
         textarea {
             width: 100%;
             min-height: 170px;
-            border: 1px solid #cfd7e6;
+            border: 1px solid var(--input-border);
             border-radius: 10px;
             padding: 14px;
             font-size: 1rem;
@@ -81,16 +81,18 @@
             resize: vertical;
             outline: none;
             transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            background: var(--input-bg);
+            color: var(--text);
         }
 
         textarea:focus {
-            border-color: #1f5ed2;
+            border-color: var(--link);
             box-shadow: 0 0 0 3px rgba(31, 94, 210, 0.18);
         }
 
         .hint {
             margin-top: 6px;
-            color: #61708d;
+            color: var(--text-muted);
             font-size: 0.86rem;
         }
 
@@ -116,19 +118,19 @@
         }
 
         .btn-primary {
-            background: #0b1f4d;
+            background: var(--brand-primary);
             color: #ffffff;
         }
 
         .btn-secondary {
-            background: #eceff5;
-            color: #2c3e57;
+            background: var(--surface-2);
+            color: var(--text);
         }
 
         .back-link {
             display: inline-block;
             margin-top: 14px;
-            color: #1f5ed2;
+            color: var(--link);
             text-decoration: none;
             font-size: 0.92rem;
             font-weight: 600;
@@ -142,8 +144,8 @@
         footer {
             margin-top: 50px;
             padding: 40px 20px;
-            background: rgb(1, 1, 51);
-            color: gold;
+            background: var(--footer-bg);
+            color: var(--footer-text);
             text-align: center;
         }
         

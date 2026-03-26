@@ -5,8 +5,8 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #eef3f9, #dfe9f4);
-    color: #1e4f94;
+    background: var(--app-bg);
+    color: var(--text);
     min-height: 100vh;
 }
 
@@ -21,16 +21,16 @@ body {
 .card {
     width: 100%;
     max-width: 560px;
-    background: #ffffff;
+    background: var(--surface);
     border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+    box-shadow: var(--shadow);
     padding: 28px;
 }
 
 h2 {
     margin: 0 0 20px;
     font-size: 1.5rem;
-    color: #111827;
+    color: var(--text);
 }
 
 .form-group {
@@ -42,22 +42,25 @@ label {
     margin-bottom: 6px;
     font-weight: 600;
     font-size: 0.95rem;
+    color: var(--text);
 }
 
 input[type="text"],
 input[type="email"] {
     width: 100%;
     padding: 10px 12px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--input-border);
     border-radius: 8px;
     font-size: 0.95rem;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    background: var(--input-bg);
+    color: var(--text);
 }
 
 input[type="text"]:focus,
 input[type="email"]:focus {
     outline: none;
-    border-color: #2563eb;
+    border-color: var(--link);
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
 }
 
@@ -82,7 +85,7 @@ input[type="email"]:focus {
 }
 
 .btn-primary {
-    background: #2563eb;
+    background: var(--link);
     color: #fff;
 }
 
@@ -91,8 +94,8 @@ input[type="email"]:focus {
 }
 
 .btn-secondary {
-    background: #e5e7eb;
-    color: #111827;
+    background: var(--surface-2);
+    color: var(--text);
 }
 
 .btn-secondary:hover {

@@ -25,7 +25,7 @@
         <?php endif; ?>
         
         <!-- Create Election Form -->
-        <div style="margin-bottom: 30px; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+        <div style="margin-bottom: 30px; padding: 20px; background: var(--surface-2); border-radius: 10px;">
             <h3>Create New Election</h3>
             <form method="post">
                 <?php echo render_csrf_field(); ?>
@@ -43,6 +43,11 @@
                             <option value="Secretary General">Secretary General</option>
                             <option value="Finance Minister">Finance Minister</option>
                             <option value="Academic Affairs">Academic Affairs</option>
+                            <optgroup label="GRCs">
+                                <option value="Faculty of Science">Faculty of Science</option>
+                                <option value="Faculty of Engineering">Faculty of Engineering</option>
+                                <option value="Faculty of Social sciences">Faculty of Social sciences</option>
+                            </optgroup>
                         </select>
                     </div>
                     <div class="form-group">
@@ -60,17 +65,17 @@
         
         <!-- Elections Statistics -->
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px;">
-            <div style="padding: 15px; background: #f0f7ff; border-radius: 8px; border-left: 4px solid #3498db;">
-                <div style="font-size: 12px; color: #666; font-weight: 500;">ACTIVE ELECTIONS</div>
-                <div style="font-size: 28px; font-weight: bold; color: #3498db;"><?php echo format_number($active_elections_count); ?></div>
+            <div style="padding: 15px; background: var(--surface-2); border-radius: 8px; border-left: 4px solid var(--brand-primary);">
+                <div style="font-size: 12px; color: var(--text-muted); font-weight: 500;">ACTIVE ELECTIONS</div>
+                <div style="font-size: 28px; font-weight: bold; color: var(--brand-primary);"><?php echo format_number($active_elections_count); ?></div>
             </div>
-            <div style="padding: 15px; background: #f9f5f0; border-radius: 8px; border-left: 4px solid #f39c12;">
-                <div style="font-size: 12px; color: #666; font-weight: 500;">SCHEDULED ELECTIONS</div>
-                <div style="font-size: 28px; font-weight: bold; color: #f39c12;"><?php echo format_number($scheduled_elections_count); ?></div>
+            <div style="padding: 15px; background: var(--surface-2); border-radius: 8px; border-left: 4px solid var(--brand-accent);">
+                <div style="font-size: 12px; color: var(--text-muted); font-weight: 500;">SCHEDULED ELECTIONS</div>
+                <div style="font-size: 28px; font-weight: bold; color: var(--brand-accent);"><?php echo format_number($scheduled_elections_count); ?></div>
             </div>
-            <div style="padding: 15px; background: #f5f5f5; border-radius: 8px; border-left: 4px solid #95a5a6;">
-                <div style="font-size: 12px; color: #666; font-weight: 500;">CLOSED ELECTIONS</div>
-                <div style="font-size: 28px; font-weight: bold; color: #95a5a6;"><?php echo format_number($closed_elections_count); ?></div>
+            <div style="padding: 15px; background: var(--surface-2); border-radius: 8px; border-left: 4px solid var(--border);">
+                <div style="font-size: 12px; color: var(--text-muted); font-weight: 500;">CLOSED ELECTIONS</div>
+                <div style="font-size: 28px; font-weight: bold; color: var(--border);"><?php echo format_number($closed_elections_count); ?></div>
             </div>
         </div>
         

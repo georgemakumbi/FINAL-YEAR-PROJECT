@@ -1,4 +1,4 @@
-Student_ID,First_Name,Last_Name,Email,Password,Faculty,Department
+student_id,first_name,last_name,email,password,faculty,department
 230080102,Martin,Byaruhanga,230080102@std.kyu.ac.ug,Martin@871,Faculty of Science,Information Technology
 230080003,Kenneth,Ssempala,230080003@std.kyu.ac.ug,Kenneth@344,Faculty of Science,Computer Science
 230080004,Peter,Kintu,230080004@std.kyu.ac.ug,Peter@993,Faculty of Education,Curriculum Studies

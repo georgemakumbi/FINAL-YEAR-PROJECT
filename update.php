@@ -74,6 +74,7 @@ if (isset($_POST['submit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Student</title>
     <style>
+        <?php include 'styles/theme.css'; ?>
         <?php include 'styles/update.css'; ?>
     </style>
 </head>
@@ -117,5 +118,6 @@ if (isset($_POST['submit'])) {
             </form>
         </div>
     </div>
+    <script src="includes/theme.js" defer></script>
 </body>
 </html>

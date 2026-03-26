@@ -17,17 +17,18 @@
         }
 
         .container {
-            background: white;
+            background: var(--surface);
             padding: 2rem;
             border-radius: 15px;
             width: 100%;
             max-width: 500px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            box-shadow: var(--shadow);
+            color: var(--text);
         }
 
         h2 {
             text-align: center;
-            color: #003366;
+            color: var(--brand-primary);
             margin-bottom: 1rem;
         }
 
@@ -39,19 +40,22 @@
             display: block;
             margin-bottom: 0.4rem;
             font-weight: 500;
+            color: var(--text);
         }
 
         input {
             width: 100%;
             padding: 0.7rem;
-            border: 1px solid #ccc;
+            border: 1px solid var(--input-border);
             border-radius: 5px;
+            background: var(--input-bg);
+            color: var(--text);
         }
 
         button {
             width: 100%;
             padding: 0.8rem;
-            background: #003366;
+            background: var(--brand-primary);
             color: white;
             border: none;
             border-radius: 5px;
@@ -60,13 +64,13 @@
         }
 
         button:hover {
-            background: #002244;
+            background: var(--brand-primary-hover);
             color: rgb(185, 194, 55);
         }
 
         .link-btn {
             background: none;
-            color: #003366;
+            color: var(--link);
             border: none;
             margin-top: 10px;
             cursor: pointer;
@@ -99,7 +103,7 @@
         footer {
             margin-top: 50px;
             padding: 40px 20px;
-            background: rgb(1, 1, 51);
-            color: gold;
+            background: var(--footer-bg);
+            color: var(--footer-text);
             text-align: center;
         }

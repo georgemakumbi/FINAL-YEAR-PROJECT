@@ -18,28 +18,30 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reset Password</title>
     <style>
+        <?php include 'styles/theme.css'; ?>
         body {
             font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            background: #f3f4f6;
+            background: var(--app-bg);
             margin: 0;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            color: var(--text);
         }
 
         .card {
             width: 100%;
             max-width: 420px;
-            background: #fff;
+            background: var(--surface);
             border-radius: 10px;
             padding: 24px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+            box-shadow: var(--shadow);
         }
 
         h2 {
             margin: 0 0 16px;
-            color: #003366;
+            color: var(--brand-primary);
         }
 
         .field {
@@ -50,14 +52,17 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
             display: block;
             margin-bottom: 6px;
             font-weight: 600;
+            color: var(--text);
         }
 
         input {
             width: 100%;
             padding: 10px;
-            border: 1px solid #cbd5e1;
+            border: 1px solid var(--input-border);
             border-radius: 6px;
             box-sizing: border-box;
+            background: var(--input-bg);
+            color: var(--text);
         }
 
         button {
@@ -66,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
             border: none;
             border-radius: 6px;
             color: #fff;
-            background: #003366;
+            background: var(--brand-primary);
             font-weight: 700;
             cursor: pointer;
         }
@@ -89,6 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
             <button type="submit">Save Password</button>
         </form>
     </div>
+    <script src="includes/theme.js" defer></script>
 </body>
 </html>
 <?php

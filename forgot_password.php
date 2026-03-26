@@ -10,14 +10,15 @@ $success = $_GET['success'] ?? '';
 <head>
     <title>Password Reset - Kyambogo University</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f4; }
-        .reset-container { max-width: 500px; margin: 50px auto; padding: 20px; background: #fff; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        <?php include 'styles/theme.css'; ?>
+        body { font-family: Arial, sans-serif; background-color: var(--app-bg); color: var(--text); }
+        .reset-container { max-width: 500px; margin: 50px auto; padding: 20px; background: var(--surface); border-radius: 5px; box-shadow: var(--shadow); }
         .logo { text-align: center; margin-bottom: 20px; }
         .logo img { height: 80px; }
-        h2 { color: #003366; text-align: center; }
+        h2 { color: var(--brand-primary); text-align: center; }
         .form-group { margin-bottom: 15px; }
-        input[type="email"], input[type="password"] { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; }
-        button { background: #003366; color: #fff; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; width: 100%; }
+        input[type="email"], input[type="password"] { width: 100%; padding: 10px; border: 1px solid var(--input-border); border-radius: 4px; background: var(--input-bg); color: var(--text); }
+        button { background: var(--brand-primary); color: #fff; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; width: 100%; }
         .error { color: #dc3545; margin-bottom: 15px; text-align: center; }
         .success { color: #28a745; margin-bottom: 15px; text-align: center; }
         .text-center { text-align: center; }
@@ -50,5 +51,6 @@ $success = $_GET['success'] ?? '';
             <a href="login.html">Back to Login</a>
         </div>
     </div>
+    <script src="includes/theme.js" defer></script>
 </body>
 </html>

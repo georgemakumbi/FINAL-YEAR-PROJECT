@@ -50,6 +50,7 @@ $check_voted->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kyambogo University - Election Results</title>
     <style>
+        <?php include 'styles/theme.css'; ?>
         <?php include 'styles/results.css'; ?>
     </style>
 </head>
@@ -126,10 +127,11 @@ $check_voted->close();
     <div class="feedback">
         <h2>Feedback</h2>
         <a href="feedback.php"><button type="button" class="feedback-btn">Share your experience with the online voting process.</button></a>
-        <footer style="text-align: center; background-color: rgb(1, 1, 51); color: gold; padding: 20px; margin-top: 50px;">
+        <footer style="text-align: center; background-color: var(--footer-bg); color: var(--footer-text); padding: 20px; margin-top: 50px;">
         <p >Designed and Developed by the Kyambogo University BITC students Class Of 2023</p>
         <p">&copy; <?php echo date("Y"); ?> Kyambogo University. All rights reserved.</p>
     </footer>
     </div>
+    <script src="includes/theme.js" defer></script>
 </body>
 </html>

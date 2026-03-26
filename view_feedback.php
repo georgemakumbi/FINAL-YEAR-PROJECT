@@ -10,11 +10,13 @@ require_admin_login();
     <link rel="icon" href="images/image.png" type="png">
     <title>View Feedback</title>
     <style>
+        <?php include 'styles/theme.css'; ?>
         *{
             font-family: Arial, sans-serif;
-            background-color: #99c0eb;
-            color: black;
-
+        }
+        body {
+            background-color: var(--app-bg);
+            color: var(--text);
         }
         table {
             width: 100%;
@@ -22,18 +24,18 @@ require_admin_login();
             margin: 20px 0;
         }
         table, th, td {
-            border: 1px solid #ddd;
+            border: 1px solid var(--border);
         }
         th, td {
             padding: 10px;
             text-align: left;
         }
         th {
-            background-color: #f4f4f4;
+            background-color: var(--surface-2);
         }
         button {
             padding: 10px 15px;
-            background-color: #0a0a0a;
+            background-color: var(--brand-primary);
             color: white;
             border: none;
             border-radius: 5px;
@@ -41,14 +43,13 @@ require_admin_login();
         }
         button a {
             color: whitesmoke;
-            background-color: #0a0a0a;
             text-decoration: none;
         }
         footer {
             margin-top: 50px;
             padding: 40px 20px;
-            background: rgb(1, 1, 51);
-            color: gold;
+            background: var(--footer-bg);
+            color: var(--footer-text);
             text-align: center;
         }
     </style>
@@ -94,5 +95,6 @@ require_admin_login();
             <p>&copy; <?php echo date("Y"); ?> Kyambogo University. All rights reserved.</p>
         </footer>
     <button><a href="admin_dashboard.php">Back to Dashboard</a></button>
+    <script src="includes/theme.js" defer></script>
 </body>
 </html>

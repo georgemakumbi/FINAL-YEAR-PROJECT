@@ -54,6 +54,7 @@ $candidates_result = $stmt->get_result();
     <title>Kyambogo University - Cast Your Vote</title>
     <link rel="icon" href="images/image.png" type="png">
     <style>
+        <?php include 'styles/theme.css'; ?>
         <?php include 'styles/voting.css'; ?>
     </style>
 </head>
@@ -128,6 +129,7 @@ $candidates_result = $stmt->get_result();
         <p>Designed and Developed by the Kyambogo University BITC students Class Of 2023</p>
         <p>&copy; <?php echo date("Y"); ?> Kyambogo University. All rights reserved.</p>
     </footer>
+    <script src="includes/theme.js" defer></script>
     <script>
         function selectCandidate(card, position) {
             // Deselect all candidates for this position

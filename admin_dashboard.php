@@ -144,6 +144,7 @@ if ($section === 'results') {
     <link rel="icon" href="images/image.png" type="png">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        <?php include 'styles/theme.css'; ?>
         <?php include 'styles/admin_dashboard.css'; ?>
     </style>
 </head>
@@ -184,7 +185,7 @@ if ($section === 'results') {
         <div class="top-bar">
             <h1>Admin Dashboard</h1>
             <div class="top-bar-right">
-                <span class="user-info">👤 <?php echo safe_output($_SESSION['admin_username']); ?></span>
+            <span class="user-info">👤 <?php echo safe_output($_SESSION['admin_username']); ?></span>
                 <a href="admin_logout.php" class="btn btn-danger">Logout</a>
             </div>
         </div>
@@ -422,5 +423,12 @@ if ($section === 'results') {
             });
         }
     </script>
+    <script src="includes/theme.js" defer></script>
 </body>
 </html>
+
+
+
+
+
+

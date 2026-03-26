@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - Kyambogo Guild Online Voting Portal</title>
     <link rel="icon" href="images/image.png" type="image/png">
+    <link rel="stylesheet" href="styles/theme.css">
     <link rel="stylesheet" href="styles/about_us.css">
 </head>
 <body>
@@ -61,5 +62,6 @@
         <p>CERTIFIED DEVELOPERS</p>
         &copy; <?php echo date("Y"); ?> Kyambogo University BITC Final Year Project Team
     </footer>
+    <script src="includes/theme.js" defer></script>
 </body>
 </html>

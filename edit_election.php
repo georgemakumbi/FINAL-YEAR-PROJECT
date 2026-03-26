@@ -106,6 +106,7 @@ $end_date_input = date('Y-m-d\TH:i', strtotime($end_date));
     <title>Edit Election - Admin</title>
     <link rel="icon" href="images/image.png" type="png">
     <style>
+        <?php include 'styles/theme.css'; ?>
         * {
             margin: 0;
             padding: 0;
@@ -114,23 +115,23 @@ $end_date_input = date('Y-m-d\TH:i', strtotime($end_date));
         }
 
         body {
-            background: #f4f7fb;
+            background: var(--app-bg);
             padding: 24px;
-            color: #2c3e50;
+            color: var(--text);
         }
 
         .container {
             max-width: 680px;
             margin: 0 auto;
-            background: #fff;
+            background: var(--surface);
             border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            box-shadow: var(--shadow);
             padding: 28px;
         }
 
         h2 {
             margin-bottom: 18px;
-            color: #003366;
+            color: var(--brand-primary);
         }
 
         .form-group {
@@ -141,14 +142,17 @@ $end_date_input = date('Y-m-d\TH:i', strtotime($end_date));
             display: block;
             margin-bottom: 6px;
             font-weight: 600;
+            color: var(--text);
         }
 
         input, select {
             width: 100%;
             padding: 10px 12px;
-            border: 1px solid #d7dde5;
+            border: 1px solid var(--input-border);
             border-radius: 6px;
             font-size: 14px;
+            background: var(--input-bg);
+            color: var(--text);
         }
 
         .error {
@@ -177,7 +181,7 @@ $end_date_input = date('Y-m-d\TH:i', strtotime($end_date));
         }
 
         .btn-primary {
-            background: #003366;
+            background: var(--brand-primary);
             color: #fff;
         }
 
@@ -241,5 +245,6 @@ $end_date_input = date('Y-m-d\TH:i', strtotime($end_date));
             </div>
         </form>
     </div>
+    <script src="includes/theme.js" defer></script>
 </body>
 </html>

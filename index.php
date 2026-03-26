@@ -33,6 +33,7 @@
     <title>Kyambogo Guild Voting Portal</title>
     <link rel="icon" href="images/image.png" type="image/png">
     <style>
+        <?php include 'styles/theme.css' ?>
         <?php include 'styles/index.css' ?>
     </style>
 </head>
@@ -43,7 +44,7 @@
             <img src="images/image.png" alt="KyU Logo">
         </div>
         <h1>Kyambogo Guild Online Voting Portal</h1>
-        <p style="color: #666; font-size: 1.1rem;">Knowledge And Skills For Service</p>
+        <p style="color: var(--text-muted); font-size: 1.1rem;">Knowledge And Skills For Service</p>
     </header>
 
     <div class="container">
@@ -57,7 +58,7 @@
             <p>This is the official online portal for Kyambogo University student registration and voting. 
             Elections are scheduled to commence in <strong>MARCH<?php  ?></strong>.</p>
             <br>
-            <p style="font-size: 0.9rem; color: #555;">Note: All candidates must submit their manifesto and passport photos to the Dean's office for verification.</p>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">Note: All candidates must submit their manifesto and passport photos to the Dean's office for verification.</p>
         </section>
 
         <section class="card">
@@ -73,8 +74,10 @@
 
         <div id="main-content" class="<?= $expired ? 'inactive' : '' ?>">
             <?php if ($expired): ?>
-                <div class="card" style="text-align: center; border: 2px solid red;">
-                    <p style="color: red; font-weight: bold;">THE VOTING SYSTEM IS CURRENTLY CLOSED.</p>
+                <div class="card" style="text-align: center; border: 2px solid #dc3545; background: #f8d7da; color: #721c24;">
+                    <h3 style="margin-bottom: 10px;">⚠️ ELECTIONS CLOSED BY ADMINISTRATION</h3>
+                    <p><strong>No active elections available.</strong></p>
+                    <p style="font-size: 0.9em; opacity: 0.8;">Contact election officials for updates.</p>
                 </div>
             <?php else: ?>
                 <section class="login-section">
@@ -88,7 +91,7 @@
         </div>
 
     </div>
-    <p style="color: #110101; font-size: 1.1rem; text-align: center;"><strong>KYAMBOGO UNIVERSITY DECIDES</strong></p>
+    <p style="color: var(--text); font-size: 1.1rem; text-align: center;"><strong>KYAMBOGO UNIVERSITY DECIDES</strong></p>
     <footer>
         <div class="quick-links">
             <p>Technical Support: <a href="mailto:admin@kyu.ac.ug">admin@kyu.ac.ug</a> | <a href="tel:+256 747077274">+256 747 077 274</a></p>
@@ -100,9 +103,10 @@
             <a  href="about_us.php">About Us</a>
         </div>
         <p class="copyright">&copy; <?php echo date("Y"); ?> Kyambogo University. All rights reserved.</p>
-        <p style="font-size: 0.8rem; color: #555;">Designed and Developed by the Kyambogo University BITC students Class Of 2023</p>
+        <p style="font-size: 0.8rem; color: var(--text-muted);">Designed and Developed by the Kyambogo University BITC students Class Of 2023</p>
     </footer>
 
+    <script src="includes/theme.js" defer></script>
     <script>
         const countdownElement = document.getElementById("countdown");
         const contentElement = document.getElementById("main-content");
@@ -137,4 +141,3 @@ document.addEventListener('keydown', function(e) {
 </script>
 </body>
 </html>
-

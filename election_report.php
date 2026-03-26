@@ -154,6 +154,7 @@ if ($election['status'] === 'active') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Election Report - <?php echo htmlspecialchars($election['election_title']); ?></title>
     <style>
+        <?php include 'styles/theme.css'; ?>
         <?php include 'styles/election_report.css'; ?>
     </style>
 </head>
@@ -266,8 +267,10 @@ if ($election['status'] === 'active') {
             <p>&copy; <?php echo date("Y"); ?> Kyambogo University. All rights reserved.</p>
         </footer>
     </div>
+    <script src="includes/theme.js" defer></script>
 </body>
 </html>
 <?php
 $recent_votes_stmt->close();
 ?>
+

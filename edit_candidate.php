@@ -116,6 +116,7 @@ if (isset($_POST['update_candidate'])) {
     <title>Edit Candidate - Admin</title>
     <link rel="icon" href="images/image.png" type="png">
     <style>
+        <?php include 'styles/theme.css'; ?>
         * {
             margin: 0;
             padding: 0;
@@ -124,23 +125,24 @@ if (isset($_POST['update_candidate'])) {
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f5f7fa;
+            background: var(--app-bg);
+            color: var(--text);
             padding: 20px;
         }
         
         .container {
             max-width: 600px;
             margin: 0 auto;
-            background: white;
+            background: var(--surface);
             padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
         }
         
         h2 {
-            color: #2c3e50;
+            color: var(--text);
             margin-bottom: 20px;
-            border-bottom: 2px solid #ecf0f1;
+            border-bottom: 2px solid var(--border);
             padding-bottom: 10px;
         }
         
@@ -152,7 +154,7 @@ if (isset($_POST['update_candidate'])) {
             display: block;
             margin-bottom: 5px;
             font-weight: 600;
-            color: #2c3e50;
+            color: var(--text);
         }
         
         .form-group input, 
@@ -160,9 +162,11 @@ if (isset($_POST['update_candidate'])) {
         .form-group textarea {
             width: 100%;
             padding: 10px;
-            border: 1px solid #ddd;
+            border: 1px solid var(--input-border);
             border-radius: 5px;
             font-size: 14px;
+            background: var(--input-bg);
+            color: var(--text);
         }
         
         .form-group textarea {
@@ -241,7 +245,7 @@ if (isset($_POST['update_candidate'])) {
             
             <div class="form-group">
                 <label>Faculty</label>
-                <input type="text" value="<?php echo htmlspecialchars($faculty); ?>" readonly style="background: #f0f0f0;">
+                <input type="text" value="<?php echo htmlspecialchars($faculty); ?>" readonly style="background: var(--surface-2); color: var(--text);">
             </div>
             
             <div class="form-group">
@@ -279,5 +283,6 @@ if (isset($_POST['update_candidate'])) {
             </div>
         </form>
     </div>
+    <script src="includes/theme.js" defer></script>
 </body>
 </html>
