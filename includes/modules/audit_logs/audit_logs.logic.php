@@ -54,7 +54,7 @@ if ($audit_action !== '') {
     } elseif ($audit_action === 'login') {
         $audit_conditions[] = "audit_entries.action IN ('ADMIN_LOGIN', 'ADMIN_LOGOUT', 'STUDENT_LOGIN', 'STUDENT_LOGOUT')";
     } elseif ($audit_action === 'admin') {
-        $audit_conditions[] = "audit_entries.action IN ('DEADLINE_UPDATED', 'ELECTION_CREATED', 'ELECTION_STATUS_UPDATED', 'CANDIDATE_ADDED', 'CANDIDATE_UPDATED', 'CANDIDATE_DELETED', 'STUDENT_ADDED', 'STUDENT_UPDATED', 'STUDENT_DELETED', 'STUDENTS_IMPORTED')";
+        $audit_conditions[] = "audit_entries.action IN ('DEADLINE_UPDATED', 'ELECTION_CREATED', 'ELECTION_STATUS_UPDATED', 'RESULTS_PUBLISHED', 'RESULTS_UNPUBLISHED', 'CANDIDATE_ADDED', 'CANDIDATE_UPDATED', 'CANDIDATE_DELETED', 'STUDENT_ADDED', 'STUDENT_UPDATED', 'STUDENT_DELETED', 'STUDENTS_IMPORTED')";
     } else {
         $audit_conditions[] = "1 = 0";
     }

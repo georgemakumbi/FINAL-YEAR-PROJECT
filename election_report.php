@@ -152,6 +152,7 @@ if ($election['status'] === 'active') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/image.png" type="png">
     <title>Election Report - <?php echo htmlspecialchars($election['election_title']); ?></title>
     <style>
         <?php include 'styles/theme.css'; ?>

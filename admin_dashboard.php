@@ -27,6 +27,7 @@ include 'db_connection.php';
 require 'admin_security.php';
 require_once 'includes/audit_logger.php';
 require_once 'includes/modules/common.php';
+require_once 'includes/results_publish.php';
 
 // Ensure admin is logged in
 require_admin_login();
@@ -36,6 +37,10 @@ ensure_csrf_token();
 
 // Check super_admin privileges
 $is_super_admin = isset($_SESSION['admin_role']) && $_SESSION['admin_role'] === 'super_admin';
+
+// Results publish status (file-based toggle)
+$results_status = get_results_publish_status();
+$results_published = $results_status === 'published';
 
 // =============================================================================
 // MESSAGE HANDLING
@@ -72,6 +77,39 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['deadline'])) {
     } else {
         $message = "Failed to update deadline.";
         $message_type = 'error';
+    }
+}
+
+// =============================================================================
+// RESULTS PUBLISHING
+// =============================================================================
+
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['results_publish_action'])) {
+    verify_csrf_or_die();
+
+    if (!$is_super_admin) {
+        $message = "Only super admins can publish or unpublish results.";
+        $message_type = 'error';
+    } else {
+        $action = $_POST['results_publish_action'];
+        $new_status = ($action === 'publish') ? 'published' : 'unpublished';
+
+        if (set_results_publish_status($new_status)) {
+            $results_status = $new_status;
+            $results_published = $results_status === 'published';
+            $message = $results_published ? "Results published successfully." : "Results unpublished successfully.";
+            $message_type = 'success';
+
+            log_audit_event(
+                $conn,
+                isset($_SESSION['admin_id']) ? (string)$_SESSION['admin_id'] : null,
+                $results_published ? 'RESULTS_PUBLISHED' : 'RESULTS_UNPUBLISHED',
+                $results_published ? 'Election results published' : 'Election results unpublished'
+            );
+        } else {
+            $message = "Failed to update results publishing status.";
+            $message_type = 'error';
+        }
     }
 }
 
@@ -297,6 +335,24 @@ if ($section === 'results') {
         ========================================================================= -->
         <?php if ($section === 'results'): ?>
         <div id="results" class="section active">
+            <div class="card" style="margin-bottom: 20px;">
+                <h2>Results Publishing</h2>
+                <p>
+                    Status:
+                    <strong><?php echo $results_published ? 'Published' : 'Unpublished'; ?></strong>
+                </p>
+                <?php if ($is_super_admin): ?>
+                    <form method="post" style="display: inline;">
+                        <?php echo render_csrf_field(); ?>
+                        <input type="hidden" name="results_publish_action" value="<?php echo $results_published ? 'unpublish' : 'publish'; ?>">
+                        <button type="submit" class="btn <?php echo $results_published ? 'btn-secondary' : 'btn-primary'; ?>">
+                            <?php echo $results_published ? 'Unpublish Results' : 'Publish Results'; ?>
+                        </button>
+                    </form>
+                <?php else: ?>
+                    <p style="color: #7f8c8d;">Only super admins can publish or unpublish results.</p>
+                <?php endif; ?>
+            </div>
             <div class="card">
                 <h2>📈 Election Results</h2>
                 
@@ -426,6 +482,7 @@ if ($section === 'results') {
     <script src="includes/theme.js" defer></script>
 </body>
 </html>
+
 
 
 

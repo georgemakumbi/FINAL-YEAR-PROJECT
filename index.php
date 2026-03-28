@@ -56,7 +56,7 @@
         <section class="card">
             <h2 style="color: var(--primary); margin-bottom: 15px;">Official Announcement</h2>
             <p>This is the official online portal for Kyambogo University student registration and voting. 
-            Elections are scheduled to commence in <strong>MARCH<?php  ?></strong>.</p>
+            Elections are scheduled to commence in <strong><?php echo date('M'), date(' Y'); ?></strong>.</p>
             <br>
             <p style="font-size: 0.9rem; color: var(--text-muted);">Note: All candidates must submit their manifesto and passport photos to the Dean's office for verification.</p>
         </section>

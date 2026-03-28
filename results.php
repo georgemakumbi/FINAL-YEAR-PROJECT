@@ -1,6 +1,7 @@
 <?php
 include 'db_connection.php';
 session_start();
+require_once 'includes/results_publish.php';
 
 // Check if user is logged in
 if (!isset($_SESSION['student_id'])) {
@@ -20,18 +21,25 @@ if (!isset($_SESSION['has_voted'])) {
 }
 
 // Get election results
-$results_query = "
-    SELECT c.position, c.candidate_id, c.first_name, c.last_name, c.faculty, c.votes, 
-           (c.votes / total.total_votes * 100) as percentage
-    FROM candidates c
-    JOIN (
-        SELECT position, SUM(votes) as total_votes
-        FROM candidates
-        GROUP BY position
-    ) total ON c.position = total.position
-    ORDER BY c.position, c.votes DESC
-";
-$results = $conn->query($results_query);
+$results_published = results_are_published();
+$results = null;
+if ($results_published) {
+    $results_query = "
+        SELECT c.position, c.candidate_id, c.first_name, c.last_name, c.faculty, c.votes, 
+               CASE 
+                   WHEN total.total_votes > 0 THEN (c.votes / total.total_votes * 100)
+                   ELSE 0
+               END as percentage
+        FROM candidates c
+        JOIN (
+            SELECT position, SUM(votes) as total_votes
+            FROM candidates
+            GROUP BY position
+        ) total ON c.position = total.position
+        ORDER BY c.position, c.votes DESC
+    ";
+    $results = $conn->query($results_query);
+}
 
 // Check if user has voted to show appropriate message
 $student_id = $_SESSION['student_id'];
@@ -82,47 +90,57 @@ $check_voted->close();
             }
             ?>
         </div>
-        
-        <?php
-        $current_position = "";
-        while ($row = $results->fetch_assoc()) {
-            if ($row['position'] != $current_position) {
-                // Close previous position section if exists
-                if ($current_position != "") {
-                    echo '</table></div>';
+
+        <?php if (!$results_published): ?>
+            <div class="vote-message not-voted">
+                Results are not yet published. Please check back later.
+            </div>
+        <?php else: ?>
+            <?php
+            $current_position = "";
+            while ($row = $results->fetch_assoc()) {
+                if ($row['position'] != $current_position) {
+                    // Close previous position section if exists
+                    if ($current_position != "") {
+                        echo '</table></div>';
+                    }
+                    // Start new position section
+                    $current_position = $row['position'];
+                    echo '<div class="position-section">';
+                    echo '<h2 class="position-title">' . htmlspecialchars($current_position) . '</h2>';
+                    echo '<table class="results-table">';
+                    echo '<thead><tr><th>Candidate</th><th>Faculty</th><th>Votes</th><th>Percentage</th></tr></thead>';
+                    echo '<tbody>';
                 }
-                // Start new position section
-                $current_position = $row['position'];
-                echo '<div class="position-section">';
-                echo '<h2 class="position-title">' . htmlspecialchars($current_position) . '</h2>';
-                echo '<table class="results-table">';
-                echo '<thead><tr><th>Candidate</th><th>Faculty</th><th>Votes</th><th>Percentage</th></tr></thead>';
-                echo '<tbody>';
+                
+                $is_winner = false;
+                // Simple logic to highlight winner (first row in each position group is the winner due to ORDER BY votes DESC)
+                if ($current_position == $row['position'] && !isset($winner_shown[$current_position])) {
+                    $is_winner = true;
+                    $winner_shown[$current_position] = true;
+                }
+                
+                $percentage_value = is_numeric($row['percentage']) ? (float)$row['percentage'] : 0;
+                $percentage_width = round($percentage_value);
+                $percentage_label = round($percentage_value, 1);
+
+                echo '<tr' . ($is_winner ? ' class="winner"' : '') . '>';
+                echo '<td>' . htmlspecialchars($row['first_name'] . ' ' . $row['last_name']) . '</td>';
+                echo '<td>' . htmlspecialchars($row['faculty']) . '</td>';
+                echo '<td>' . htmlspecialchars($row['votes']) . '</td>';
+                echo '<td>';
+                echo '<div class="percentage-bar-container">';
+                echo '<div class="percentage-bar" style="width: ' . $percentage_width . '%;">' . $percentage_label . '%</div>';
+                echo '</div>';
+                echo '</td>';
+                echo '</tr>';
             }
-            
-            $is_winner = false;
-            // Simple logic to highlight winner (first row in each position group is the winner due to ORDER BY votes DESC)
-            if ($current_position == $row['position'] && !isset($winner_shown[$current_position])) {
-                $is_winner = true;
-                $winner_shown[$current_position] = true;
+            // Close the last position section
+            if ($current_position != "") {
+                echo '</tbody></table></div>';
             }
-            
-            echo '<tr' . ($is_winner ? ' class="winner"' : '') . '>';
-            echo '<td>' . htmlspecialchars($row['first_name'] . ' ' . $row['last_name']) . '</td>';
-            echo '<td>' . htmlspecialchars($row['faculty']) . '</td>';
-            echo '<td>' . htmlspecialchars($row['votes']) . '</td>';
-            echo '<td>';
-            echo '<div class="percentage-bar-container">';
-            echo '<div class="percentage-bar" style="width: ' . round($row['percentage']) . '%;">' . round($row['percentage'], 1) . '%</div>';
-            echo '</div>';
-            echo '</td>';
-            echo '</tr>';
-        }
-        // Close the last position section
-        if ($current_position != "") {
-            echo '</tbody></table></div>';
-        }
-        ?>
+            ?>
+        <?php endif; ?>
     </div>
     <div class="feedback">
         <h2>Feedback</h2>

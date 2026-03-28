@@ -101,6 +101,15 @@
             background-color: #e6f7e6 !important;
             font-weight: bold;
         }
+
+        body.dark .winner {
+            background-color: #1f3b2b !important;
+            color: #e7f5ea;
+        }
+
+        body.dark .winner td {
+            color: inherit;
+        }
         
         .percentage-bar-container {
             width: 100%;
