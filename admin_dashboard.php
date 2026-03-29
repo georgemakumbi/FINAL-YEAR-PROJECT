@@ -139,7 +139,7 @@ $current_deadline = $deadline ? $deadline : '';
 // =============================================================================
 
 $section = isset($_GET['section']) ? $_GET['section'] : 'dashboard';
-$valid_sections = ['dashboard', 'elections', 'candidates', 'students', 'results', 'feedback', 'audit'];
+$valid_sections = ['dashboard', 'elections', 'candidates', 'students', 'results', 'feedback', 'audit', 'settings'];
 
 if (!in_array($section, $valid_sections)) {
     $section = 'dashboard';
@@ -164,6 +164,9 @@ switch ($section) {
         break;
     case 'feedback':
         include_once 'includes/modules/feedback/feedback.logic.php';
+        break;
+    case 'settings':
+        include_once 'includes/modules/settings/settings.logic.php';
         break;
 }
 
@@ -204,6 +207,7 @@ if ($section === 'results') {
             <li><a href="admin_dashboard.php?section=results" class="nav-item <?php echo $section === 'results' ? 'active' : ''; ?>">📈 Results</a></li>
             <li><a href="admin_dashboard.php?section=feedback" class="nav-item <?php echo $section === 'feedback' ? 'active' : ''; ?>">💬 Feedback</a></li>
             <li><a href="admin_dashboard.php?section=audit" class="nav-item <?php echo $section === 'audit' ? 'active' : ''; ?>">🔍 Audit Log</a></li>
+            <li><a href="admin_dashboard.php?section=settings" class="nav-item <?php echo $section === 'settings' ? 'active' : ''; ?>">⚙️ Settings</a></li>
         </ul>
     </div>
 
@@ -427,6 +431,15 @@ if ($section === 'results') {
         <?php if ($section === 'feedback'): ?>
             <div id="feedback" class="section active">
                 <?php include_once 'includes/modules/feedback/feedback.view.php'; ?>
+            </div>
+        <?php endif; ?>
+
+        <!-- =========================================================================
+        SETTINGS MODULE
+        ========================================================================= -->
+        <?php if ($section === 'settings'): ?>
+            <div id="settings" class="section active">
+                <?php include_once 'includes/modules/settings/settings.view.php'; ?>
             </div>
         <?php endif; ?>
 

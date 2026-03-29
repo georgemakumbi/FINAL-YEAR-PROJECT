@@ -129,7 +129,6 @@ require_once __DIR__ . '/../common.php';
         </div>
         <?php endif; ?>
     </div>
-
 <!-- Student List Table -->
 <div class="card">
         <h3>📋 Student List <?php echo $search_term ? '(Search Results)' : ''; ?></h3>

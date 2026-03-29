@@ -21,8 +21,6 @@
 // Initialize students variables
 $search_term = isset($_GET['search']) ? $_GET['search'] : '';
 $search_results = null;
-$students_message = '';
-$students_message_type = '';
 
 // =============================================================================
 // SEARCH FUNCTIONALITY - STUDENTS

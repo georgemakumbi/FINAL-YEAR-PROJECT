@@ -1,0 +1,155 @@
+<?php
+/**
+ * =============================================================================
+ * SETTINGS MODULE - VIEW
+ * =============================================================================
+ * Renders settings actions for super admins.
+ * 
+ * Requires (set by settings.logic.php):
+ * - $settings_message (string)
+ * - $settings_message_type (string)
+ * - $is_super_admin (bool)
+ * 
+ * =============================================================================
+ */
+require_once __DIR__ . '/../common.php';
+?>
+
+<div class="card">
+    <h2>⚙️ Settings</h2>
+
+    <?php if ($settings_message): ?>
+        <?php echo render_alert($settings_message_type, $settings_message); ?>
+    <?php endif; ?>
+
+    <?php if (!$is_super_admin): ?>
+        <p style="color: var(--text-muted);">Only super admins can access these settings.</p>
+    <?php else: ?>
+        <div style="margin-bottom: 10px;">
+            <h3>Reset Voting Status</h3>
+            <p style="color: #7f8c8d; margin-bottom: 12px;">
+                Use this after an election ends to allow students to vote again in a new election cycle.
+            </p>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <form method="post" id="reset-has-voted-form">
+                    <?php echo render_csrf_field(); ?>
+                    <input type="hidden" name="reset_voting_action" value="reset_has_voted">
+                    <button type="button" class="btn btn-warning" onclick="openResetModal('reset-has-voted-form', 'Reset has_voted for all students?');">
+                        Reset has_voted Only
+                    </button>
+                </form>
+                <form method="post" id="full-reset-form">
+                    <?php echo render_csrf_field(); ?>
+                    <input type="hidden" name="reset_voting_action" value="full_reset">
+                    <button type="button" class="btn btn-danger" onclick="openResetModal('full-reset-form', 'This will clear ALL votes, reset candidate totals, and reset has_voted. Continue?');">
+                        Full Election Reset
+                    </button>
+                </form>
+            </div>
+        </div>
+    <?php endif; ?>
+</div>
+
+<div id="reset-modal" class="reset-modal" aria-hidden="true">
+    <div class="reset-modal-overlay" onclick="closeResetModal()"></div>
+    <div class="reset-modal-card" role="dialog" aria-modal="true" aria-labelledby="reset-modal-title">
+        <h3 id="reset-modal-title">Confirm Reset</h3>
+        <p id="reset-modal-message"></p>
+        <label for="reset-modal-input" style="display: block; margin-top: 12px; font-weight: 600;">
+            Type command to continue
+        </label>
+        <input id="reset-modal-input" type="text" autocomplete="off" style="margin-top: 6px;">
+        <div id="reset-modal-error" style="display: none; color: #b91c1c; margin-top: 8px; font-size: 13px;">
+            Incorrect command.
+        </div>
+        <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 16px;">
+            <button type="button" class="btn btn-secondary" onclick="closeResetModal()">Cancel</button>
+            <button type="button" class="btn btn-danger" onclick="confirmReset()">Confirm</button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .reset-modal {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    }
+
+    .reset-modal.show {
+        display: flex;
+    }
+
+    .reset-modal-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    .reset-modal-card {
+        position: relative;
+        background: var(--surface);
+        color: var(--text);
+        border-radius: 10px;
+        padding: 20px;
+        width: min(440px, 92vw);
+        box-shadow: var(--shadow);
+        border: 1px solid var(--border);
+        z-index: 1;
+    }
+
+    .reset-modal-card input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid var(--input-border);
+        border-radius: 6px;
+        background: var(--input-bg);
+        color: var(--text);
+    }
+</style>
+
+<script>
+    let pendingResetFormId = null;
+
+    function openResetModal(formId, message) {
+        pendingResetFormId = formId;
+        const modal = document.getElementById('reset-modal');
+        const messageEl = document.getElementById('reset-modal-message');
+        const inputEl = document.getElementById('reset-modal-input');
+        const errorEl = document.getElementById('reset-modal-error');
+
+        messageEl.textContent = message;
+        inputEl.value = '';
+        errorEl.style.display = 'none';
+        modal.classList.add('show');
+        modal.setAttribute('aria-hidden', 'false');
+
+        setTimeout(() => inputEl.focus(), 0);
+    }
+
+    function closeResetModal() {
+        const modal = document.getElementById('reset-modal');
+        modal.classList.remove('show');
+        modal.setAttribute('aria-hidden', 'true');
+        pendingResetFormId = null;
+    }
+
+    function confirmReset() {
+        const inputEl = document.getElementById('reset-modal-input');
+        const errorEl = document.getElementById('reset-modal-error');
+
+        if (inputEl.value !== 'RESET') {
+            errorEl.style.display = 'block';
+            inputEl.focus();
+            return;
+        }
+
+        if (pendingResetFormId) {
+            document.getElementById(pendingResetFormId).submit();
+        }
+    }
+</script>
+

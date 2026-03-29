@@ -33,9 +33,8 @@ $votes_stmt = $conn->prepare("
         COUNT(DISTINCT student_id) AS unique_voters
     FROM votes
     WHERE position = ?
-      AND vote_date BETWEEN ? AND ?
 ");
-$votes_stmt->bind_param("sss", $position, $start_date, $end_date);
+$votes_stmt->bind_param("s", $position);
 $votes_stmt->execute();
 $votes_summary = $votes_stmt->get_result()->fetch_assoc();
 $votes_stmt->close();
@@ -55,12 +54,11 @@ $candidates_stmt = $conn->prepare("
     LEFT JOIN votes v
       ON v.candidate_id = c.candidate_id
      AND v.position = ?
-     AND v.vote_date BETWEEN ? AND ?
     WHERE c.position = ?
     GROUP BY c.candidate_id, c.first_name, c.last_name, c.faculty
     ORDER BY election_votes DESC, c.first_name ASC, c.last_name ASC
 ");
-$candidates_stmt->bind_param("ssss", $position, $start_date, $end_date, $position);
+$candidates_stmt->bind_param("ss", $position, $position);
 $candidates_stmt->execute();
 $candidate_result = $candidates_stmt->get_result();
 
@@ -96,11 +94,10 @@ $recent_votes_stmt = $conn->prepare("
     LEFT JOIN students s ON s.student_id = v.student_id
     LEFT JOIN candidates c ON c.candidate_id = v.candidate_id
     WHERE v.position = ?
-      AND v.vote_date BETWEEN ? AND ?
     ORDER BY v.vote_date DESC
     LIMIT 20
 ");
-$recent_votes_stmt->bind_param("sss", $position, $start_date, $end_date);
+$recent_votes_stmt->bind_param("s", $position);
 $recent_votes_stmt->execute();
 $recent_votes = $recent_votes_stmt->get_result();
 
@@ -234,34 +231,6 @@ if ($election['status'] === 'active') {
                     <?php endif; ?>
                 </tbody>
             </table>
-
-            <h2>Recent Votes (Within Election Window)</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Vote Time</th>
-                        <th>Student ID</th>
-                        <th>Voter</th>
-                        <th>Candidate</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if ($recent_votes && $recent_votes->num_rows > 0): ?>
-                        <?php while ($vote_row = $recent_votes->fetch_assoc()): ?>
-                            <tr>
-                                <td><?php echo htmlspecialchars($vote_row['vote_date']); ?></td>
-                                <td><?php echo htmlspecialchars($vote_row['student_id']); ?></td>
-                                <td><?php echo htmlspecialchars($vote_row['voter_name']); ?></td>
-                                <td><?php echo htmlspecialchars($vote_row['candidate_name'] ?? 'Unknown Candidate'); ?></td>
-                            </tr>
-                        <?php endwhile; ?>
-                    <?php else: ?>
-                        <tr>
-                            <td colspan="4" class="empty">No votes found in this election window.</td>
-                        </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
         </div>
         <footer>
             <p>Designed and Developed by the Kyambogo University BITC students Class Of 2023</p>
@@ -274,4 +243,3 @@ if ($election['status'] === 'active') {
 <?php
 $recent_votes_stmt->close();
 ?>
-

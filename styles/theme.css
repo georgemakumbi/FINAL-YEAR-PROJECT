@@ -71,7 +71,7 @@
 
         .theme-toggle {
             position: fixed;
-            top: 18px;
+            bottom: 18px;
             right: 18px;
             z-index: 1000;
             display: inline-flex;
