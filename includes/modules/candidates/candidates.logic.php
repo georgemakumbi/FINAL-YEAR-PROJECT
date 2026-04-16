@@ -21,6 +21,37 @@ $candidates_message = '';
 $candidates_message_type = '';
 
 // =============================================================================
+// PROCESS ACTIONS
+// =============================================================================
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['candidate_action']) && $is_super_admin) {
+    verify_csrf_or_die();
+    
+    $action = $_POST['candidate_action'];
+    $candidate_id = isset($_POST['candidate_id']) ? (int)$_POST['candidate_id'] : 0;
+    
+    if ($candidate_id > 0) {
+        if ($action === 'verify_candidate') {
+            $stmt = $conn->prepare("UPDATE candidates SET status = 'verified' WHERE candidate_id = ?");
+            $stmt->bind_param("i", $candidate_id);
+            if ($stmt->execute()) {
+                $candidates_message = "Candidate verified successfully.";
+                $candidates_message_type = "success";
+            }
+            $stmt->close();
+        } elseif ($action === 'reject_candidate') {
+            $stmt = $conn->prepare("UPDATE candidates SET status = 'rejected' WHERE candidate_id = ?");
+            $stmt->bind_param("i", $candidate_id);
+            if ($stmt->execute()) {
+                $candidates_message = "Candidate rejected successfully.";
+                $candidates_message_type = "success";
+            }
+            $stmt->close();
+        }
+    }
+}
+
+// =============================================================================
 // FETCH DATA - CANDIDATES
 // =============================================================================
 

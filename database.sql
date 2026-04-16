@@ -28,6 +28,7 @@ CREATE TABLE candidates (
     manifesto TEXT,
     image_path VARCHAR(255),
     votes INT DEFAULT 0,
+    status ENUM('pending', 'verified', 'rejected') DEFAULT 'pending',
     FOREIGN KEY (student_id) REFERENCES students(student_id)
 );
 

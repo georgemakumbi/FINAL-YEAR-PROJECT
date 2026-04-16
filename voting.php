@@ -35,9 +35,11 @@ $voter_department = isset($_SESSION['department']) ? $_SESSION['department'] : '
 // University-wide positions show all candidates, department positions show only matching candidates
 $candidates_query = "
     SELECT * FROM candidates 
-    WHERE is_university_wide = 1 
+    WHERE status = 'verified' AND (
+       is_university_wide = 1 
        OR department = ? 
        OR department IS NULL
+    )
     ORDER BY position, last_name
 ";
 $stmt = $conn->prepare($candidates_query);
@@ -64,9 +66,10 @@ $candidates_result = $stmt->get_result();
             <img src="images/image.png" alt="Kyambogo University Logo">
             <div class="university-name">KYAMBOGO UNIVERSITY ONLINE VOTING SYSTEM</div>
         </div>
-        <div class="user-info">
+        <div class="user-info" style="display: flex; gap: 15px; align-items: center;">
+            <a href="apply_candidate.php" class="vote-btn" style="padding: 5px 15px; text-decoration: none; font-size: 0.9em; width: auto; margin:0;">Apply for Candidacy</a>
             Welcome, <?php echo $_SESSION['first_name']; ?>
-            <form action="logout.php" method="POST">
+            <form action="logout.php" method="POST" style="margin:0;">
                 <button type="submit" class="logout-btn">Logout</button>
             </form>
         </div>

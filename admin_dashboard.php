@@ -266,7 +266,7 @@ if ($section === 'results') {
                         <?php while ($vote = $recent_votes->fetch_assoc()): ?>
                             <div class="activity-item">
                                 <div>
-                                    <strong><?php echo safe_output($vote['first_name'] . ' ' . $vote['last_name']); ?></strong> 
+                                    <strong><?php echo safe_output($vote['student_id']); ?></strong> 
                                     voted for 
                                     <strong><?php echo safe_output($vote['candidate_first_name'] . ' ' . $vote['candidate_last_name']); ?></strong>
                                 </div>

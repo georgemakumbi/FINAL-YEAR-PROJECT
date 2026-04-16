@@ -5,7 +5,7 @@ require_once 'includes/results_publish.php';
 
 // Check if user is logged in
 if (!isset($_SESSION['student_id'])) {
-    header("Location: index.html?error=Please login first");
+    header("Location: index.php?error=Please login first");
     exit();
 }
 

@@ -100,6 +100,7 @@ require_once __DIR__ . '/../common.php';
                     <th>Faculty</th>
                     <th>Department</th>
                     <th>Scope</th>
+                    <th>Status</th>
                     <th>Votes</th>
                     <th>Actions</th>
                 </tr>
@@ -127,9 +128,30 @@ require_once __DIR__ . '/../common.php';
                             <td><?php echo safe_output($candidate['faculty']); ?></td>
                             <td><?php echo safe_output($candidate['department'] ?? 'N/A'); ?></td>
                             <td><?php echo $scope; ?></td>
+                            <td>
+                                <span class="status-badge status-<?php echo ($candidate['status'] == 'verified') ? 'active' : (($candidate['status'] == 'rejected') ? 'closed' : 'scheduled'); ?>">
+                                    <?php echo ucfirst($candidate['status'] ?? 'pending'); ?>
+                                </span>
+                            </td>
                             <td><strong><?php echo format_number($candidate['votes']); ?></strong></td>
                             <td class="action-links">
                                 <?php if ($is_super_admin): ?>
+                                <?php if ($candidate['status'] !== 'verified'): ?>
+                                    <form method="post" style="display:inline;">
+                                        <?php echo render_csrf_field(); ?>
+                                        <input type="hidden" name="candidate_action" value="verify_candidate">
+                                        <input type="hidden" name="candidate_id" value="<?php echo (int)$candidate['candidate_id']; ?>">
+                                        <button type="submit" class="btn btn-small" style="background:#27ae60; color:white; border:none; border-radius:4px; padding:4px 8px; cursor:pointer;">Verify</button>
+                                    </form>
+                                <?php endif; ?>
+                                <?php if ($candidate['status'] !== 'rejected'): ?>
+                                    <form method="post" style="display:inline;">
+                                        <?php echo render_csrf_field(); ?>
+                                        <input type="hidden" name="candidate_action" value="reject_candidate">
+                                        <input type="hidden" name="candidate_id" value="<?php echo (int)$candidate['candidate_id']; ?>">
+                                        <button type="submit" class="btn btn-small" style="background:#e67e22; color:white; border:none; border-radius:4px; padding:4px 8px; cursor:pointer;">Reject</button>
+                                    </form>
+                                <?php endif; ?>
                                 <a href="edit_candidate.php?id=<?php echo safe_output($candidate['candidate_id']); ?>">Edit</a>
                                 <form action="delete_candidate.php" method="post" style="display:inline;" onsubmit="return confirm('Are you sure?')">
                                     <?php echo render_csrf_field(); ?>
@@ -142,7 +164,7 @@ require_once __DIR__ . '/../common.php';
                     <?php endwhile; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="8" style="text-align: center;">No candidates found.</td>
+                        <td colspan="9" style="text-align: center;">No candidates found.</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
