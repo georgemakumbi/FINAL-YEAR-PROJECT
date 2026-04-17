@@ -58,62 +58,6 @@ if (isset($_GET['success']) && $_GET['success'] !== '') {
 }
 
 // =============================================================================
-// DEADLINE HANDLING
-// =============================================================================
-
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['deadline'])) {
-    verify_csrf_or_die();
-    
-    $new_deadline = trim($_POST['deadline']);
-    if (file_put_contents("deadline.txt", $new_deadline) !== false) {
-        $message = "Deadline updated successfully.";
-        $message_type = 'success';
-        log_audit_event(
-            $conn,
-            isset($_SESSION['admin_id']) ? (string)$_SESSION['admin_id'] : null,
-            'DEADLINE_UPDATED',
-            'Voting deadline set to ' . $new_deadline
-        );
-    } else {
-        $message = "Failed to update deadline.";
-        $message_type = 'error';
-    }
-}
-
-// =============================================================================
-// RESULTS PUBLISHING
-// =============================================================================
-
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['results_publish_action'])) {
-    verify_csrf_or_die();
-
-    if (!$is_super_admin) {
-        $message = "Only super admins can publish or unpublish results.";
-        $message_type = 'error';
-    } else {
-        $action = $_POST['results_publish_action'];
-        $new_status = ($action === 'publish') ? 'published' : 'unpublished';
-
-        if (set_results_publish_status($new_status)) {
-            $results_status = $new_status;
-            $results_published = $results_status === 'published';
-            $message = $results_published ? "Results published successfully." : "Results unpublished successfully.";
-            $message_type = 'success';
-
-            log_audit_event(
-                $conn,
-                isset($_SESSION['admin_id']) ? (string)$_SESSION['admin_id'] : null,
-                $results_published ? 'RESULTS_PUBLISHED' : 'RESULTS_UNPUBLISHED',
-                $results_published ? 'Election results published' : 'Election results unpublished'
-            );
-        } else {
-            $message = "Failed to update results publishing status.";
-            $message_type = 'error';
-        }
-    }
-}
-
-// =============================================================================
 // DASHBOARD STATISTICS
 // =============================================================================
 
@@ -122,17 +66,6 @@ $total_candidates = $conn->query("SELECT COUNT(*) as count FROM candidates")->fe
 $total_votes = $conn->query("SELECT COUNT(*) as count FROM votes")->fetch_assoc()['count'];
 $voters_who_voted = $conn->query("SELECT COUNT(*) as count FROM students WHERE has_voted = 1")->fetch_assoc()['count'];
 $turnout = $total_students > 0 ? round(($voters_who_voted / $total_students) * 100, 1) : 0;
-
-// Recent voting activity
-$recent_votes = $conn->query("SELECT v.*, s.first_name, s.last_name, c.first_name as candidate_first_name, c.last_name as candidate_last_name 
-    FROM votes v 
-    LEFT JOIN students s ON v.student_id = s.student_id 
-    LEFT JOIN candidates c ON v.candidate_id = c.candidate_id 
-    ORDER BY v.vote_date DESC LIMIT 10");
-
-// Current deadline
-$deadline = file_get_contents("deadline.txt");
-$current_deadline = $deadline ? $deadline : '';
 
 // =============================================================================
 // DETERMINE WHICH SECTION TO DISPLAY
@@ -258,44 +191,7 @@ if ($section === 'results') {
                 </div>
             </div>
 
-            <!-- Activity and Deadline -->
-            <div class="two-columns">
-                <div class="card">
-                    <h2>📊 Recent Voting Activity</h2>
-                    <?php if ($recent_votes && $recent_votes->num_rows > 0): ?>
-                        <?php while ($vote = $recent_votes->fetch_assoc()): ?>
-                            <div class="activity-item">
-                                <div>
-                                    <strong><?php echo safe_output($vote['student_id']); ?></strong> 
-                                    voted for 
-                                    <strong><?php echo safe_output($vote['candidate_first_name'] . ' ' . $vote['candidate_last_name']); ?></strong>
-                                </div>
-                                <div class="activity-time"><?php echo safe_output($vote['vote_date']); ?></div>
-                            </div>
-                        <?php endwhile; ?>
-                    <?php else: ?>
-                        <p>No recent voting activity.</p>
-                    <?php endif; ?>
-                </div>
 
-                <div class="card">
-                    <h2>⏰ Voting Deadline</h2>
-                    <form method="post">
-                        <?php echo render_csrf_field(); ?>
-                        <div class="form-group">
-                            <label style="color: #7f8c8d;">Set Deadline (YYYY-MM-DD HH:MM:SS):</label>
-                            <input type="text" name="deadline" required placeholder="2025-09-01 19:00:00" 
-                                   value="<?php echo safe_output($current_deadline); ?>">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Save Deadline</button>
-                    </form>
-                    <?php if ($current_deadline): ?>
-                        <p style="margin-top: 15px; font-size: 18px; font-weight: bold;">
-                            Current: <?php echo safe_output($current_deadline); ?>
-                        </p>
-                    <?php endif; ?>
-                </div>
-            </div>
 
             <!-- Voting Statistics Chart -->
             <div class="card">
@@ -339,24 +235,6 @@ if ($section === 'results') {
         ========================================================================= -->
         <?php if ($section === 'results'): ?>
         <div id="results" class="section active">
-            <div class="card" style="margin-bottom: 20px;">
-                <h2>Results Publishing</h2>
-                <p>
-                    Status:
-                    <strong><?php echo $results_published ? 'Published' : 'Unpublished'; ?></strong>
-                </p>
-                <?php if ($is_super_admin): ?>
-                    <form method="post" style="display: inline;">
-                        <?php echo render_csrf_field(); ?>
-                        <input type="hidden" name="results_publish_action" value="<?php echo $results_published ? 'unpublish' : 'publish'; ?>">
-                        <button type="submit" class="btn <?php echo $results_published ? 'btn-secondary' : 'btn-primary'; ?>">
-                            <?php echo $results_published ? 'Unpublish Results' : 'Publish Results'; ?>
-                        </button>
-                    </form>
-                <?php else: ?>
-                    <p style="color: #7f8c8d;">Only super admins can publish or unpublish results.</p>
-                <?php endif; ?>
-            </div>
             <div class="card">
                 <h2>📈 Election Results</h2>
                 

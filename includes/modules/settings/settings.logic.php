@@ -8,6 +8,8 @@
  * Responsibilities:
  * - Reset voting status
  * - Full election reset
+ * - Update deadline
+ * - Update results status
  *
  * Dependencies:
  * - $conn (database connection)
@@ -72,3 +74,55 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['reset_voting_action']
     }
 }
 
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['deadline'])) {
+    verify_csrf_or_die();
+    
+    $new_deadline = trim($_POST['deadline']);
+    if (file_put_contents("deadline.txt", $new_deadline) !== false) {
+        $settings_message = "Deadline updated successfully.";
+        $settings_message_type = 'success';
+        log_audit_event(
+            $conn,
+            isset($_SESSION['admin_id']) ? (string)$_SESSION['admin_id'] : null,
+            'DEADLINE_UPDATED',
+            'Voting deadline set to ' . $new_deadline
+        );
+    } else {
+        $settings_message = "Failed to update deadline.";
+        $settings_message_type = 'error';
+    }
+}
+
+// Current deadline
+$deadline_file_content = @file_get_contents("deadline.txt");
+$current_deadline = $deadline_file_content ? $deadline_file_content : '';
+
+// Results Publishing
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['results_publish_action'])) {
+    verify_csrf_or_die();
+
+    if (!$is_super_admin) {
+        $settings_message = "Only super admins can publish or unpublish results.";
+        $settings_message_type = 'error';
+    } else {
+        $action = $_POST['results_publish_action'];
+        $new_status = ($action === 'publish') ? 'published' : 'unpublished';
+
+        if (set_results_publish_status($new_status)) {
+            $results_status = $new_status;
+            $results_published = $results_status === 'published';
+            $settings_message = $results_published ? "Results published successfully." : "Results unpublished successfully.";
+            $settings_message_type = 'success';
+
+            log_audit_event(
+                $conn,
+                isset($_SESSION['admin_id']) ? (string)$_SESSION['admin_id'] : null,
+                $results_published ? 'RESULTS_PUBLISHED' : 'RESULTS_UNPUBLISHED',
+                $results_published ? 'Election results published' : 'Election results unpublished'
+            );
+        } else {
+            $settings_message = "Failed to update results publishing status.";
+            $settings_message_type = 'error';
+        }
+    }
+}

@@ -4,8 +4,6 @@
     // Include database connection
     require 'db_connection.php';
     
-    // Fetch candidates
-    $candidates_summary = $conn->query("SELECT first_name, last_name, position, status, image_path FROM candidates ORDER BY position, first_name");
     
     // Get the election end date from the database
     $election_query = $conn->query("SELECT end_date FROM elections WHERE status = 'active' ORDER BY end_date DESC LIMIT 1");
@@ -75,27 +73,10 @@
             </ul>
         </section>
 
-        <section class="card">
-            <h2 style="color: var(--primary); margin-bottom: 15px;">Application Status for Candidates</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;">
-                <?php if ($candidates_summary && $candidates_summary->num_rows > 0): ?>
-                    <?php while($cand = $candidates_summary->fetch_assoc()): ?>
-                        <div style="background: var(--surface-2); padding: 15px; border-radius: 8px; text-align: center; border: 1px solid var(--border);">
-                            <img src="<?php echo $cand['image_path'] ? htmlspecialchars($cand['image_path']) : 'images/placeholder.png'; ?>" alt="Photo" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 10px;">
-                            <h4 style="margin: 0; font-size: 1.1em; color: var(--text);"><?php echo htmlspecialchars($cand['first_name'] . ' ' . $cand['last_name']); ?></h4>
-                            <p style="margin: 5px 0; color: var(--text-muted); font-size: 0.9em;"><?php echo htmlspecialchars($cand['position']); ?></p>
-                            <?php 
-                                $status_color = ($cand['status'] == 'verified') ? '#27ae60' : (($cand['status'] == 'rejected') ? '#e74c3c' : '#f39c12'); 
-                            ?>
-                            <span style="background: <?php echo $status_color; ?>; color: white; padding: 3px 8px; border-radius: 12px; font-size: 0.8em; font-weight: bold;">
-                                <?php echo ucfirst(htmlspecialchars($cand['status'] ?? 'pending')); ?>
-                            </span>
-                        </div>
-                    <?php endwhile; ?>
-                <?php else: ?>
-                    <p style="grid-column: 1 / -1; text-align: center; color: var(--text-muted);">No candidates have applied yet.</p>
-                <?php endif; ?>
-            </div>
+        <section class="card" style="text-align: center;">
+            <h2 style="color: var(--primary); margin-bottom: 15px;">Candidates</h2>
+            <p style="margin-bottom: 20px;">Check the status of candidates who have applied for different positions.</p>
+            <a href="view_candidates.php" class="btn btn-student" style="display: inline-block; padding: 10px 20px; background-color: var(--primary); color: white; text-decoration: none; border-radius: 5px; font-weight: bold; transition: opacity 0.2s;">View Candidates</a>
         </section>
 
         <div id="main-content" class="<?= $expired ? 'inactive' : '' ?>">
@@ -110,6 +91,8 @@
                     <h3 style="margin-bottom: 20px;">Access the Portal</h3>
                     <div class="btn-group" style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
                         <a href="login.html" class="btn btn-student">Login As Student</a>
+                        
+                    </div>
                 </section>
             <?php endif; ?>
             

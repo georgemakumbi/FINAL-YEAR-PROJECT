@@ -25,6 +25,41 @@ require_once __DIR__ . '/../common.php';
     <?php if (!$is_super_admin): ?>
         <p style="color: var(--text-muted);">Only super admins can access these settings.</p>
     <?php else: ?>
+        <div style="margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid var(--border);">
+            <h3>📈 Results Publishing</h3>
+            <p style="color: #7f8c8d; margin-bottom: 12px;">
+                Status: <strong><?php echo $results_published ? 'Published' : 'Unpublished'; ?></strong>
+            </p>
+            <form method="post" style="display: inline;">
+                <?php echo render_csrf_field(); ?>
+                <input type="hidden" name="results_publish_action" value="<?php echo $results_published ? 'unpublish' : 'publish'; ?>">
+                <button type="submit" class="btn <?php echo $results_published ? 'btn-secondary' : 'btn-primary'; ?>">
+                    <?php echo $results_published ? 'Unpublish Results' : 'Publish Results'; ?>
+                </button>
+            </form>
+        </div>
+
+        <div style="margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid var(--border);">
+            <h3>⏰ Voting Deadline</h3>
+            <p style="color: #7f8c8d; margin-bottom: 12px;">
+                Set the absolute deadline for voting.
+            </p>
+            <form method="post" style="max-width: 400px;">
+                <?php echo render_csrf_field(); ?>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; color: var(--text);">Set Deadline (YYYY-MM-DD HH:MM:SS):</label>
+                    <input type="text" name="deadline" required placeholder="2025-09-01 19:00:00" 
+                           value="<?php echo safe_output($current_deadline); ?>" style="width: 100%; padding: 10px; border: 1px solid var(--input-border); border-radius: 6px; background: var(--input-bg); color: var(--text);">
+                </div>
+                <button type="submit" class="btn btn-primary">Save Deadline</button>
+            </form>
+            <?php if ($current_deadline): ?>
+                <p style="margin-top: 15px; font-size: 16px; font-weight: bold;">
+                    Current: <?php echo safe_output($current_deadline); ?>
+                </p>
+            <?php endif; ?>
+        </div>
+
         <div style="margin-bottom: 10px;">
             <h3>Reset Voting Status</h3>
             <p style="color: #7f8c8d; margin-bottom: 12px;">
