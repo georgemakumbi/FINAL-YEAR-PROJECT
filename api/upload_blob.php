@@ -5,6 +5,7 @@
 
 require_once dirname(__DIR__) . '/bootstrap.php';
 
+// NOTE: On Vercel serverless, this route must not touch the local filesystem.
 header('Content-Type: application/json; charset=utf-8');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -16,9 +17,18 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // Vercel Blob integration requires an env var token.
 $token = getenv('VERCEL_BLOB_READ_WRITE_TOKEN') ?: ($_ENV['VERCEL_BLOB_READ_WRITE_TOKEN'] ?? null);
 if (!$token) {
+    // Fallback: if you stored token under another name, this avoids silent failures.
+    $token = getenv('BLOB_READ_WRITE_TOKEN') ?: ($_ENV['BLOB_READ_WRITE_TOKEN'] ?? null);
+}
+if (!$token) {
     http_response_code(500);
-    echo json_encode(['error' => 'Missing env var: VERCEL_BLOB_READ_WRITE_TOKEN']);
+    echo json_encode(['error' => 'Missing env var: VERCEL_BLOB_READ_WRITE_TOKEN (or BLOB_READ_WRITE_TOKEN)']);
     exit;
+}
+
+$storeId = getenv('VERCEL_BLOB_STORE_ID') ?: ($_ENV['VERCEL_BLOB_STORE_ID'] ?? null);
+if (!$storeId) {
+    $storeId = getenv('BLOB_STORE_ID') ?: ($_ENV['BLOB_STORE_ID'] ?? null);
 }
 
 if (!isset($_FILES['candidate_image']) || $_FILES['candidate_image']['error'] !== UPLOAD_ERR_OK) {
