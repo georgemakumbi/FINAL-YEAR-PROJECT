@@ -33,6 +33,8 @@
  * =============================================================================
  */
 
+use Dotenv\Dotenv;
+
 // ─── Load Environment Variables ──────────────────────────────────────────────
 // phpdotenv is a library that reads .env files and makes the values available
 // in PHP via the $_ENV superglobal array.
