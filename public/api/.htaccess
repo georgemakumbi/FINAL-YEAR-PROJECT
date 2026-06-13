@@ -1,0 +1,3 @@
+# API directory — allows access to API files only
+# The PHP files handle their own authentication checks
+Options -Indexes

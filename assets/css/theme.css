@@ -1,0 +1,343 @@
+/* =============================================================================
+ * DESIGN SYSTEM — Kyambogo University Voting System (Phase 5)
+ * =============================================================================
+ *
+ * This is the FOUNDATION of all visual styles. Every page imports this file.
+ *
+ * WHAT'S IN HERE:
+ *   1. CSS Custom Properties (design tokens) for light/dark themes
+ *   2. Typography using Google Fonts (Inter)
+ *   3. Base element styles
+ *   4. Reusable utility classes
+ *   5. Theme toggle component
+ *   6. Responsive breakpoints
+ *
+ * HOW CSS CUSTOM PROPERTIES WORK:
+ *   --brand-primary: #003366;
+ *   This creates a variable you can reuse everywhere:
+ *   button { background: var(--brand-primary); }
+ *
+ *   When the user toggles dark mode, body.dark changes ALL the variables,
+ *   and every element using var(--x) updates automatically!
+ *
+ * ============================================================================= */
+
+/* ── Google Fonts Import ──────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* LIGHT THEME (Default)                                                      */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+:root {
+    /* Background & Surfaces */
+    --app-bg: #f0f2f5;
+    --surface: #ffffff;
+    --surface-2: #f8f9fb;
+    --surface-glass: rgba(255, 255, 255, 0.7);
+
+    /* Text */
+    --text: #1a1d23;
+    --text-muted: #6b7280;
+    --text-light: #9ca3af;
+
+    /* Borders & Lines */
+    --border: #e5e7eb;
+    --border-light: #f3f4f6;
+
+    /* Interactive */
+    --link: #2563eb;
+    --input-bg: #ffffff;
+    --input-border: #d1d5db;
+    --input-focus: #3b82f6;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12);
+    --shadow-glow: 0 0 20px rgba(37, 99, 235, 0.15);
+
+    /* Brand Colors — Kyambogo University */
+    --brand-primary: #003366;
+    --brand-primary-hover: #002244;
+    --brand-primary-light: #e8f0fe;
+    --brand-accent: #ffc107;
+    --brand-accent-hover: #e6ac00;
+    --brand-success: #059669;
+    --brand-success-light: #d1fae5;
+    --brand-danger: #dc2626;
+    --brand-danger-light: #fee2e2;
+    --brand-info: #0891b2;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, #003366, #004d99);
+    --gradient-accent: linear-gradient(135deg, #ffc107, #ff9800);
+    --gradient-hero: linear-gradient(135deg, #003366 0%, #004d99 50%, #0066cc 100%);
+
+    /* Layout */
+    --radius-sm: 6px;
+    --radius: 10px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-full: 999px;
+
+    /* Footer */
+    --footer-bg: #0a1628;
+    --footer-text: #d1d5db;
+
+    /* Sidebar (admin) */
+    --sidebar-bg: #1e293b;
+    --sidebar-header-bg: #0f172a;
+    --sidebar-text: #e2e8f0;
+    --sidebar-hover-bg: #334155;
+    --brand-indigo: #6366f1;
+    --brand-orange: #f59e0b;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* DARK THEME                                                                  */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+body.dark {
+    --app-bg: #0b0f19;
+    --surface: #131a27;
+    --surface-2: #1a2332;
+    --surface-glass: rgba(19, 26, 39, 0.8);
+
+    --text: #f1f5f9;
+    --text-muted: #94a3b8;
+    --text-light: #64748b;
+
+    --border: #1e293b;
+    --border-light: #1e293b;
+
+    --link: #60a5fa;
+    --input-bg: #0f1724;
+    --input-border: #1e293b;
+    --input-focus: #3b82f6;
+
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.5);
+    --shadow-glow: 0 0 20px rgba(96, 165, 250, 0.15);
+
+    --brand-primary: #2563eb;
+    --brand-primary-hover: #1d4ed8;
+    --brand-primary-light: #1e293b;
+    --brand-accent: #fbbf24;
+    --brand-accent-hover: #f59e0b;
+    --brand-success: #10b981;
+    --brand-success-light: #064e3b;
+    --brand-danger: #ef4444;
+    --brand-danger-light: #450a0a;
+    --brand-info: #22d3ee;
+
+    --gradient-primary: linear-gradient(135deg, #1e3a5f, #2563eb);
+    --gradient-accent: linear-gradient(135deg, #fbbf24, #f59e0b);
+    --gradient-hero: linear-gradient(135deg, #0b1629 0%, #1e3a5f 50%, #2563eb 100%);
+
+    --footer-bg: #070b14;
+    --footer-text: #94a3b8;
+
+    --sidebar-bg: #0b1120;
+    --sidebar-header-bg: #070b14;
+    --sidebar-text: #e2e8f0;
+    --sidebar-hover-bg: #1e293b;
+    --brand-indigo: #818cf8;
+    --brand-orange: #fbbf24;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* BASE STYLES                                                                 */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--app-bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+a {
+    color: var(--link);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ── Form Elements ──────────────────────────────────────────────────────── */
+input, select, textarea {
+    font-family: inherit;
+    font-size: 0.95rem;
+    background: var(--input-bg);
+    color: var(--text);
+    border: 1.5px solid var(--input-border);
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+}
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--input-focus);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+::placeholder {
+    color: var(--text-light);
+}
+
+/* ── Buttons ────────────────────────────────────────────────────────────── */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 24px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+.btn:hover { text-decoration: none; transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+
+.btn-primary {
+    background: var(--gradient-primary);
+    color: #fff;
+    box-shadow: var(--shadow-sm);
+}
+.btn-primary:hover {
+    box-shadow: var(--shadow);
+    opacity: 0.95;
+}
+
+.btn-accent {
+    background: var(--gradient-accent);
+    color: #1a1d23;
+    box-shadow: var(--shadow-sm);
+}
+.btn-accent:hover {
+    box-shadow: var(--shadow);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--brand-primary);
+    border: 2px solid var(--brand-primary);
+}
+.btn-outline:hover {
+    background: var(--brand-primary);
+    color: #fff;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* THEME TOGGLE (Bottom-Right Corner)                                          */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+.theme-toggle {
+    position: fixed;
+    bottom: 18px;
+    right: 18px;
+    z-index: 1000;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    border-radius: var(--radius-full);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(10px);
+}
+
+.theme-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-muted);
+}
+
+.theme-switch {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+.theme-switch input { opacity: 0; width: 0; height: 0; }
+
+.theme-slider {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    transition: all 0.3s ease;
+}
+.theme-slider::before {
+    content: "";
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    left: 2px;
+    top: 2px;
+    background: var(--text-muted);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+.theme-switch input:checked + .theme-slider {
+    background: var(--link);
+    border-color: var(--link);
+}
+.theme-switch input:checked + .theme-slider::before {
+    transform: translateX(20px);
+    background: #ffffff;
+}
+
+.theme-mode {
+    font-size: 12px;
+    color: var(--text-muted);
+    min-width: 54px;
+    text-align: right;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* UTILITY CLASSES                                                             */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+.hidden { display: none !important; }
+.text-center { text-align: center; }
+.text-muted { color: var(--text-muted); }
+.mt-1 { margin-top: 8px; }
+.mt-2 { margin-top: 16px; }
+.mt-3 { margin-top: 24px; }
+.mb-1 { margin-bottom: 8px; }
+.mb-2 { margin-bottom: 16px; }
+.mb-3 { margin-bottom: 24px; }
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* RESPONSIVE BREAKPOINTS                                                      */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+    .theme-toggle {
+        bottom: 12px;
+        right: 12px;
+        padding: 6px 10px;
+    }
+}

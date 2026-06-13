@@ -1,0 +1,107 @@
+# =============================================================================
+# ROOT .htaccess — Kyambogo University Online Voting System
+# =============================================================================
+# 
+# WHAT IS .htaccess?
+#   This file tells Apache (your web server) special rules about how to handle
+#   requests. It's like giving instructions to the waiter at a restaurant:
+#   "Don't serve raw ingredients to customers" (don't show PHP source code)
+#   "Redirect customers to the dining area" (send users to public/ folder)
+#
+# WHERE DOES THIS FILE GO?
+#   In the ROOT of your project: c:\wamp64\www\finalyearproject\.htaccess
+#
+# =============================================================================
+
+# ─── SECURITY: Deny Direct Access to Sensitive Files ─────────────────────────
+# These rules BLOCK users from accessing files they shouldn't see.
+# Without these, anyone could visit:
+#   http://localhost/finalyearproject/.env  ← See your database passwords!
+#   http://localhost/finalyearproject/bootstrap.php ← See your code!
+
+# Block access to .env files (contains passwords!)
+<FilesMatch "^\.env">
+    # "Require all denied" = nobody can access this file via the web
+    Require all denied
+</FilesMatch>
+
+# Block access to .git directory (contains your source code history)
+<FilesMatch "^\.git">
+    Require all denied
+</FilesMatch>
+
+# Block access to composer files (reveals your dependencies)
+<FilesMatch "^composer\.(json|lock|phar)$">
+    Require all denied
+</FilesMatch>
+
+# Block access to markdown and text files
+<FilesMatch "\.(md|txt|sql|log)$">
+    Require all denied
+</FilesMatch>
+
+# ─── SECURITY: Block Directory Listing ────────────────────────────────────────
+# Without this, visiting http://localhost/finalyearproject/storage/
+# would show a list of ALL files in that directory. Very dangerous!
+Options -Indexes
+
+# ─── SECURITY: Protect Sensitive Directories ──────────────────────────────────
+# Block web access to directories that should NEVER be accessed directly.
+# Only PHP (running on the server) should access these.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Block direct access to app/ directory
+    RewriteRule ^app/ - [F,L]
+    
+    # Block direct access to views/ directory  
+    RewriteRule ^views/ - [F,L]
+    
+    # Block direct access to storage/ directory
+    RewriteRule ^storage/ - [F,L]
+    
+    # Block direct access to database/ directory
+    RewriteRule ^database/ - [F,L]
+    
+    # Block direct access to vendor/ directory
+    RewriteRule ^vendor/ - [F,L]
+    
+    # Block direct access to docs/ directory
+    RewriteRule ^docs/ - [F,L]
+</IfModule>
+
+# ─── SECURITY: HTTP Headers ───────────────────────────────────────────────────
+# These headers tell the browser extra security rules.
+<IfModule mod_headers.c>
+    # Prevent browsers from MIME-type sniffing
+    # (stops browser from treating a text file as JavaScript)
+    Header always set X-Content-Type-Options "nosniff"
+    
+    # Prevent your site from being embedded in an iframe on another site
+    # (prevents "clickjacking" attacks)
+    Header always set X-Frame-Options "SAMEORIGIN"
+    
+    # Enable browser's built-in XSS protection
+    Header always set X-XSS-Protection "1; mode=block"
+    
+    # Control how much referrer info is sent when navigating away
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# ─── PERFORMANCE: Enable Compression ──────────────────────────────────────────
+# Compresses text files before sending to browser = faster page loads
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/css
+    AddOutputFilterByType DEFLATE application/javascript application/json
+</IfModule>
+
+# ─── PERFORMANCE: Browser Caching for Static Files ────────────────────────────
+# Tell browsers to cache images, CSS, JS for 1 month instead of re-downloading
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+</IfModule>

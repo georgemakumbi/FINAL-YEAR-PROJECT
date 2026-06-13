@@ -1,0 +1,47 @@
+# =============================================================================
+# .gitignore — Files and Folders Git Should IGNORE
+# =============================================================================
+#
+# WHAT IS .gitignore?
+#   When you use Git (version control), this file tells Git:
+#   "Don't track these files." This keeps sensitive data and 
+#   unnecessary files out of your repository.
+#
+# WHY IS THIS IMPORTANT?
+#   - .env contains your database passwords → NEVER push to GitHub!
+#   - vendor/ contains downloaded libraries → too large, can be reinstalled
+#   - storage/logs/ contains runtime data → not part of source code
+#
+# =============================================================================
+
+# ── Environment Files (PASSWORDS!) ──────────────────────────────────────────
+.env
+.env.local
+.env.production
+
+# ── PHP Dependencies (reinstall with: php composer.phar install) ─────────────
+/vendor/
+
+# ── Uploaded Files (user-generated content) ──────────────────────────────────
+/storage/uploads/candidates/*
+/storage/logs/*
+!storage/uploads/candidates/.gitkeep
+!storage/logs/.gitkeep
+
+# ── IDE and Editor Files ─────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ── Operating System Files ───────────────────────────────────────────────────
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# ── Vercel ───────────────────────────────────────────────────────────────────
+.vercel/
+
+# ── Composer binary (can be downloaded fresh) ────────────────────────────────
+composer.phar

@@ -1,0 +1,166 @@
+[33mcommit c37c220fbf30231fbfa64a3e314f9c7940e69924[m
+Author: George <georgemakumbi3@gmail.com>
+Date:   Sat Jun 13 22:33:51 2026 +0300
+
+    final changes
+
+ .env.example                                       |   47 [32m+[m
+ .gitignore                                         |   47 [32m+[m
+ .htaccess                                          |  107 [32m++[m
+ DIRECTORY_STRUCTURE.md                             |  168 [32m+++[m
+ README.md                                          |  241 [32m++++[m
+ api/index.php                                      |   20 [32m+[m
+ api/upload_blob.php                                |  109 [32m++[m
+ app/config/deadline.txt                            |    1 [32m+[m
+ app/config/results_status.txt                      |    1 [32m+[m
+ app/controllers/add_candidate.php                  |  107 [32m++[m
+ app/controllers/add_student.php                    |   52 [32m+[m
+ app/controllers/apply_candidate.php                |  225 [32m++++[m
+ app/controllers/delete.php                         |   59 [32m+[m
+ app/controllers/delete_candidate.php               |   69 [32m++[m
+ app/controllers/edit_candidate.php                 |  294 [32m+++++[m
+ app/controllers/edit_election.php                  |  255 [32m++++[m
+ app/controllers/import_students.php                |  327 [32m+++++[m
+ app/middleware/admin_authenticate.php              |   96 [32m++[m
+ app/middleware/admin_logout.php                    |   25 [32m+[m
+ app/middleware/admin_security.php                  |  194 [32m+++[m
+ app/middleware/authenticate.php                    |  113 [32m++[m
+ app/middleware/forgot_password.php                 |   61 [32m+[m
+ app/middleware/input_validator.php                 |  173 [32m+++[m
+ app/middleware/logout.php                          |   87 [32m++[m
+ app/middleware/rate_limiter.php                    |  265 [32m++++[m
+ app/middleware/reset_password.php                  |  145 [32m+++[m
+ app/models/Admin.php                               |  135 [32m++[m
+ app/models/Candidate.php                           |  321 [32m+++++[m
+ app/models/Election.php                            |  222 [32m++++[m
+ app/models/Student.php                             |  484 [32m++++++++[m
+ app/models/Vote.php                                |  148 [32m+++[m
+ app/services/password.php                          |    3 [32m+[m
+ app/services/processvote.php                       |  380 [32m++++++[m
+ app/services/send_notifications.php                |   94 [32m++[m
+ app/services/send_otp.php                          |   89 [32m++[m
+ app/services/update.php                            |  129 [32m++[m
+ app/services/verify_otp.php                        |   66 [32m+[m
+ app/utils/db_connection.php                        |   98 [32m++[m
+ app/utils/smtp_mailer.php                          |  214 [32m++++[m
+ assets/css/about_us.css                            |  113 [32m++[m
+ assets/css/admin_dashboard.css                     |  436 [32m+++++++[m
+ assets/css/election_report.css                     |  201 [32m+++[m
+ assets/css/feedback.css                            |  156 [32m+++[m
+ assets/css/home.css                                |  120 [32m++[m
+ assets/css/index.css                               |  165 [32m+++[m
+ assets/css/login.css                               |  167 [32m+++[m
+ assets/css/results.css                             |  188 [32m+++[m
+ assets/css/theme.css                               |  343 [32m++++++[m
+ assets/css/update.css                              |  117 [32m++[m
+ assets/css/voting.css                              |  189 [32m+++[m
+ assets/images/FLAVIA.jpg                           |  Bin [31m0[m -> [32m28704[m bytes
+ assets/images/LYT.jpg                              |  Bin [31m0[m -> [32m43400[m bytes
+ assets/images/celebrity.jpeg                       |  Bin [31m0[m -> [32m50184[m bytes
+ assets/images/geo.jpg                              |  Bin [31m0[m -> [32m1070835[m bytes
+ assets/images/image.png                            |  Bin [31m0[m -> [32m154566[m bytes
+ assets/images/isaac.jpg                            |  Bin [31m0[m -> [32m314792[m bytes
+ assets/images/liam.jpg                             |  Bin [31m0[m -> [32m304333[m bytes
+ assets/images/man.jpeg                             |  Bin [31m0[m -> [32m44032[m bytes
+ assets/images/manager.jpeg                         |  Bin [31m0[m -> [32m50034[m bytes
+ assets/images/memo.jpg                             |  Bin [31m0[m -> [32m324728[m bytes
+ assets/images/ndawula.jpg                          |  Bin [31m0[m -> [32m286444[m bytes
+ assets/images/owner.jpeg                           |  Bin [31m0[m -> [32m54510[m bytes
+ assets/images/travel blogger.jpeg                  |  Bin [31m0[m -> [32m37908[m bytes
+ assets/images/vacation planner.jpeg                |  Bin [31m0[m -> [32m51409[m bytes
+ assets/images/visitor.jpeg                         |  Bin [31m0[m -> [32m36540[m bytes
+ assets/images/weather analyst.jpeg                 |  Bin [31m0[m -> [32m64792[m bytes
+ assets/images/wil at beach.jpg                     |  Bin [31m0[m -> [32m131045[m bytes
+ assets/images/wilson.jpg                           |  Bin [31m0[m -> [32m268565[m bytes
+ assets/js/theme.js                                 |   49 [32m+[m
+ bootstrap.php                                      |  155 [32m+++[m
+ composer.json                                      |   19 [32m+[m
+ composer.lock                                      |  494 [32m++++++++[m
+ composer.phar                                      |  Bin [31m0[m -> [32m3377213[m bytes
+ database/database.sql                              |  119 [32m++[m
+ .../kyambogo_voting_system.sqlproj                 |   13 [32m+[m
+ database/schema.sql                                |  285 [32m+++++[m
+ docs/ADMIN_DASHBOARD_MODULAR_GUIDE.md              |  365 [32m++++++[m
+ docs/DEPLOYMENT_GUIDE.md                           |  245 [32m++++[m
+ docs/FINAL YEAR REPORT.docx                        |  Bin [31m0[m -> [32m897261[m bytes
+ docs/FINAL YEAR REPORT.docx.bak                    |  Bin [31m0[m -> [32m90257[m bytes
+ docs/FINAL_YEAR_REPORT_EXTRACTED.md                | 1285 [32m++++++++++++++++++++[m
+ docs/PHASE1_HOW_THE_WEB_WORKS.md                   |  703 [32m+++++++++++[m
+ docs/PHASE2_DATABASE_AND_MODELS.md                 |  190 [32m+++[m
+ docs/PHASE3_SECURITY_HARDENING.md                  |  124 [32m++[m
+ docs/PHASE4_VOTING_AND_ANALYTICS.md                |  148 [32m+++[m
+ docs/PHASE5_UI_AND_DESIGN.md                       |  154 [32m+++[m
+ docs/PHASE6_ADMIN_DASHBOARD.md                     |  176 [32m+++[m
+ docs/TODO.md                                       |   39 [32m+[m
+ docs/authenticate.py                               |   56 [32m+[m
+ docs/dfd_context.png                               |  Bin [31m0[m -> [32m79948[m bytes
+ docs/dfd_level0.png                                |  Bin [31m0[m -> [32m119164[m bytes
+ docs/dfd_level1.png                                |  Bin [31m0[m -> [32m127259[m bytes
+ docs/dfd_level2.png                                |  Bin [31m0[m -> [32m84692[m bytes
+ docs/erd.png                                       |  Bin [31m0[m -> [32m72990[m bytes
+ docs/test_mermaid.png                              |  Bin [31m0[m -> [32m3324[m bytes
+ docs/uml_activity.png                              |  Bin [31m0[m -> [32m46238[m bytes
+ docs/uml_class.png                                 |  Bin [31m0[m -> [32m137819[m bytes
+ docs/uml_state_candidate.png                       |  Bin [31m0[m -> [32m19685[m bytes
+ docs/uml_state_election.png                        |  Bin [31m0[m -> [32m19421[m bytes
+ docs/uml_usecase.png                               |  Bin [31m0[m -> [32m93519[m bytes
+ public/about_us.php                                |   67 [32m+[m
+ public/add_candidate.php                           |    5 [32m+[m
+ public/add_student.php                             |    5 [32m+[m
+ public/admin_authenticate.php                      |    4 [32m+[m
+ public/admin_dashboard.php                         |    4 [32m+[m
+ public/admin_login.php                             |   86 [32m++[m
+ public/admin_logout.php                            |    4 [32m+[m
+ public/api/.htaccess                               |    3 [32m+[m
+ public/api/analytics.php                           |   57 [32m+[m
+ public/api/results.php                             |   95 [32m++[m
+ public/apply_candidate.php                         |    4 [32m+[m
+ public/authenticate.php                            |    4 [32m+[m
+ public/candidates/candidate_07a5e1a4ccabc9f3.jpg   |  Bin [31m0[m -> [32m314792[m bytes
+ public/candidates/candidate_14cfb270545cab29.jpg   |  Bin [31m0[m -> [32m28704[m bytes
+ public/candidates/candidate_d3abe913add7681a.jpg   |  Bin [31m0[m -> [32m37908[m bytes
+ public/check_db.php                                |    6 [32m+[m
+ public/countdown.php                               |   77 [32m++[m
+ public/delete.php                                  |    5 [32m+[m
+ public/delete_candidate.php                        |    5 [32m+[m
+ public/edit_candidate.php                          |    5 [32m+[m
+ public/edit_election.php                           |    5 [32m+[m
+ public/election_report.php                         |  226 [32m++++[m
+ public/feedback.php                                |  116 [32m++[m
+ public/forgot_password.php                         |    4 [32m+[m
+ public/import_students.php                         |    5 [32m+[m
+ public/index.php                                   |  522 [32m++++++++[m
+ public/login.php                                   |  138 [32m+++[m
+ public/logout.php                                  |    4 [32m+[m
+ public/processvote.php                             |    4 [32m+[m
+ public/reset_password.php                          |    4 [32m+[m
+ public/results.php                                 |  384 [32m++++++[m
+ public/send_notifications.php                      |    5 [32m+[m
+ public/send_otp.php                                |    4 [32m+[m
+ public/update.php                                  |    5 [32m+[m
+ public/verify_otp.php                              |    4 [32m+[m
+ public/view_candidates.php                         |   75 [32m++[m
+ public/view_feedback.php                           |  100 [32m++[m
+ public/voting.php                                  |  416 [32m+++++++[m
+ storage/logs/.gitkeep                              |    1 [32m+[m
+ storage/uploads/kyambogo_students database.csv     |  100 [32m++[m
+ vercel.json                                        |   13 [32m+[m
+ views/admin/admin_dashboard.backup.php             | 1131 [32m+++++++++++++++++[m
+ views/admin/admin_dashboard.php                    |  544 [32m+++++++++[m
+ views/components/includes/audit_logger.php         |  148 [32m+++[m
+ .../modules/audit_logs/audit_logs.logic.php        |  123 [32m++[m
+ .../modules/audit_logs/audit_logs.view.php         |   94 [32m++[m
+ .../modules/candidates/candidates.logic.php        |   70 [32m++[m
+ .../modules/candidates/candidates.view.php         |  172 [32m+++[m
+ views/components/includes/modules/common.php       |  165 [32m+++[m
+ .../includes/modules/elections/elections.logic.php |   99 [32m++[m
+ .../includes/modules/elections/elections.view.php  |  145 [32m+++[m
+ .../includes/modules/feedback/feedback.logic.php   |   43 [32m+[m
+ .../includes/modules/feedback/feedback.view.php    |   69 [32m++[m
+ .../includes/modules/settings/settings.logic.php   |  128 [32m++[m
+ .../includes/modules/settings/settings.view.php    |  190 [32m+++[m
+ .../includes/modules/students/students.logic.php   |   67 [32m+[m
+ .../includes/modules/students/students.view.php    |  276 [32m+++++[m
+ views/components/includes/results_publish.php      |   49 [32m+[m
+ views/components/results_status.txt                |    1 [32m+[m
+ 159 files changed, 18570 insertions(+)
