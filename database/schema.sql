@@ -172,22 +172,27 @@ CREATE TABLE IF NOT EXISTS candidates (
 -- PURPOSE: Records every individual vote cast. This is the most critical table.
 --
 -- INTEGRITY RULES:
---   1. A student can only vote ONCE per position (enforced by UNIQUE constraint)
---   2. The candidate must exist (enforced by FOREIGN KEY)
---   3. The student must exist (enforced by FOREIGN KEY)
+--   1. Each anonymous receipt token can only vote ONCE per position
+--      (enforced by UNIQUE(receipt_token, position)). This preserves
+--      the property "one vote per eligible voter per position" without
+--      storing the student's identity in the votes table.
+--   2. The candidate must exist (enforced by FOREIGN KEY to candidates)
 --
 -- WHY EACH COLUMN EXISTS:
---   vote_id      → Unique ID for each vote record
---   student_id   → Who cast this vote (FK → students)
---   candidate_id → Who they voted for (FK → candidates)
---   position     → Which position this vote is for
---   vote_date    → When the vote was cast (auto-filled, used for audit)
+--   vote_id       → Unique ID for each vote record
+--   receipt_token → Anonymous verification token representing a unique vote
+--                    (not a student identifier). This preserves voter privacy
+--                    while still allowing vote verification.
+--   candidate_id  → Who they voted for (FK → candidates)
+--   position      → Which position this vote is for
+--   vote_date     → When the vote was cast (auto-filled, used for audit)
 --
 -- THE UNIQUE CONSTRAINT:
---   UNIQUE(student_id, position) means:
---   Student "23/U/001" can vote for Guild President ONCE
---   Student "23/U/001" can vote for Guild Secretary ONCE
---   But NOT vote for Guild President TWICE
+--   UNIQUE(receipt_token, position) means:
+--   A single anonymous receipt token can be used to cast one vote per position.
+--   This prevents duplicate votes from the same receipt token for a position.
+--   Note: The system separately tracks which student has voted via
+--   `students.has_voted` at the application level; votes remain anonymous.
 -- =============================================================================
 CREATE TABLE IF NOT EXISTS votes (
     vote_id       INT          AUTO_INCREMENT PRIMARY KEY,

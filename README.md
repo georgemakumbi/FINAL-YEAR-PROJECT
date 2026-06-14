@@ -81,6 +81,13 @@ This system provides:
 | Vote Integrity | Database transactions with row-level locking |
 | Audit Trail | All actions logged with user ID, IP, timestamp |
 
+### 🔐 Anonymous Voting (Privacy)
+The system records votes anonymously using a per-ballot `receipt_token` rather than storing `student_id` on the `votes` table. This preserves voter privacy while still allowing:
+- vote verification via the `receipt_token` shown to a voter after casting their ballot;
+- enforcement of one-vote-per-person at the application level using `students.has_voted`.
+
+Note: The `votes` table therefore uses `receipt_token` as the unique vote identifier (together with `position`) and does not contain `student_id`.
+
 ---
 
 ## Tech Stack

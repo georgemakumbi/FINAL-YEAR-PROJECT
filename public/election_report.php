@@ -30,7 +30,7 @@ $eligible_voters = (int)($eligible_row['total_students'] ?? 0);
 $votes_stmt = $conn->prepare("
     SELECT
         COUNT(*) AS total_votes,
-        COUNT(DISTINCT student_id) AS unique_voters
+        COUNT(DISTINCT receipt_token) AS unique_voters
     FROM votes
     WHERE position = ?
 ");

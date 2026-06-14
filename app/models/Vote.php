@@ -8,9 +8,9 @@
  * It records every single vote cast.
  *
  * INTEGRITY RULES (enforced by the database):
- *   1. UNIQUE(student_id, position) → One vote per student per position
- *   2. FOREIGN KEY → student_id must exist in students table
- *   3. FOREIGN KEY → candidate_id must exist in candidates table
+ *   1. UNIQUE(receipt_token, position) → One vote per anonymous receipt token per position
+ *      (preserves one-vote-per-voter property while keeping votes anonymous).
+ *   2. FOREIGN KEY → candidate_id must exist in candidates table
  *
  * =============================================================================
  */
@@ -23,8 +23,8 @@ class Vote
      * Inserts a new vote record into the votes table.
      * This should ONLY be called inside a transaction (from processvote.php).
      *
-     * @param mysqli $conn          Database connection (should be in a transaction)
-     * @param string $student_id    Who is voting
+    * @param mysqli $conn          Database connection (should be in a transaction)
+    * @param string $receipt_token Anonymous receipt token representing the vote
      * @param int    $candidate_id  Who they're voting for
      * @param string $position      Which position
      * @return bool                 true if vote was recorded
