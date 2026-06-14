@@ -157,6 +157,7 @@ ensure_csrf_token();
         /* ── Error Messages ────────────────────────────────────────────────────── */
         #error-message,
         #error {
+            display: none;
             padding: 14px 16px;
             border-radius: var(--radius, 10px);
             font-size: 0.9rem;
@@ -315,7 +316,9 @@ ensure_csrf_token();
         const params = new URLSearchParams(window.location.search);
         const error = params.get("error");
         if (error) {
-            document.getElementById("error").textContent = error;
+            const errorEl = document.getElementById("error");
+            errorEl.textContent = error;
+            errorEl.style.display = "block";
         }
     </script>
 </body>

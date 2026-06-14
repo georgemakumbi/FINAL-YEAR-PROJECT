@@ -146,6 +146,7 @@ button[type="submit"]:active {
 /* ── Error Messages ────────────────────────────────────────────────────── */
 #error-message,
 #error {
+    display: none;
     padding: 14px 16px;
     border-radius: var(--radius, 10px);
     font-size: 0.9rem;
