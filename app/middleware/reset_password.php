@@ -85,6 +85,8 @@ if ($_SERVER["REQUEST_METHOD"] === "GET") {
     <div class="card">
         <h2>Create New Password</h2>
         <form action="reset_password.php" method="POST">
+            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
+
             <div class="field">
                 <label for="new_password">New Password</label>
                 <input id="new_password" type="password" name="new_password" required minlength="8">
@@ -109,6 +111,8 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     header("Location: login.php");
     exit();
 }
+
+verify_csrf_or_die();
 
 $new_password = $_POST['new_password'] ?? '';
 $confirm_password = $_POST['confirm_password'] ?? '';

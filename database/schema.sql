@@ -263,6 +263,18 @@ CREATE TABLE IF NOT EXISTS audit_log (
 
 
 -- =============================================================================
+-- TABLE: settings
+-- =============================================================================
+-- PURPOSE: Key-value store for runtime configuration (logo, results status, etc.)
+-- =============================================================================
+CREATE TABLE IF NOT EXISTS settings (
+    setting_key   VARCHAR(50) PRIMARY KEY,
+    setting_value TEXT         NOT NULL,
+    updated_at    DATETIME     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- =============================================================================
 -- DEFAULT DATA
 -- =============================================================================
 -- Insert a default admin account so you can log in for the first time.

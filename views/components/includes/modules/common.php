@@ -177,15 +177,7 @@ function get_system_logo($conn, $relative_prefix = '') {
     }
 
     // Auto-migrate: Check if settings table exists, if not, create it
-    // Using a quiet error check to avoid any script halting
-    $table_check = @$conn->query("SHOW TABLES LIKE 'settings'");
-    if ($table_check && $table_check->num_rows === 0) {
-        $conn->query("CREATE TABLE settings (
-            setting_key VARCHAR(50) PRIMARY KEY,
-            setting_value TEXT NOT NULL,
-            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
-    }
+    ensure_settings_table($conn);
 
     $logo_path = $relative_prefix . 'assets/images/image.png'; // Default fallback
     

@@ -12,7 +12,9 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit();
 }
 
-$student_id = trim($_POST['student_id']);
+verify_csrf_or_die();
+
+$student_id = trim($_POST['student_id'] ?? '');
 
 if (empty($student_id)) {
     die("Invalid request.");
@@ -85,7 +87,7 @@ if ($mailSent) {
     error_log("Email sending failed for student: $student_id, email: $email");
     
     // Redirect with error message
-    header("Location: login.php?error=Failed+to+send+OTP.+Check+MailHog+status.&show=otp");
+    header("Location: login.php?error=Failed+to+send+OTP.+Please+try+again+later.&show=otp");
     exit();
 }
 ?>

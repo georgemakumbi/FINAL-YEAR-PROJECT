@@ -12,6 +12,8 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit();
 }
 
+verify_csrf_or_die();
+
 if (!isset($_SESSION['otp_student'])) {
     header("Location: login.php?error=OTP+session+expired.+Request+a+new+OTP.&show=otp");
     exit();

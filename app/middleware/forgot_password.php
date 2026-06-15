@@ -44,7 +44,8 @@ $success = $_GET['success'] ?? '';
             <div class="success"><?= htmlspecialchars($success) ?></div>
         <?php endif; ?>
 
-        <form action="reset_password.php" method="POST">
+        <form action="submit_forgot_password.php" method="POST">
+            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
 
             <div class="form-group">
                 <label>University Email Address:</label>

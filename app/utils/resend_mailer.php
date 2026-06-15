@@ -6,17 +6,27 @@
 // - RESEND_FROM_EMAIL
 // - RESEND_FROM_NAME (optional)
 
-
 if (!defined('PROJECT_ROOT')) {
     require_once dirname(__DIR__, 2) . '/bootstrap.php';
 }
 
-function get_resend_config() {
-    $apiKey = $_ENV['RESEND_API_KEY'] ?? '';
-    $fromEmail = $_ENV['RESEND_FROM_EMAIL'] ?? '';
-    $fromName = $_ENV['RESEND_FROM_NAME'] ?? 'Voting System';
+function resend_env(string $key, string $default = ''): string
+{
+    $value = $_ENV[$key] ?? getenv($key);
+    if ($value === false || $value === null) {
+        return $default;
+    }
 
-    if (empty($apiKey) || empty($fromEmail)) {
+    return (string)$value;
+}
+
+function get_resend_config(): array
+{
+    $apiKey = resend_env('RESEND_API_KEY');
+    $fromEmail = resend_env('RESEND_FROM_EMAIL');
+    $fromName = resend_env('RESEND_FROM_NAME', 'Voting System');
+
+    if ($apiKey === '' || $fromEmail === '') {
         throw new Exception('Resend mailer misconfigured: missing RESEND_API_KEY or RESEND_FROM_EMAIL');
     }
 
@@ -30,23 +40,20 @@ function get_resend_config() {
  * @param string $to_name
  * @return bool
  */
-function send_resend_email($to, $subject, $htmlMessage, $to_name = ''): bool {
+function send_resend_email($to, $subject, $htmlMessage, $to_name = ''): bool
+{
     try {
         [$apiKey, $fromEmail, $fromName] = get_resend_config();
 
+        $from = $fromName !== ''
+            ? $fromName . ' <' . $fromEmail . '>'
+            : $fromEmail;
+
         $payload = [
-            'from' => [
-                'email' => $fromEmail,
-                'name'  => $fromName
-            ],
-            'to' => [
-                [
-                    'email' => $to,
-                    'name'  => $to_name ?: $to
-                ]
-            ],
+            'from' => $from,
+            'to' => [$to],
             'subject' => $subject,
-            'html' => $htmlMessage
+            'html' => $htmlMessage,
         ];
 
         $ch = curl_init('https://api.resend.com/emails');
@@ -54,7 +61,7 @@ function send_resend_email($to, $subject, $htmlMessage, $to_name = ''): bool {
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'Authorization: Bearer ' . $apiKey,
-            'Content-Type: application/json'
+            'Content-Type: application/json',
         ]);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
 
@@ -79,5 +86,5 @@ function send_resend_email($to, $subject, $htmlMessage, $to_name = ''): bool {
         return false;
     }
 }
-?>
 
+?>
