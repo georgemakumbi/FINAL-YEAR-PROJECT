@@ -7,7 +7,7 @@ require_once APP_UTILS . '/db_connection.php';
 require_once APP_UTILS . '/resend_mailer.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: register.php');
+    header('Location: ../../public/register.php');
     exit();
 }
 
@@ -19,7 +19,7 @@ $last_name = trim($_POST['last_name'] ?? '');
 
 // Validate email format: 230000000@std.kyu.ac.ug
 if (!preg_match('/^\d{9}@std\.kyu\.ac\.ug$/', $email)) {
-    header('Location: register.php?error=Email+must+be+in+the+format+230000000%40std.kyu.ac.ug');
+    header('Location: ../../public/register.php?error=Email+must+be+in+the+format+230000000%40std.kyu.ac.ug');
     exit();
 }
 

@@ -25,7 +25,7 @@ $success = $_GET['success'] ?? '';
         label { display: block; margin-bottom: 6px; font-weight: 700; color: var(--text); font-size: 0.9rem; }
         input { width: 100%; padding: 12px 14px; border-radius: 10px; border: 1.5px solid var(--input-border, #d1d5db); background: var(--input-bg, #fff); color: var(--text); }
         button { width: 100%; padding: 13px; border: none; border-radius: 10px; background: var(--gradient-primary, linear-gradient(135deg, #003366, #004d99)); color: #fff; font-weight: 800; cursor: pointer; margin-top: 8px; }
-        .link-row { text-align: center; margin-top: 14px; }
+        .link-row { text-align: center; margin-top: 14px; text-decoration: none; }
         a { color: var(--brand-primary); text-decoration: none; font-weight: 700; }
     </style>
 </head>
@@ -50,13 +50,13 @@ $success = $_GET['success'] ?? '';
         </div>
 
         <div class="form-group">
-            <label>First Name (optional)</label>
-            <input type="text" name="first_name" placeholder="e.g., John">
+            <label>First Name</label>
+            <input type="text" name="first_name" placeholder="e.g., Joy">
         </div>
 
         <div class="form-group">
-            <label>Last Name (optional)</label>
-            <input type="text" name="last_name" placeholder="e.g., Doe">
+            <label>Last Name </label>
+            <input type="text" name="last_name" placeholder="e.g., Kizza">
         </div>
 
         <div class="form-group">

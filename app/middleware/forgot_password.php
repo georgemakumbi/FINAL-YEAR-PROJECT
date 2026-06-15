@@ -44,7 +44,8 @@ $success = $_GET['success'] ?? '';
             <div class="success"><?= htmlspecialchars($success) ?></div>
         <?php endif; ?>
 
-        <form action="send_reset_email.php" method="POST">
+        <form action="reset_password.php" method="POST">
+
             <div class="form-group">
                 <label>University Email Address:</label>
                 <input type="email" name="email" required>
