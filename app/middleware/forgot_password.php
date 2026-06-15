@@ -32,7 +32,7 @@ $success = $_GET['success'] ?? '';
 <body>
     <div class="reset-container">
         <div class="logo">
-            <img src="../assets/images/image.png" alt="University Logo">
+            <img src="<?php echo get_system_logo($conn, '../'); ?>" alt="University Logo">
         </div>
         <h2>PASSWORD RESET</h2>
 

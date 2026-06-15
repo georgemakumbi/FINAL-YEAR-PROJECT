@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !$already_applied) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apply for Candidacy - Kyambogo University</title>
-    <link rel="icon" href="../assets/images/image.png" type="image/png">
+    <link rel="icon" href="<?php echo get_system_logo($conn, '../'); ?>" type="image/png">
     <style>
         <?php include ASSETS_CSS . '/theme.css'; ?>
         <?php include ASSETS_CSS . '/voting.css'; ?>
@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !$already_applied) {
 <body>
     <header>
         <div class="logo">
-            <img src="../assets/images/image.png" alt="Kyambogo University Logo">
+            <img src="<?php echo get_system_logo($conn, '../'); ?>" alt="Kyambogo University Logo">
             <div class="university-name">KYAMBOGO UNIVERSITY ONLINE VOTING SYSTEM</div>
         </div>
         <div class="user-info" style="display: flex; gap: 15px; align-items: center;">

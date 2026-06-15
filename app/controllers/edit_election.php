@@ -109,7 +109,7 @@ $end_date_input = date('Y-m-d\TH:i', strtotime($end_date));
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Election - Admin</title>
-    <link rel="icon" href="images/image.png" type="png">
+    <link rel="icon" href="<?php echo get_system_logo($conn, '../'); ?>" type="image/png">
     <style>
         <?php include ASSETS_CSS . '/theme.css'; ?>
         * {

@@ -91,7 +91,7 @@ if (isset($_POST['update_candidate'])) {
 <html>
 <head>
     <title>Edit Candidate - Admin</title>
-    <link rel="icon" href="images/image.png" type="png">
+    <link rel="icon" href="<?php echo get_system_logo($conn, '../'); ?>" type="image/png">
     <style>
         <?php include ASSETS_CSS . '/theme.css'; ?>
         * {

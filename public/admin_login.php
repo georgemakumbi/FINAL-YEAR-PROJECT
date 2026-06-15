@@ -278,14 +278,14 @@ ensure_csrf_token();
         }
 
     </style>
-    <link rel="icon" href="../assets/images/image.png" type="image/png">
+    <link rel="icon" href="<?php echo get_system_logo($conn, '../'); ?>" type="image/png">
     <link rel="stylesheet" href="../assets/css/theme.css">
     <link rel="stylesheet" href="../assets/css/admin_login.css">
 </head>
 <body>
     <div class="login-container">
         <div class="logo">
-            <img src="../assets/images/image.png" alt="Kyambogo University Logo">
+            <img src="<?php echo get_system_logo($conn, '../'); ?>" alt="Kyambogo University Logo">
         </div>
         <div class="university-name">
             <h1>KYAMBOGO UNIVERSITY</h1>

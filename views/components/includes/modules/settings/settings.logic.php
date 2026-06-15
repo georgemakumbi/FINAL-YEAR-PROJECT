@@ -126,3 +126,42 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['results_publish_actio
         }
     }
 }
+
+// Logo Upload Handling
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['upload_logo_action'])) {
+    verify_csrf_or_die();
+
+    if (!$is_super_admin) {
+        $settings_message = "Only super admins can change system logo.";
+        $settings_message_type = 'error';
+    } else {
+        $logo_error = null;
+        $logo_path = upload_system_logo($_FILES['system_logo'] ?? null, $logo_error);
+
+        if ($logo_path) {
+            // Update or Insert in settings table
+            $stmt = $conn->prepare("INSERT INTO settings (setting_key, setting_value) VALUES ('system_logo', ?) 
+                                    ON DUPLICATE KEY UPDATE setting_value = ?, updated_at = CURRENT_TIMESTAMP");
+            $stmt->bind_param("ss", $logo_path, $logo_path);
+            
+            if ($stmt->execute()) {
+                $settings_message = "System logo updated successfully.";
+                $settings_message_type = 'success';
+                log_audit_event(
+                    $conn,
+                    isset($_SESSION['admin_id']) ? (string)$_SESSION['admin_id'] : null,
+                    'SYSTEM_LOGO_UPDATED',
+                    'System logo updated to: ' . $logo_path
+                );
+            } else {
+                $settings_message = "Failed to save logo to database.";
+                $settings_message_type = 'error';
+            }
+            $stmt->close();
+        } else {
+            $settings_message = $logo_error;
+            $settings_message_type = 'error';
+        }
+    }
+}
+

@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Candidates - Kyambogo Guild</title>
-    <link rel="icon" href="../assets/images/image.png" type="image/png">
+    <link rel="icon" href="<?php echo get_system_logo($conn, '../'); ?>" type="image/png">
     <style>
         <?php include ASSETS_CSS . '/theme.css'; ?>
         <?php include ASSETS_CSS . '/index.css'; ?>
@@ -21,7 +21,7 @@
 <body>
     <header class="header">
         <div class="logo">
-            <img src="../assets/images/image.png" alt="KyU Logo">
+            <img src="<?php echo get_system_logo($conn, '../'); ?>" alt="KyU Logo">
         </div>
         <h1>Kyambogo Guild Online Voting Portal</h1>
         <p style="color: var(--text-muted); font-size: 1.1rem;">Knowledge And Skills For Service</p>
