@@ -151,6 +151,7 @@ ensure_csrf_token();
         }
 
         .link-btn:hover {
+            color: #00010c;
             background: var(--brand-primary-light, #e8f0fe);
             border-color: var(--brand-primary, #003366);
         }
