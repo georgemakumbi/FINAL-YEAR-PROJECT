@@ -162,4 +162,45 @@ function render_csrf_field() {
     return '<input type="hidden" name="csrf_token" value="' . get_csrf_token() . '">';
 }
 
+/**
+ * Get system logo path
+ * Checks if 'system_logo' is set in settings table. If not, falls back to default.
+ * 
+ * @param mysqli $conn Database connection
+ * @param string $relative_prefix Prefix to go from current page to the project root (e.g. '../' or '')
+ * @return string Logo URL or file path
+ */
+function get_system_logo($conn, $relative_prefix = '') {
+    static $logo_path = null;
+    if ($logo_path !== null) {
+        return $logo_path;
+    }
+
+    // Auto-migrate: Check if settings table exists, if not, create it
+    // Using a quiet error check to avoid any script halting
+    $table_check = @$conn->query("SHOW TABLES LIKE 'settings'");
+    if ($table_check && $table_check->num_rows === 0) {
+        $conn->query("CREATE TABLE settings (
+            setting_key VARCHAR(50) PRIMARY KEY,
+            setting_value TEXT NOT NULL,
+            updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+    }
+
+    $logo_path = $relative_prefix . 'assets/images/image.png'; // Default fallback
+    
+    $result = @$conn->query("SELECT setting_value FROM settings WHERE setting_key = 'system_logo' LIMIT 1");
+    if ($result && $row = $result->fetch_assoc()) {
+        $val = $row['setting_value'];
+        if (!empty($val)) {
+            if (strpos($val, 'http://') === 0 || strpos($val, 'https://') === 0) {
+                $logo_path = $val;
+            } else {
+                $logo_path = $relative_prefix . $val;
+            }
+        }
+    }
+    return $logo_path;
+}
+
 ?>

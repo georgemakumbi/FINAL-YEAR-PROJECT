@@ -53,43 +53,14 @@ if (isset($_POST['update_candidate'])) {
     
     $image_path = $_POST['old_image_path'];
     
-    // Handle file upload (Vercel Blob)
+    // Handle file upload
     if (isset($_FILES['candidate_image']) && $_FILES['candidate_image']['error'] == UPLOAD_ERR_OK) {
-        $tmpPath = $_FILES['candidate_image']['tmp_name'];
-        $max_size = 2 * 1024 * 1024; // 2MB
-        if ((int)$_FILES['candidate_image']['size'] > $max_size) {
-            $error = "Image too large. Maximum size is 2MB.";
+        $upload_error = null;
+        $uploaded_path = upload_candidate_image($_FILES['candidate_image'], $upload_error);
+        if ($uploaded_path) {
+            $image_path = $uploaded_path;
         } else {
-            $apiUrl = (($_SERVER['HTTPS'] ?? '') ? 'https://' : 'http://') . ($_SERVER['HTTP_HOST'] ?? '') . '/api/upload_blob.php';
-            $ch = curl_init($apiUrl);
-            curl_setopt_array($ch, [
-                CURLOPT_POST => true,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_POSTFIELDS => [
-                    'candidate_image' => new CURLFile($tmpPath, $_FILES['candidate_image']['type'] ?? 'application/octet-stream', $_FILES['candidate_image']['name'] ?? 'candidate')
-                ],
-                CURLOPT_TIMEOUT => 30,
-            ]);
-
-            $resp = curl_exec($ch);
-            $err = curl_error($ch);
-            $code = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            curl_close($ch);
-
-            if ($resp === false) {
-                $error = 'Image upload failed: ' . $err;
-            } else {
-                $decoded = json_decode($resp, true);
-                if ($code >= 200 && $code < 300 && isset($decoded['image_url'])) {
-                    // Replace stored DB value with Blob URL
-                    $image_path = $decoded['image_url'];
-                } else {
-                    $error = 'Image upload failed';
-                    if (is_array($decoded) && isset($decoded['error'])) {
-                        $error .= ': ' . $decoded['error'];
-                    }
-                }
-            }
+            $error = $upload_error;
         }
     }
     
@@ -120,7 +91,7 @@ if (isset($_POST['update_candidate'])) {
 <html>
 <head>
     <title>Edit Candidate - Admin</title>
-    <link rel="icon" href="images/image.png" type="png">
+    <link rel="icon" href="<?php echo get_system_logo($conn, '../'); ?>" type="image/png">
     <style>
         <?php include ASSETS_CSS . '/theme.css'; ?>
         * {
@@ -275,10 +246,14 @@ if (isset($_POST['update_candidate'])) {
             <div class="form-group">
                 <label>Candidate Image</label>
                 <input type="file" name="candidate_image" accept="image/*">
-                <?php if ($image_path && file_exists(PROJECT_ROOT . '/' . $image_path)): ?>
+                <?php 
+                $is_url = ($image_path && (strpos($image_path, 'http://') === 0 || strpos($image_path, 'https://') === 0));
+                $exists = $is_url || ($image_path && file_exists(PROJECT_ROOT . '/public/' . $image_path));
+                if ($exists): 
+                ?>
                     <div class="current-image">
                         <p>Current Image:</p>
-                        <img src="<?php echo '../' . htmlspecialchars($image_path); ?>" alt="Current Image">
+                        <img src="<?php echo htmlspecialchars($image_path); ?>" alt="Current Image">
                     </div>
                 <?php endif; ?>
             </div>

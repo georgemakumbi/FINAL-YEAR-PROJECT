@@ -115,12 +115,16 @@ require_once __DIR__ . '/../common.php';
                     ?>
                         <tr>
                             <td>
-                                <?php if (file_exists($image_src)): ?>
-                                    <img src="<?php echo safe_output($image_src); ?>" class="candidate-img" alt="Candidate">
+                                <?php 
+                                $is_url = ($image_src && (strpos($image_src, 'http://') === 0 || strpos($image_src, 'https://') === 0));
+                                $exists = $is_url || ($image_src && file_exists(PROJECT_ROOT . '/public/' . $image_src));
+                                if ($exists): 
+                                ?>
+                                     <img src="<?php echo safe_output($image_src); ?>" class="candidate-img" alt="Candidate">
                                 <?php else: ?>
-                                    <div class="candidate-img" style="background: var(--border); display: flex; align-items: center; justify-content: center; color: var(--text);">
-                                        <?php echo strtoupper(substr($candidate['first_name'], 0, 1)); ?>
-                                    </div>
+                                     <div class="candidate-img" style="background: var(--border); display: flex; align-items: center; justify-content: center; color: var(--text);">
+                                         <?php echo strtoupper(substr($candidate['first_name'], 0, 1)); ?>
+                                     </div>
                                 <?php endif; ?>
                             </td>
                             <td><?php echo safe_output($candidate['first_name'] . ' ' . $candidate['last_name']); ?></td>

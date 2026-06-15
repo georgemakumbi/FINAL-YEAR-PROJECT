@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['Submit'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../assets/images/image.png" type="image/png">
+    <link rel="icon" href="<?php echo get_system_logo($conn, '../'); ?>" type="image/png">
     <title>Feedback - Kyambogo University Voting System</title>
     <style>
         <?php include ASSETS_CSS . '/theme.css'; ?>

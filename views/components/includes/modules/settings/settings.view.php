@@ -40,6 +40,28 @@ require_once __DIR__ . '/../common.php';
         </div>
 
         <div style="margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid var(--border);">
+            <h3>🏫 University Logo</h3>
+            <p style="color: #7f8c8d; margin-bottom: 12px;">
+                Change the university logo displayed across headers, favicons, and pages.
+            </p>
+            <div style="display: flex; gap: 20px; align-items: center; margin-bottom: 15px; flex-wrap: wrap;">
+                <div>
+                    <p style="font-weight: bold; margin-bottom: 5px;">Current Logo:</p>
+                    <img src="<?php echo get_system_logo($conn, '../'); ?>" alt="University Logo" style="max-height: 80px; max-width: 150px; object-fit: contain; border: 1px solid var(--border); padding: 5px; border-radius: 6px; background: white;">
+                </div>
+                <form method="post" enctype="multipart/form-data" style="max-width: 400px; flex-grow: 1;">
+                    <?php echo render_csrf_field(); ?>
+                    <input type="hidden" name="upload_logo_action" value="1">
+                    <div class="form-group" style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; color: var(--text);">Select New Logo (JPG, PNG, WEBP, max 2MB):</label>
+                        <input type="file" name="system_logo" accept="image/*" required style="width: 100%; padding: 10px; border: 1px solid var(--input-border); border-radius: 6px; background: var(--input-bg); color: var(--text);">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Upload Logo</button>
+                </form>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid var(--border);">
             <h3>⏰ Voting Deadline</h3>
             <p style="color: #7f8c8d; margin-bottom: 12px;">
                 Set the absolute deadline for voting.

@@ -51,7 +51,7 @@ if ($results_published) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Election Results — Kyambogo University</title>
     <meta name="description" content="Live election results for Kyambogo University student elections">
-    <link rel="icon" href="../assets/images/image.png" type="image/png">
+    <link rel="icon" href="<?php echo get_system_logo($conn, '../'); ?>" type="image/png">
     <style>
         <?php include ASSETS_CSS . '/theme.css'; ?>
         <?php include ASSETS_CSS . '/results.css'; ?>
@@ -212,7 +212,7 @@ if ($results_published) {
 <body>
     <header>
         <div class="logo">
-            <img src="../assets/images/image.png" alt="Kyambogo University Logo">
+            <img src="<?php echo get_system_logo($conn, '../'); ?>" alt="Kyambogo University Logo">
             <div class="university-name">KYAMBOGO UNIVERSITY ONLINE VOTING SYSTEM</div>
         </div>
         <div class="user-info">

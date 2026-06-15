@@ -197,7 +197,7 @@ ensure_csrf_token();
             .container h2 { font-size: 1.3rem; }
         }
     </style>
-    <link rel="icon" href="../assets/images/image.png" type="image/png">
+    <link rel="icon" href="<?php echo get_system_logo($conn, '../'); ?>" type="image/png">
     <link rel="stylesheet" href="../assets/css/theme.css">
     <link rel="stylesheet" href="../assets/css/login.css">
 </head>

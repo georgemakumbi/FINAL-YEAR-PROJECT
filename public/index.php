@@ -25,7 +25,7 @@ $total_candidates = Candidate::countByStatus($conn, 'verified');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kyambogo University — Online Voting Portal</title>
     <meta name="description" content="Official online voting portal for Kyambogo University student guild elections. Cast your vote securely.">
-    <link rel="icon" href="../assets/images/image.png" type="image/png">
+    <link rel="icon" href="<?php echo get_system_logo($conn, '../'); ?>" type="image/png">
     <style>
         <?php include ASSETS_CSS . '/theme.css'; ?>
 
@@ -362,7 +362,7 @@ $total_candidates = Candidate::countByStatus($conn, 'verified');
     <!-- ═══════════════════════════════════════════════════════════════════ -->
     <section class="hero">
         <div class="hero-content">
-            <img src="../assets/images/image.png" alt="Kyambogo University Logo" class="hero-logo">
+            <img src="<?php echo get_system_logo($conn, '../'); ?>" alt="Kyambogo University Logo" class="hero-logo">
             <h1>KYAMBOGO UNIVERSITY</h1>
             <p class="hero-motto">Knowledge And Skills For Service</p>
 

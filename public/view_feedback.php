@@ -7,7 +7,7 @@ require_admin_login();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="images/image.png" type="png">
+    <link rel="icon" href="<?php echo get_system_logo($conn, '../'); ?>" type="image/png">
     <title>View Feedback</title>
     <style>
         <?php include 'styles/theme.css'; ?>
