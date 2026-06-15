@@ -53,48 +53,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !$already_applied) {
     
     $department = $is_university_wide ? null : $student['department'];
     
-    // Handle image upload (Vercel Blob)
+    // Handle image upload
     $image_path = null;
     if (isset($_FILES['candidate_image']) && $_FILES['candidate_image']['error'] == UPLOAD_ERR_OK) {
-        $tmpPath = $_FILES['candidate_image']['tmp_name'];
-        $max_size = 2 * 1024 * 1024; // 2MB
-        if ((int)$_FILES['candidate_image']['size'] > $max_size) {
-            $message = "Image too large. Max 2MB";
-            $message_type = "error";
+        $upload_error = null;
+        $uploaded_path = upload_candidate_image($_FILES['candidate_image'], $upload_error);
+        if ($uploaded_path) {
+            $image_path = $uploaded_path;
         } else {
-            // Call our internal upload endpoint (server-to-server)
-            $apiUrl = (($_SERVER['HTTPS'] ?? '') ? 'https://' : 'http://') . ($_SERVER['HTTP_HOST'] ?? '') . '/api/upload_blob.php';
-            $ch = curl_init($apiUrl);
-            curl_setopt_array($ch, [
-                CURLOPT_POST => true,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_POSTFIELDS => [
-                    'candidate_image' => new CURLFile($tmpPath, $_FILES['candidate_image']['type'] ?? 'application/octet-stream', $_FILES['candidate_image']['name'] ?? 'candidate')
-                ],
-                CURLOPT_TIMEOUT => 30,
-            ]);
-
-            $resp = curl_exec($ch);
-            $err = curl_error($ch);
-            $code = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            curl_close($ch);
-
-            if ($resp === false) {
-                $message = 'Image upload failed: ' . $err;
-                $message_type = 'error';
-            } else {
-                $decoded = json_decode($resp, true);
-                if ($code >= 200 && $code < 300 && isset($decoded['image_url'])) {
-                    // Store the public Blob URL in DB
-                    $image_path = $decoded['image_url'];
-                } else {
-                    $message = 'Image upload failed';
-                    if (is_array($decoded) && isset($decoded['error'])) {
-                        $message .= ': ' . $decoded['error'];
-                    }
-                    $message_type = 'error';
-                }
-            }
+            $message = $upload_error;
+            $message_type = "error";
         }
     }
 

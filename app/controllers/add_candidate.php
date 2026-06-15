@@ -48,38 +48,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Handle file upload
     $image_path = null;
     if (isset($_FILES['candidate_image']) && $_FILES['candidate_image']['error'] == UPLOAD_ERR_OK) {
-        $upload_dir = PROJECT_ROOT . '/public/candidates/';
-        if (!file_exists($upload_dir)) {
-            mkdir($upload_dir, 0777, true);
-        }
-
-        $max_size = 2 * 1024 * 1024; // 2MB
-        if ($_FILES['candidate_image']['size'] > $max_size) {
-            header("Location: admin_dashboard.php?error=Image too large. Max 2MB");
-            exit();
-        }
-
-        $allowed_mime = [
-            'image/jpeg' => 'jpg',
-            'image/png' => 'png',
-            'image/webp' => 'webp'
-        ];
-        $finfo = finfo_open(FILEINFO_MIME_TYPE);
-        $mime = finfo_file($finfo, $_FILES['candidate_image']['tmp_name']);
-        finfo_close($finfo);
-
-        if (!isset($allowed_mime[$mime])) {
-            header("Location: admin_dashboard.php?error=Invalid image format");
-            exit();
-        }
-
-        $file_name = 'candidate_' . bin2hex(random_bytes(8)) . '.' . $allowed_mime[$mime];
-        $target_file = $upload_dir . $file_name;
-        if (move_uploaded_file($_FILES['candidate_image']['tmp_name'], $target_file)) {
-            // Store RELATIVE path in DB (relative to public)
-            $image_path = 'candidates/' . $file_name;
+        $upload_error = null;
+        $uploaded_path = upload_candidate_image($_FILES['candidate_image'], $upload_error);
+        if ($uploaded_path) {
+            $image_path = $uploaded_path;
         } else {
-            header("Location: admin_dashboard.php?error=Failed to upload candidate image");
+            header("Location: admin_dashboard.php?error=" . urlencode($upload_error));
             exit();
         }
     }

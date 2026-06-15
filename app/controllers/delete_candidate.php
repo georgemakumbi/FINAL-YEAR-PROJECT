@@ -31,8 +31,9 @@ if ($candidate_id > 0) {
         $candidate_details = $candidate;
         
         // Delete the image file if it exists
-        if ($candidate['image_path'] && strpos($candidate['image_path'], 'candidates/') === 0 && file_exists($candidate['image_path'])) {
-            unlink($candidate['image_path']);
+        $local_img_path = PROJECT_ROOT . '/public/' . $candidate['image_path'];
+        if ($candidate['image_path'] && strpos($candidate['image_path'], 'candidates/') === 0 && file_exists($local_img_path)) {
+            @unlink($local_img_path);
         }
     }
     $stmt->close();

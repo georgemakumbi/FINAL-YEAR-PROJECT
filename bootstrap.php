@@ -85,6 +85,7 @@ define('ASSETS_IMAGES', ASSETS_PATH . '/images');
 // smtp_mailer.php   → Provides email sending functions
 require_once APP_UTILS . '/db_connection.php';
 require_once APP_UTILS . '/smtp_mailer.php';
+require_once APP_UTILS . '/image_uploader.php';
 
 // ─── STEP 3.5: Load Model Classes ────────────────────────────────────────────
 // Models are PHP classes that handle ALL database operations for each table.
