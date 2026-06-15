@@ -145,15 +145,6 @@ finalyearproject/
 ```
 
 ---
-
-## Installation & Setup
-
-### Prerequisites
-- [WAMP Server](https://www.wampserver.com/) (Windows) or XAMPP
-- PHP 8.0 or higher
-- MySQL 8.0 / MariaDB 10.4+
-- Composer (PHP package manager)
-
 ### Step 1: Clone the Repository
 ```bash
 cd c:\wamp64\www\
@@ -236,6 +227,7 @@ mysql -u root kyambogo_voting < database/schema.sql
 ## Authors
 
 **Kyambogo University BITC Students — Class of 2023**
+
 
 - Built as a Final Year Project for the Bachelor of Information Technology & Computing program
 - Supervised by the Department of Computer Science, Kyambogo University
