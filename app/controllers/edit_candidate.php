@@ -247,7 +247,7 @@ if (isset($_POST['update_candidate'])) {
                 <label>Candidate Image</label>
                 <input type="file" name="candidate_image" accept="image/*">
                 <?php 
-                $is_url = (strpos($image_path, 'http://') === 0 || strpos($image_path, 'https://') === 0);
+                $is_url = ($image_path && (strpos($image_path, 'http://') === 0 || strpos($image_path, 'https://') === 0));
                 $exists = $is_url || ($image_path && file_exists(PROJECT_ROOT . '/public/' . $image_path));
                 if ($exists): 
                 ?>

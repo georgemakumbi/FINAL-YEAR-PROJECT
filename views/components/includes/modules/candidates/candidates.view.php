@@ -116,7 +116,7 @@ require_once __DIR__ . '/../common.php';
                         <tr>
                             <td>
                                 <?php 
-                                $is_url = (strpos($image_src, 'http://') === 0 || strpos($image_src, 'https://') === 0);
+                                $is_url = ($image_src && (strpos($image_src, 'http://') === 0 || strpos($image_src, 'https://') === 0));
                                 $exists = $is_url || ($image_src && file_exists(PROJECT_ROOT . '/public/' . $image_src));
                                 if ($exists): 
                                 ?>

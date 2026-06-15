@@ -55,16 +55,15 @@ function upload_candidate_image($file, &$error = null) {
             return null;
         }
 
-        $uploadUrl = 'https://blob.vercel-storage.com/upload';
+        $uploadUrl = 'https://blob.vercel-storage.com/' . urlencode($filename);
         $ch = curl_init($uploadUrl);
         curl_setopt_array($ch, [
-            CURLOPT_POST => true,
+            CURLOPT_CUSTOMREQUEST => 'PUT',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HTTPHEADER => [
                 'Authorization: Bearer ' . $token,
-                'Content-Type: application/octet-stream',
-                'x-filename: ' . $filename,
-                'x-content-type: ' . $mime,
+                'x-api-version: 2',
+                'Content-Type: ' . $mime,
             ],
             CURLOPT_POSTFIELDS => $binary,
             CURLOPT_TIMEOUT => 30,
@@ -167,16 +166,15 @@ function upload_system_logo($file, &$error = null) {
             return null;
         }
 
-        $uploadUrl = 'https://blob.vercel-storage.com/upload';
+        $uploadUrl = 'https://blob.vercel-storage.com/' . urlencode($filename);
         $ch = curl_init($uploadUrl);
         curl_setopt_array($ch, [
-            CURLOPT_POST => true,
+            CURLOPT_CUSTOMREQUEST => 'PUT',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HTTPHEADER => [
                 'Authorization: Bearer ' . $token,
-                'Content-Type: application/octet-stream',
-                'x-filename: ' . $filename,
-                'x-content-type: ' . $mime,
+                'x-api-version: 2',
+                'Content-Type: ' . $mime,
             ],
             CURLOPT_POSTFIELDS => $binary,
             CURLOPT_TIMEOUT => 30,
