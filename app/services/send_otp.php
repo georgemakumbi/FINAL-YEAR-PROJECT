@@ -48,7 +48,7 @@ $update = $conn->prepare("UPDATE students SET otp = ?, otp_expiry = ? WHERE stud
 $update->bind_param("sss", $otp, $expiry, $student_id);
 $update->execute();
 
-// 6. Send OTP via Email using SMTP
+// 6. Send OTP via Email using Resend
 $to = $email;
 $subject = 'Your Voting System OTP Code';
 $message = "
@@ -66,8 +66,10 @@ $message = "
 </html>
 ";
 
-// Send email using SMTP
-$mailSent = send_smtp_email($to, $subject, $message);
+require_once APP_UTILS . '/resend_mailer.php';
+
+// Send email using Resend
+$mailSent = send_resend_email($to, $subject, $message);
 
 if ($mailSent) {
     // 7. Store student ID in session for verification step
@@ -75,7 +77,8 @@ if ($mailSent) {
     $_SESSION['otp_sent'] = true;
 
     // 8. Redirect back to login and reveal OTP verification section
-    header("Location: login.php?success=OTP+sent+successfully.+Check+MailHog+inbox.&show=verify");
+    header("Location: login.php?success=OTP+sent+successfully.+Check+inbox.&show=verify");
+    
     exit();
 } else {
     // Log error internally

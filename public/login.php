@@ -224,7 +224,7 @@ ensure_csrf_token();
 
         <button type="submit">Login</button>
         <p style="text-align: center; padding-top: 20px;"><a href="forgot_password.php" style="color: var(--primary);"><i>Forgot password?</i></a></p>
-        <button type="button" class="link-btn" onclick="showOTP()">Register here</button>
+<button type="button" class="link-btn" onclick="window.location.href='register.php'">Register here</button>
     </form>
 
     <!-- OTP REQUEST FORM -->
