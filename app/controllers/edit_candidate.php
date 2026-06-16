@@ -48,10 +48,16 @@ if (isset($_GET["id"])) {
 if (isset($_POST['update_candidate'])) {
     verify_csrf_or_die();
     $candidate_id = $_POST['candidate_id'];
-    $position = $conn->real_escape_string($_POST['position']);
-    $manifesto = $conn->real_escape_string($_POST['manifesto']);
+    $position = $_POST['position'];
+    $manifesto = $_POST['manifesto'];
     
-    $image_path = $_POST['old_image_path'];
+    // Fetch the existing image path from the database (don't trust the client-side hidden field)
+    $stmt_img = $conn->prepare("SELECT image_path FROM candidates WHERE candidate_id = ?");
+    $stmt_img->bind_param("i", $candidate_id);
+    $stmt_img->execute();
+    $res_img = $stmt_img->get_result();
+    $image_path = ($res_img->num_rows === 1) ? $res_img->fetch_assoc()['image_path'] : '';
+    $stmt_img->close();
     
     // Handle file upload
     if (isset($_FILES['candidate_image']) && $_FILES['candidate_image']['error'] == UPLOAD_ERR_OK) {
@@ -202,7 +208,7 @@ if (isset($_POST['update_candidate'])) {
         <h2>Edit Candidate</h2>
         
         <?php if (isset($error)): ?>
-            <p style="color: red; margin-bottom: 15px;"><?php echo $error; ?></p>
+            <p style="color: red; margin-bottom: 15px;"><?php echo htmlspecialchars($error, ENT_QUOTES, 'UTF-8'); ?></p>
         <?php endif; ?>
         
         <form action="" method="post" enctype="multipart/form-data">

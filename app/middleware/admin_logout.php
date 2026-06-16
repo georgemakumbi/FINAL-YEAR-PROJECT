@@ -3,6 +3,11 @@ if (!defined('PROJECT_ROOT')) {
     require_once dirname(__DIR__, 2) . '/bootstrap.php';
 }
 
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    die("Invalid request method for logout.");
+}
+verify_csrf_or_die();
+
 require_once APP_UTILS . '/db_connection.php';
 require_once VIEWS_COMPONENTS . '/includes/audit_logger.php';
 

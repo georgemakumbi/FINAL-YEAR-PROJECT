@@ -36,8 +36,8 @@ $message_type = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !$already_applied) {
     verify_csrf_or_die();
     
-    $position = $conn->real_escape_string($_POST['position']);
-    $manifesto = $conn->real_escape_string($_POST['manifesto']);
+    $position = $_POST['position'];
+    $manifesto = $_POST['manifesto'];
     
     $is_university_wide = 0;
     if (in_array($position, ['Guild President', 'Guild Vice President'])) {
@@ -117,8 +117,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !$already_applied) {
         </div>
         <div class="user-info" style="display: flex; gap: 15px; align-items: center;">
             <a href="voting.php" class="vote-btn" style="padding: 5px 15px; text-decoration: none; font-size: 0.9em; width: auto; margin:0;">Back to Voting</a>
-            Welcome, <?php echo $_SESSION['first_name']; ?>
+            Welcome, <?php echo htmlspecialchars($_SESSION['first_name'] ?? '', ENT_QUOTES, 'UTF-8'); ?>
             <form action="logout.php" method="POST" style="margin:0;">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'] ?? ''); ?>">
                 <button type="submit" class="logout-btn">Logout</button>
             </form>
         </div>

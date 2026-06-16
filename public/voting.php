@@ -196,6 +196,7 @@ $total_positions = count($positions);
             <a href="apply_candidate.php" class="vote-btn" style="padding: 5px 15px; text-decoration: none; font-size: 0.9em; width: auto; margin:0;">Apply for Candidacy</a>
             Welcome, <?php echo htmlspecialchars($_SESSION['first_name']); ?>
             <form action="logout.php" method="POST" style="margin:0;">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'] ?? ''); ?>">
                 <button type="submit" class="logout-btn">Logout</button>
             </form>
         </div>
@@ -364,10 +365,18 @@ $total_positions = count($positions);
             const name = card.dataset.candidateName;
             
             const li = document.createElement('li');
-            li.innerHTML = `
-                <span class="modal-position">${position}</span>
-                <span class="modal-candidate">${name}</span>
-            `;
+            
+            const positionSpan = document.createElement('span');
+            positionSpan.className = 'modal-position';
+            positionSpan.textContent = position;
+            
+            const nameSpan = document.createElement('span');
+            nameSpan.className = 'modal-candidate';
+            nameSpan.textContent = name;
+            
+            li.appendChild(positionSpan);
+            li.appendChild(nameSpan);
+            
             summary.appendChild(li);
         });
         

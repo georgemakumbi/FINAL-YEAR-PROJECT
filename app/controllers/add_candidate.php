@@ -12,12 +12,12 @@ require_super_admin();
 // Enter candidate details if request method is POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     verify_csrf_or_die();
-    $student_id = $conn->real_escape_string($_POST['student_id']);
-    $position = $conn->real_escape_string($_POST['position']);
-    $manifesto = $conn->real_escape_string($_POST['manifesto']);
+    $student_id = $_POST['student_id'];
+    $position = $_POST['position'];
+    $manifesto = $_POST['manifesto'];
     
     // Get department from form (for department-specific candidates)
-    $department = isset($_POST['department']) ? $conn->real_escape_string($_POST['department']) : null;
+    $department = isset($_POST['department']) ? $_POST['department'] : null;
     
     // Check if this is a university-wide position
     $is_university_wide = isset($_POST['is_university_wide']) ? 1 : 0;

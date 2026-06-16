@@ -11,13 +11,13 @@ require_super_admin();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     verify_csrf_or_die();
-    $student_id = $conn->real_escape_string($_POST['student_id']);
-    $first_name = $conn->real_escape_string($_POST['first_name']);
-    $last_name = $conn->real_escape_string($_POST['last_name']);
-    $email = $conn->real_escape_string($_POST['email']);
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $faculty = $conn->real_escape_string($_POST['faculty']);
-    $department = $conn->real_escape_string($_POST['department']);
+    $student_id = trim($_POST['student_id'] ?? '');
+    $first_name = trim($_POST['first_name'] ?? '');
+    $last_name = trim($_POST['last_name'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $password = password_hash($_POST['password'] ?? '', PASSWORD_DEFAULT);
+    $faculty = trim($_POST['faculty'] ?? '');
+    $department = trim($_POST['department'] ?? '');
     
     $stmt = $conn->prepare("INSERT INTO students (student_id, first_name, last_name, email, password_hash, faculty, department) VALUES (?, ?, ?, ?, ?, ?, ?)");
     $stmt->bind_param("sssssss", $student_id, $first_name, $last_name, $email, $password, $faculty, $department);

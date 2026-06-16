@@ -177,7 +177,10 @@ if ($section === 'results') {
                     <span class="user-avatar"><?php echo strtoupper(substr($_SESSION['admin_username'] ?? 'A', 0, 1)); ?></span>
                     <?php echo safe_output($_SESSION['admin_username']); ?>
                 </span>
-                <a href="admin_logout.php" class="btn btn-danger">Logout</a>
+                <form action="admin_logout.php" method="POST" style="margin:0; display:inline;">
+                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'] ?? ''); ?>">
+                    <button type="submit" class="btn btn-danger" style="cursor:pointer;">Logout</button>
+                </form>
             </div>
         </div>
 

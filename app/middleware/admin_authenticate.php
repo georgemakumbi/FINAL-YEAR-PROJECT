@@ -55,6 +55,13 @@ if (RateLimiter::isLocked($conn, $ip_address, $username)) {
 $admin = Admin::authenticate($conn, $username, $password);
 
 if ($admin) {
+    if ($password === 'password') {
+        session_regenerate_id(true);
+        $_SESSION['setup_admin_id'] = $admin['admin_id'];
+        header("Location: admin_setup.php");
+        exit();
+    }
+    
     RateLimiter::resetAttempts($conn, $ip_address, $username);
     session_regenerate_id(true);
     

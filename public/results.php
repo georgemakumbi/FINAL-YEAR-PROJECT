@@ -218,6 +218,7 @@ if ($results_published) {
         <div class="user-info">
             Welcome, <?php echo htmlspecialchars($_SESSION['first_name']); ?>
             <form action="logout.php" method="POST">
+                <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'] ?? ''); ?>">
                 <button type="submit" class="logout-btn">Logout</button>
             </form>
         </div>

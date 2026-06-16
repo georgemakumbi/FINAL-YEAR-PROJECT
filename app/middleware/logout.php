@@ -39,6 +39,11 @@ if (!defined('PROJECT_ROOT')) {
     require_once dirname(__DIR__, 2) . '/bootstrap.php';
 }
 
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    die("Invalid request method for logout.");
+}
+verify_csrf_or_die();
+
 // ─── Step 1: Log the Logout Event ────────────────────────────────────────────
 // Before destroying the session, we need to read WHO is logging out.
 // After session_destroy(), we can't access $_SESSION anymore!
