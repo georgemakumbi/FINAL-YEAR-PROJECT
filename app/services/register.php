@@ -71,7 +71,7 @@ if ($result->num_rows === 0) {
     $student = $result->fetch_assoc();
     $student_id = $student['student_id'];
     $update = $conn->prepare(
-        'UPDATE students SET password_hash = ?, first_name = COALESCE(NULLIF(?, ""), first_name), last_name = COALESCE(NULLIF(?, ""), last_name) WHERE student_id = ?'
+        "UPDATE students SET password_hash = ?, first_name = COALESCE(NULLIF(?, ''), first_name), last_name = COALESCE(NULLIF(?, ''), last_name) WHERE student_id = ?"
     );
     $update->bind_param('ssss', $hashed_password, $first_name, $last_name, $student_id);
     if (!$update->execute()) {
