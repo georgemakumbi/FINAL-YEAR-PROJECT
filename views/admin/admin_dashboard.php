@@ -113,152 +113,40 @@ if ($section === 'results') {
         <?php readfile(ASSETS_CSS . '/theme.css'); ?>
         <?php readfile(ASSETS_CSS . '/admin_dashboard.css'); ?>
 
-        /* ── Phase 6: Enhanced Dashboard Cards ─────────────────────── */
-        .stat-card {
-            position: relative;
-            overflow: hidden;
-        }
-        .stat-card::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-        }
-        .stat-card:nth-child(1)::after { background: linear-gradient(90deg, #3498db, #2980b9); }
-        .stat-card:nth-child(2)::after { background: linear-gradient(90deg, #27ae60, #2ecc71); }
-        .stat-card:nth-child(3)::after { background: linear-gradient(90deg, #f39c12, #e67e22); }
-        .stat-card:nth-child(4)::after { background: linear-gradient(90deg, #9b59b6, #8e44ad); }
-        .stat-card:nth-child(5)::after { background: linear-gradient(90deg, #e74c3c, #c0392b); }
-
-        /* ── Enhanced Chart Area ───────────────────────────────────── */
-        .charts-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-top: 20px;
-        }
-        @media (max-width: 900px) {
-            .charts-grid { grid-template-columns: 1fr; }
-        }
-
-        /* ── Results Cards (Phase 6) ───────────────────────────────── */
-        .result-position-block {
-            background: var(--surface);
-            border-radius: var(--radius-lg, 16px);
-            padding: 24px;
-            margin-bottom: 20px;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border);
-        }
-        .result-position-block h3 {
-            color: var(--brand-primary);
-            font-size: 1.1rem;
-            margin-bottom: 16px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--border);
-        }
-        .result-row {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 10px 0;
-        }
-        .result-rank {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.85rem;
-            flex-shrink: 0;
-            background: var(--border);
-            color: var(--text-muted);
-        }
-        .result-row:first-child .result-rank {
-            background: #ffc107;
-            color: #333;
-        }
-        .result-info { flex: 1; min-width: 0; }
-        .result-name { font-weight: 600; font-size: 0.95rem; }
-        .result-faculty { font-size: 0.8rem; color: var(--text-muted); }
-        .result-bar-track {
-            background: var(--border);
-            border-radius: 8px;
-            height: 22px;
-            overflow: hidden;
-            margin-top: 4px;
-        }
-        .result-bar-fill {
-            height: 100%;
-            border-radius: 8px;
-            background: linear-gradient(90deg, var(--brand-primary), #2980b9);
-            display: flex;
-            align-items: center;
-            padding: 0 8px;
-            color: #fff;
-            font-size: 0.75rem;
-            font-weight: 700;
-            min-width: 30px;
-            transition: width 0.6s ease;
-        }
-        .result-row:first-child .result-bar-fill {
-            background: linear-gradient(90deg, #ffc107, #ff9800);
-            color: #333;
-        }
-        .result-votes {
-            text-align: right;
-            flex-shrink: 0;
-            min-width: 50px;
-        }
-        .result-votes-num { font-weight: 700; font-size: 1.1rem; }
-        .result-votes-label { font-size: 0.7rem; color: var(--text-muted); }
-
-        /* ── Live Indicator ────────────────────────────────────────── */
-        .live-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            float: right;
-        }
-        .live-badge .dot {
-            width: 7px;
-            height: 7px;
-            background: #27ae60;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
     </style>
 </head>
 <body>
     <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- SIDEBAR OVERLAY (mobile)                                           -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
     <!-- SIDEBAR                                                            -->
     <!-- ═══════════════════════════════════════════════════════════════════ -->
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <h2>👤 Admin Panel</h2>
+            <div class="brand-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            </div>
+            <h2>Admin Panel</h2>
             <p>Voting System</p>
         </div>
         
         <ul class="nav-menu">
-            <li><a href="admin_dashboard.php?section=dashboard" class="nav-item <?php echo $section === 'dashboard' ? 'active' : ''; ?>">📊 Dashboard</a></li>
-            <li><a href="admin_dashboard.php?section=elections" class="nav-item <?php echo $section === 'elections' ? 'active' : ''; ?>">🗳️ Elections</a></li>
-            <li><a href="admin_dashboard.php?section=candidates" class="nav-item <?php echo $section === 'candidates' ? 'active' : ''; ?>">👥 Candidates</a></li>
-            <li><a href="admin_dashboard.php?section=students" class="nav-item <?php echo $section === 'students' ? 'active' : ''; ?>">🎓 Students</a></li>
-            <li><a href="admin_dashboard.php?section=results" class="nav-item <?php echo $section === 'results' ? 'active' : ''; ?>">📈 Results</a></li>
-            <li><a href="admin_dashboard.php?section=feedback" class="nav-item <?php echo $section === 'feedback' ? 'active' : ''; ?>">💬 Feedback</a></li>
-            <li><a href="admin_dashboard.php?section=audit" class="nav-item <?php echo $section === 'audit' ? 'active' : ''; ?>">🔍 Audit Log</a></li>
-            <li><a href="admin_dashboard.php?section=settings" class="nav-item <?php echo $section === 'settings' ? 'active' : ''; ?>">⚙️ Settings</a></li>
+            <li><a href="admin_dashboard.php?section=dashboard" class="nav-item <?php echo $section === 'dashboard' ? 'active' : ''; ?>"><span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span> Dashboard</a></li>
+            <li><a href="admin_dashboard.php?section=elections" class="nav-item <?php echo $section === 'elections' ? 'active' : ''; ?>"><span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg></span> Elections</a></li>
+            <li><a href="admin_dashboard.php?section=candidates" class="nav-item <?php echo $section === 'candidates' ? 'active' : ''; ?>"><span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span> Candidates</a></li>
+            <li><a href="admin_dashboard.php?section=students" class="nav-item <?php echo $section === 'students' ? 'active' : ''; ?>"><span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></span> Students</a></li>
+            <li><a href="admin_dashboard.php?section=results" class="nav-item <?php echo $section === 'results' ? 'active' : ''; ?>"><span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span> Results</a></li>
+            <li><a href="admin_dashboard.php?section=feedback" class="nav-item <?php echo $section === 'feedback' ? 'active' : ''; ?>"><span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span> Feedback</a></li>
+            <li><a href="admin_dashboard.php?section=audit" class="nav-item <?php echo $section === 'audit' ? 'active' : ''; ?>"><span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span> Audit Log</a></li>
+            <li><a href="admin_dashboard.php?section=settings" class="nav-item <?php echo $section === 'settings' ? 'active' : ''; ?>"><span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span> Settings</a></li>
         </ul>
+
+        <div class="sidebar-footer">
+            &copy; <?php echo date("Y"); ?> Kyambogo University
+        </div>
     </div>
 
     <!-- ═══════════════════════════════════════════════════════════════════ -->
@@ -274,9 +162,21 @@ if ($section === 'results') {
 
         <!-- Top Bar -->
         <div class="top-bar">
-            <h1><?php echo ucfirst($section === 'dashboard' ? 'Dashboard' : $section); ?></h1>
+            <div class="top-bar-left">
+                <button class="hamburger" id="hamburgerBtn" aria-label="Toggle sidebar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                </button>
+                <h1><?php echo ucfirst($section === 'dashboard' ? 'Dashboard' : $section); ?></h1>
+            </div>
             <div class="top-bar-right">
-                <span class="user-info">👤 <?php echo safe_output($_SESSION['admin_username']); ?></span>
+                <button class="theme-toggle-btn" data-theme-toggle-btn aria-label="Toggle theme">
+                    <svg class="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                    <svg class="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
+                <span class="user-info">
+                    <span class="user-avatar"><?php echo strtoupper(substr($_SESSION['admin_username'] ?? 'A', 0, 1)); ?></span>
+                    <?php echo safe_output($_SESSION['admin_username']); ?>
+                </span>
                 <a href="admin_logout.php" class="btn btn-danger">Logout</a>
             </div>
         </div>
@@ -290,22 +190,37 @@ if ($section === 'results') {
             <!-- Statistics Cards — now powered by Models -->
             <div class="stats-grid">
                 <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                    </div>
                     <h3>Total Students</h3>
                     <div class="value" id="stat-students"><?php echo format_number($total_students); ?></div>
                 </div>
                 <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg>
+                    </div>
                     <h3>Active Elections</h3>
                     <div class="value"><?php echo $active_elections; ?></div>
                 </div>
                 <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                    </div>
                     <h3>Votes Cast</h3>
                     <div class="value" id="stat-votes"><?php echo format_number($total_votes); ?></div>
                 </div>
                 <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    </div>
                     <h3>Voter Turnout</h3>
                     <div class="value" id="stat-turnout"><?php echo $turnout; ?>%</div>
                 </div>
                 <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
                     <h3>Candidates</h3>
                     <div class="value"><?php echo $total_candidates; ?></div>
                 </div>
@@ -540,5 +455,46 @@ if ($section === 'results') {
     <?php endif; ?>
     </script>
     <script src="../assets/js/theme.js" defer></script>
+    <script>
+    // ─── Sidebar Toggle (Mobile) ──────────────────────────────────────────────
+    (function() {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        const hamburger = document.getElementById('hamburgerBtn');
+
+        if (sidebar && overlay && hamburger) {
+            const open = () => {
+                sidebar.classList.add('open');
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            };
+            const close = () => {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            };
+
+            hamburger.addEventListener('click', open);
+            overlay.addEventListener('click', close);
+
+            // Close on escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') close();
+            });
+
+            // Close on nav link click (mobile)
+            sidebar.querySelectorAll('.nav-item').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) close();
+                });
+            });
+
+            // Handle resize
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 768) close();
+            });
+        }
+    })();
+    </script>
 </body>
 </html>

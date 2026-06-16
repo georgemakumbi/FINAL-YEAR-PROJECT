@@ -248,7 +248,37 @@ input:focus, select:focus, textarea:focus {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════ */
-/* THEME TOGGLE (Bottom-Right Corner)                                          */
+/* THEME TOGGLE (Top-bar button, used in admin)                               */
+/* ═══════════════════════════════════════════════════════════════════════════ */
+.theme-toggle-btn {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    transition: all 0.2s ease;
+    width: 36px;
+    height: 36px;
+}
+
+.theme-toggle-btn:hover {
+    background: var(--surface-2);
+    color: var(--text);
+    border-color: var(--link);
+}
+
+.theme-toggle-btn svg {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s ease;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════ */
+/* THEME TOGGLE (Bottom-Right Corner — legacy / non-admin pages)              */
 /* ═══════════════════════════════════════════════════════════════════════════ */
 .theme-toggle {
     position: fixed;
