@@ -12,7 +12,7 @@ $success = $_GET['success'] ?? '';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - Kyambogo Voting System</title>
     <link rel="icon" href="../assets/images/image.png" type="image/png">
-    <link rel="stylesheet" href="../assets/css/theme.css">
+    <style><?php include ASSETS_CSS . '/theme.css'; ?></style>
     <link rel="stylesheet" href="../assets/css/login.css">
     <style>
         body { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--app-bg); padding: 20px; }

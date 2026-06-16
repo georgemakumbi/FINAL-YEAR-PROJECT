@@ -279,7 +279,7 @@ ensure_csrf_token();
 
     </style>
     <link rel="icon" href="<?php echo get_system_logo($conn, '../'); ?>" type="image/png">
-    <link rel="stylesheet" href="../assets/css/theme.css">
+    <style><?php include ASSETS_CSS . '/theme.css'; ?></style>
     <link rel="stylesheet" href="../assets/css/admin_login.css">
 </head>
 <body>
