@@ -51,7 +51,7 @@ $result = $stmt->get_result();
 $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
 if ($result->num_rows === 0) {
-    $stmt = $conn->prepare('INSERT INTO students (student_id, email, first_name, last_name, password_hash) VALUES (?, ?, ?, ?, ?)');
+    $stmt = $conn->prepare('INSERT INTO students (student_id, email, first_name, last_name, password_hash, faculty, department) VALUES (?, ?, ?, ?, ?, "", "")');
     $stmt->bind_param('sssss', $student_id, $email, $first_name, $last_name, $hashed_password);
     if (!$stmt->execute()) {
         $err = $conn->errno;
