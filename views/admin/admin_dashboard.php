@@ -454,8 +454,43 @@ if ($section === 'results') {
     
     <?php endif; ?>
     </script>
-    <script src="../assets/js/theme.js" defer></script>
     <script>
+    // ─── Theme Toggle ─────────────────────────────────────────────────────────
+    (function() {
+        var storageKey = "siteTheme";
+        var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        var saved = localStorage.getItem(storageKey);
+        var isDark = saved ? saved === "dark" : prefersDark;
+
+        document.body.classList.toggle("dark", isDark);
+
+        function updateButtons(dark) {
+            document.querySelectorAll("[data-theme-toggle-btn]").forEach(function(btn) {
+                var sun = btn.querySelector(".theme-icon-sun");
+                var moon = btn.querySelector(".theme-icon-moon");
+                if (sun && moon) {
+                    sun.style.display = dark ? "none" : "block";
+                    moon.style.display = dark ? "block" : "none";
+                }
+            });
+        }
+
+        function setTheme(dark) {
+            document.body.classList.toggle("dark", dark);
+            localStorage.setItem(storageKey, dark ? "dark" : "light");
+            updateButtons(dark);
+        }
+
+        document.querySelectorAll("[data-theme-toggle-btn]").forEach(function(btn) {
+            btn.addEventListener("click", function(e) {
+                var dark = !document.body.classList.contains("dark");
+                setTheme(dark);
+            });
+        });
+
+        updateButtons(isDark);
+    })();
+
     // ─── Sidebar Toggle (Mobile) ──────────────────────────────────────────────
     (function() {
         const sidebar = document.getElementById('sidebar');
