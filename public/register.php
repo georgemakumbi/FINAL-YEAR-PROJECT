@@ -45,6 +45,11 @@ $success = $_GET['success'] ?? '';
         <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
 
         <div class="form-group">
+            <label>Student Number</label>
+            <input type="text" name="student_id" placeholder="e.g., 23/U/12345" required>
+        </div>
+
+        <div class="form-group">
             <label>University Email</label>
             <input type="email" name="email" placeholder="230000000@std.kyu.ac.ug" required>
         </div>
