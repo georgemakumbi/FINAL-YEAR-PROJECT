@@ -18,7 +18,7 @@ $confirm = $_POST['confirm_password'] ?? '';
 $first_name = trim($_POST['first_name'] ?? '');
 $last_name = trim($_POST['last_name'] ?? '');
 
-if (!preg_match('/^\d{9}@std\.kyu\.ac\.ug$/', $email)) {
+if (!preg_match('/^\d{7,11}@std\.kyu\.ac\.ug$/', $email)) {
     header('Location: register.php?error=Email+must+be+in+the+format+230000000%40std.kyu.ac.ug');
     exit();
 }
