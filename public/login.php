@@ -201,6 +201,7 @@ ensure_csrf_token();
     <link rel="icon" href="<?php echo get_system_logo($conn, '../'); ?>" type="image/png">
     <style><?php include ASSETS_CSS . '/theme.css'; ?></style>
     <link rel="stylesheet" href="../assets/css/login.css">
+    <?php include VIEWS_COMPONENTS . '/includes/speed_insights.php'; ?>
 </head>
 
 <body>

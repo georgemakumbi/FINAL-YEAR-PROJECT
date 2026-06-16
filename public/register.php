@@ -28,6 +28,7 @@ $success = $_GET['success'] ?? '';
         .link-row { text-align: center; margin-top: 14px; text-decoration: none; }
         a { color: var(--brand-primary); text-decoration: none; font-weight: 700; }
     </style>
+    <?php include VIEWS_COMPONENTS . '/includes/speed_insights.php'; ?>
 </head>
 <body>
 <div class="container">

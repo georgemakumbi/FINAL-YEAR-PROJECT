@@ -114,6 +114,7 @@ if ($section === 'results') {
         <?php readfile(ASSETS_CSS . '/admin_dashboard.css'); ?>
 
     </style>
+    <?php include VIEWS_COMPONENTS . '/includes/speed_insights.php'; ?>
 </head>
 <body>
     <!-- ═══════════════════════════════════════════════════════════════════ -->
