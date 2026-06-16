@@ -98,15 +98,8 @@ $html = "
 </body>
 </html>";
 
-$mailSent = send_resend_email($to, $subject, $html, $full_name);
-
-if ($mailSent) {
-    header('Location: login.php?success=Account+created+successfully');
-    exit();
-}
-
-error_log("Registration confirmation email failed for student: $student_id, email: $to");
-header('Location: login.php?success=Account+created.+Confirmation+email+could+not+be+sent.');
+send_resend_email($to, $subject, $html, $full_name);
+header('Location: login.php?success=Account+created+successfully');
 exit();
 
 ?>
