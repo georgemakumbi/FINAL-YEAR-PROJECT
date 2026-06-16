@@ -92,6 +92,11 @@
             margin-top: 24px;
         }
 
+        article {
+            display: block;
+            width: 50%;
+        }
+
         .member {
             border: 2px solid var(--border);
             border-left: 5px solid var(--brand-orange, #f59e0b);
