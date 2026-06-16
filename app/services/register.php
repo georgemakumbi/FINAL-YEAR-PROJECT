@@ -44,7 +44,7 @@ if (strlen($password) < 8) {
     exit();
 }
 
-$stmt = $conn->prepare('SELECT student_id, email, first_name, last_name FROM students WHERE email = ? OR student_id = ?');
+$stmt = $conn->prepare('SELECT student_id, email, first_name, last_name, password_hash FROM students WHERE email = ? OR student_id = ?');
 $stmt->bind_param('ss', $email, $student_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -69,6 +69,10 @@ if ($result->num_rows === 0) {
     $to = $email;
 } else {
     $student = $result->fetch_assoc();
+    if (!empty($student['password_hash'])) {
+        header('Location: login.php?error=Account+already+registered.+Please+log+in.');
+        exit();
+    }
     $student_id = $student['student_id'];
     $update = $conn->prepare(
         "UPDATE students SET password_hash = ?, first_name = COALESCE(NULLIF(?, ''), first_name), last_name = COALESCE(NULLIF(?, ''), last_name) WHERE student_id = ?"

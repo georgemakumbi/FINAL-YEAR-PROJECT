@@ -227,14 +227,6 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST' && isset($_FILES['csv_file'])) {
                 // Hash password for security
                 $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-                // Escape data for SQL injection prevention
-                $student_id_escaped = $conn->real_escape_string($student_id);
-                $first_name_escaped = $conn->real_escape_string($first_name);
-                $last_name_escaped = $conn->real_escape_string($last_name);
-                $email_escaped = $conn->real_escape_string($email);
-                $faculty_escaped = $conn->real_escape_string($faculty);
-                $department_escaped = $conn->real_escape_string($department);
-
                 // Prepare insert statement
                 $insert_stmt = $conn->prepare(
                     "INSERT INTO students (student_id, first_name, last_name, email, password_hash, faculty, department) 
@@ -245,15 +237,16 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST' && isset($_FILES['csv_file'])) {
                     throw new Exception('Database error: ' . $conn->error);
                 }
 
+                // Data is safe from SQL injection because we are using prepared statements
                 $insert_stmt->bind_param(
                     "sssssss",
-                    $student_id_escaped,
-                    $first_name_escaped,
-                    $last_name_escaped,
-                    $email_escaped,
+                    $student_id,
+                    $first_name,
+                    $last_name,
+                    $email,
                     $password_hash,
-                    $faculty_escaped,
-                    $department_escaped
+                    $faculty,
+                    $department
                 );
 
                 // Execute insert

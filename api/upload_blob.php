@@ -5,6 +5,12 @@
 
 require_once dirname(__DIR__) . '/bootstrap.php';
 
+if (!isset($_SESSION['admin_id'])) {
+    http_response_code(401);
+    echo json_encode(['error' => 'Unauthorized']);
+    exit;
+}
+
 // NOTE: On Vercel serverless, this route must not touch the local filesystem.
 header('Content-Type: application/json; charset=utf-8');
 

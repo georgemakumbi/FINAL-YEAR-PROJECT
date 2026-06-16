@@ -19,6 +19,18 @@ if (!isset($_SESSION['otp_student'])) {
     exit();
 }
 
+if (!isset($_SESSION['otp_attempts'])) {
+    $_SESSION['otp_attempts'] = 0;
+}
+$_SESSION['otp_attempts']++;
+
+if ($_SESSION['otp_attempts'] > 5) {
+    unset($_SESSION['otp_student']);
+    unset($_SESSION['otp_attempts']);
+    header("Location: login.php?error=Too+many+failed+attempts.+Please+request+a+new+OTP.&show=otp");
+    exit();
+}
+
 $student_id = $_SESSION['otp_student'];
 $entered_otp = trim($_POST['otp']);
 
@@ -62,6 +74,8 @@ $_SESSION['verified_student'] = $student_id;
 $clear = $conn->prepare("UPDATE students SET otp = NULL, otp_expiry = NULL WHERE student_id = ?");
 $clear->bind_param("s", $student_id);
 $clear->execute();
+
+unset($_SESSION['otp_attempts']);
 
 header("Location: reset_password.php");
 exit();

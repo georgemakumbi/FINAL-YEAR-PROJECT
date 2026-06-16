@@ -7,9 +7,10 @@ if ($path === '/' || $path === '') {
     $path = '/index.php';
 }
 
-$target = __DIR__ . '/../public' . $path;
+$public_dir = realpath(__DIR__ . '/../public');
+$target = realpath(__DIR__ . '/../public' . $path);
 
-if (file_exists($target) && is_file($target) && preg_match('/\.php$/', $target)) {
+if ($target && strncmp($target, $public_dir, strlen($public_dir)) === 0 && is_file($target) && preg_match('/\.php$/', $target)) {
     // Set the working directory exactly to where the file is located
     chdir(dirname($target));
     require $target;
