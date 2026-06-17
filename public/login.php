@@ -215,7 +215,7 @@ ensure_csrf_token();
         
         <div class="form-group">
             <label>Student ID</label>
-            <input type="text" name="student_id" id="student_id" placeholder="e.g., 23/U/001" required>
+            <input type="text" name="student_id" id="student_id" placeholder="Your id number" required>
         </div>
 
         <div class="form-group">
@@ -225,7 +225,7 @@ ensure_csrf_token();
 
         <button type="submit">Login</button>
         <p style="text-align: center; padding-top: 20px;"><a href="forgot_password.php" style="color: var(--primary);"><i>Forgot password?</i></a></p>
-<button type="button" class="link-btn" onclick="window.location.href='register.php'">Register here</button>
+        <button type="button" class="link-btn" onclick="window.location.href='register.php'">Register here</button>
     </form>
 
     <!-- OTP REQUEST FORM -->
