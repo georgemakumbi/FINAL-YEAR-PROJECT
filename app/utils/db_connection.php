@@ -41,15 +41,25 @@ use Dotenv\Dotenv;
 //
 // file_exists() checks if .env file is present (it might not be on Vercel)
 // __DIR__ . '/../../' goes up 2 directories: utils/ → app/ → project root
-if (file_exists(__DIR__ . '/../../.env')) {
-    // Load Composer's autoloader (manages all installed libraries)
-    require_once __DIR__ . '/../../vendor/autoload.php';
-    
-    // Create a Dotenv instance pointing to the project root
-    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
-    
-    // Read the .env file and load values into $_ENV
-    $dotenv->load();
+$envFile = __DIR__ . '/../../.env';
+$autoload = __DIR__ . '/../../vendor/autoload.php';
+
+if (file_exists($envFile)) {
+    if (file_exists($autoload)) {
+        require_once $autoload;
+        $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
+        $dotenv->load();
+    } else {
+        // Fallback: manually parse .env if vendor/autoload.php is missing
+        $lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        foreach ($lines as $line) {
+            if (strpos(trim($line), '#') === 0) continue;
+            if (strpos($line, '=') !== false) {
+                list($key, $val) = explode('=', $line, 2);
+                $_ENV[trim($key)] = trim($val, " \t\"'");
+            }
+        }
+    }
 }
 
 // ─── Read Database Configuration ─────────────────────────────────────────────

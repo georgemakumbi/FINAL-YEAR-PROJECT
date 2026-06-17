@@ -51,7 +51,7 @@ $students_not_voted = $total_students - $students_voted;
 if ($search_term && $search_results) {
     $students = $search_results;
 } else {
-    $students = $conn->query("SELECT * FROM students ORDER BY registration_date DESC LIMIT 100");
+    $students = $conn->query("SELECT * FROM students ORDER BY registration_date DESC");
 }
 
 // =============================================================================
