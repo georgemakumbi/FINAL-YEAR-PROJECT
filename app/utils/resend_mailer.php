@@ -64,6 +64,25 @@ function send_resend_email($to, $subject, $htmlMessage, $to_name = ''): bool
             'Content-Type: application/json',
         ]);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+        curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+
+        // ── SSL: try the WAMP-shipped cacert.pem first, then system bundle ──
+        $wampCaCert = 'C:/wamp64/bin/php/php8.3.28/cacert.pem';
+        if (file_exists($wampCaCert)) {
+            curl_setopt($ch, CURLOPT_CAINFO, $wampCaCert);
+        } elseif (function_exists('curl_version')) {
+            $cv = curl_version();
+            if (!empty($cv['ssl_version'])) {
+                // Let cURL use system CA store (Linux/Mac/production)
+            }
+        }
+        // Last resort: disable peer verification on localhost only
+        $host = $_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_NAME'] ?? 'localhost';
+        if (in_array($host, ['localhost', '127.0.0.1', '::1'])) {
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        }
+
 
         $resp = curl_exec($ch);
         $httpCode = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
