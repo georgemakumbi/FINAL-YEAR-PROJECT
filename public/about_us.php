@@ -215,6 +215,10 @@
         body.dark .card { background: var(--surface); }
         body.dark .member { background: var(--surface-2); }
     </style>
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
     <header class="header">
