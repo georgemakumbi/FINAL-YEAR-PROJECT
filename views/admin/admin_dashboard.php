@@ -375,7 +375,7 @@ if ($section === 'results') {
     const posCtx = document.getElementById('positionChart');
     if (posCtx) {
         const posLabels = <?php echo json_encode(array_column($votes_by_position, 'position')); ?>;
-        const posVotes = <?php echo json_encode(array_map('intval', array_column($votes_by_position, 'total_votes'))); ?>;
+        const posVotes = <?php echo json_encode(array_map('intval', array_column($votes_by_position, 'vote_count'))); ?>;
         
         new Chart(posCtx, {
             type: 'bar',
