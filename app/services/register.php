@@ -3,7 +3,7 @@ if (!defined('PROJECT_ROOT')) {
     require_once dirname(__DIR__, 2) . '/bootstrap.php';
 }
 
-require_once APP_UTILS . '/resend_mailer.php';
+
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: register.php');
@@ -102,7 +102,7 @@ $html = "
 </body>
 </html>";
 
-send_resend_email($to, $subject, $html, $full_name);
+send_smtp_email($to, $subject, $html, $full_name);
 header('Location: login.php?success=Account+created+successfully');
 exit();
 

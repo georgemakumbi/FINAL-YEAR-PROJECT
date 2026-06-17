@@ -69,10 +69,8 @@ while ($student = $students->fetch_assoc()) {
     </body>
     </html>";
 
-require_once APP_UTILS . '/resend_mailer.php';
-
-    // Send email via Resend
-    if (send_resend_email($student['email'], $subject, $html_message, $full_name)) {
+    // Send email via SMTP
+    if (send_smtp_email($student['email'], $subject, $html_message, $full_name)) {
         $sent++;
         
         // Audit log

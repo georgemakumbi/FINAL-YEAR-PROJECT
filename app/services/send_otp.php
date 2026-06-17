@@ -68,10 +68,8 @@ $message = "
 </html>
 ";
 
-require_once APP_UTILS . '/resend_mailer.php';
-
-// Send email using Resend
-$mailSent = send_resend_email($to, $subject, $message);
+// Send email using SMTP
+$mailSent = send_smtp_email($to, $subject, $message);
 
 if ($mailSent) {
     // 7. Store student ID in session for verification step

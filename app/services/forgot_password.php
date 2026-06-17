@@ -3,7 +3,7 @@ if (!defined('PROJECT_ROOT')) {
     require_once dirname(__DIR__, 2) . '/bootstrap.php';
 }
 
-require_once APP_UTILS . '/resend_mailer.php';
+
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: forgot_password.php');
@@ -55,7 +55,7 @@ $message = "
 </body>
 </html>";
 
-$mailSent = send_resend_email($to, $subject, $message);
+$mailSent = send_smtp_email($to, $subject, $message);
 
 if ($mailSent) {
     $_SESSION['otp_student'] = $student_id;
