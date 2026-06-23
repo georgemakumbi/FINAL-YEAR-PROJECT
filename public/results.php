@@ -208,6 +208,7 @@ if ($results_published) {
             color: var(--text-muted, #888);
         }
     </style>
+    <?php include VIEWS_COMPONENTS . '/includes/speed_insights.php'; ?>
 </head>
 <body>
     <header>

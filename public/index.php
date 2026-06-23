@@ -354,6 +354,7 @@ $total_candidates = Candidate::countByStatus($conn, 'verified');
             .countdown-number { font-size: 1.3rem; min-width: 38px; padding: 8px 4px; }
         }
     </style>
+    <?php include VIEWS_COMPONENTS . '/includes/speed_insights.php'; ?>
 </head>
 <body>
 

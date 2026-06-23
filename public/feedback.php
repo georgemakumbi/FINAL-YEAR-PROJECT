@@ -76,6 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['Submit'])) {
         <?php include ASSETS_CSS . '/theme.css'; ?>
         <?php include ASSETS_CSS . '/feedback.css'; ?>
     </style>
+    <?php include VIEWS_COMPONENTS . '/includes/speed_insights.php'; ?>
 </head>
 <body>
     <div class="feedback-card">

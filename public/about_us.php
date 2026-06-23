@@ -215,6 +215,7 @@
         body.dark .card { background: var(--surface); }
         body.dark .member { background: var(--surface-2); }
     </style>
+    <?php include VIEWS_COMPONENTS . '/includes/speed_insights.php'; ?>
 </head>
 <body>
     <header class="header">

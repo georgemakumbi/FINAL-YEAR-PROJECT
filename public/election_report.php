@@ -139,6 +139,7 @@ if ($election['status'] === 'active') {
         <?php include ASSETS_CSS . '/theme.css'; ?>
         <?php include ASSETS_CSS . '/election_report.css'; ?>
     </style>
+    <?php include VIEWS_COMPONENTS . '/includes/speed_insights.php'; ?>
 </head>
 <body>
     <div class="container">

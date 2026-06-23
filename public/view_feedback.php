@@ -53,6 +53,7 @@ require_admin_login();
             text-align: center;
         }
     </style>
+    <?php include VIEWS_COMPONENTS . '/includes/speed_insights.php'; ?>
 </head>
 <body>
     <h1>Feedback from Students</h1>
