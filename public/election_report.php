@@ -139,6 +139,10 @@ if ($election['status'] === 'active') {
         <?php include ASSETS_CSS . '/theme.css'; ?>
         <?php include ASSETS_CSS . '/election_report.css'; ?>
     </style>
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
     <div class="container">

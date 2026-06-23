@@ -354,6 +354,10 @@ $total_candidates = Candidate::countByStatus($conn, 'verified');
             .countdown-number { font-size: 1.3rem; min-width: 38px; padding: 8px 4px; }
         }
     </style>
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
 

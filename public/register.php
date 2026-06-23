@@ -28,6 +28,10 @@ $success = $_GET['success'] ?? '';
         .link-row { text-align: center; margin-top: 14px; text-decoration: none; }
         a { color: var(--brand-primary); text-decoration: none; font-weight: 700; }
     </style>
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
 <div class="container">
@@ -85,4 +89,3 @@ $success = $_GET['success'] ?? '';
 <script src="../assets/js/theme.js" defer></script>
 </body>
 </html>
-

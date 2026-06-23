@@ -281,6 +281,10 @@ ensure_csrf_token();
     <link rel="icon" href="<?php echo get_system_logo($conn, '../'); ?>" type="image/png">
     <style><?php include ASSETS_CSS . '/theme.css'; ?></style>
     <link rel="stylesheet" href="../assets/css/admin_login.css">
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
     <div class="login-container">

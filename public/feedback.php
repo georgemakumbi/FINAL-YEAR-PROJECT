@@ -76,6 +76,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['Submit'])) {
         <?php include ASSETS_CSS . '/theme.css'; ?>
         <?php include ASSETS_CSS . '/feedback.css'; ?>
     </style>
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
     <div class="feedback-card">

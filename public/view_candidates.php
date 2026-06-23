@@ -17,6 +17,10 @@
         <?php include ASSETS_CSS . '/theme.css'; ?>
         <?php include ASSETS_CSS . '/index.css'; ?>
     </style>
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
     <header class="header">
