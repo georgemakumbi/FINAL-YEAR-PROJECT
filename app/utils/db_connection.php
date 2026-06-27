@@ -47,7 +47,7 @@ $autoload = __DIR__ . '/../../vendor/autoload.php';
 if (file_exists($envFile)) {
     if (file_exists($autoload)) {
         require_once $autoload;
-        $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
+        $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
         $dotenv->load();
     } else {
         // Fallback: manually parse .env if vendor/autoload.php is missing
