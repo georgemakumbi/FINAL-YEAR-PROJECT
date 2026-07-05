@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require 'admin_security.php';
 require_admin_login();
 ?>

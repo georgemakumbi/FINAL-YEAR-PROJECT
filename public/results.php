@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * =============================================================================
  * RESULTS PAGE — With Live Updates & Animated Progress Bars (Phase 4)

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once '../bootstrap.php';
 ensure_csrf_token();
 

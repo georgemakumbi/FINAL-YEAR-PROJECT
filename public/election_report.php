@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once '../bootstrap.php';
 // admin_security.php is already loaded by bootstrap.php
 require_admin_login();

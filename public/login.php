@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * =============================================================================
  * STUDENT LOGIN PAGE — Now with CSRF Protection! (Converted from .html to .php)

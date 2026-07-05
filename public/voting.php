@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * =============================================================================
  * VOTING PAGE — With Confirmation Modal & Improved UX (Phase 4)

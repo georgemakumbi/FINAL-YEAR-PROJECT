@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Admin Login Page — Converted from .html to .php for CSRF protection
  */

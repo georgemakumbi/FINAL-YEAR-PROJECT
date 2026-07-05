@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Admin Setup Page — Force password change on default login
  */
