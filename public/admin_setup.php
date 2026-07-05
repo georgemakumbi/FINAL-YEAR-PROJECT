@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Admin Setup Page — Force password change on default login
  */
@@ -281,7 +281,15 @@ if (!isset($_SESSION['setup_admin_id'])) {
             background: var(--surface-2);
         }
     </style>
-    <link rel="icon" href="<?php echo get_system_logo($conn, '../'); ?>" type="image/png">
+    <link rel="icon" href="<?php echo get_system_logo($conn, '../'); ?>
+    <!-- PWA -->
+    <link rel="manifest" href="/finalyearproject/public/manifest.json">
+    <meta name="theme-color" content="#1a237e">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="KU Votes">
+    <link rel="apple-touch-icon" href="/finalyearproject/assets/images/icons/icon-180.png">" type="image/png">
     <style><?php include ASSETS_CSS . '/theme.css'; ?></style>
     <link rel="stylesheet" href="../assets/css/admin_login.css">
 </head>
@@ -323,5 +331,6 @@ if (!isset($_SESSION['setup_admin_id'])) {
             errorEl.style.display = "block";
         }
     </script>
+    <script src="/finalyearproject/assets/js/pwa.js" defer></script>
 </body>
 </html>

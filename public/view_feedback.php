@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require 'admin_security.php';
 require_admin_login();
 ?>
@@ -7,7 +7,15 @@ require_admin_login();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="<?php echo get_system_logo($conn, '../'); ?>" type="image/png">
+    <link rel="icon" href="<?php echo get_system_logo($conn, '../'); ?>
+    <!-- PWA -->
+    <link rel="manifest" href="/finalyearproject/public/manifest.json">
+    <meta name="theme-color" content="#1a237e">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="KU Votes">
+    <link rel="apple-touch-icon" href="/finalyearproject/assets/images/icons/icon-180.png">" type="image/png">
     <title>View Feedback</title>
     <style>
         <?php include 'styles/theme.css'; ?>
@@ -96,5 +104,6 @@ require_admin_login();
         </footer>
     <button><a href="admin_dashboard.php">Back to Dashboard</a></button>
     <script src="includes/theme.js" defer></script>
+    <script src="/finalyearproject/assets/js/pwa.js" defer></script>
 </body>
 </html>

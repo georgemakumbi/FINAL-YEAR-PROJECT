@@ -1,4 +1,4 @@
-<?php
+﻿<?php
     date_default_timezone_set('Africa/Kampala');
     
     require_once '../bootstrap.php';
@@ -12,7 +12,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Candidates - Kyambogo Guild</title>
-    <link rel="icon" href="<?php echo get_system_logo($conn, '../'); ?>" type="image/png">
+    <link rel="icon" href="<?php echo get_system_logo($conn, '../'); ?>
+    <!-- PWA -->
+    <link rel="manifest" href="/finalyearproject/public/manifest.json">
+    <meta name="theme-color" content="#1a237e">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="KU Votes">
+    <link rel="apple-touch-icon" href="/finalyearproject/assets/images/icons/icon-180.png">" type="image/png">
     <style>
         <?php include ASSETS_CSS . '/theme.css'; ?>
         <?php include ASSETS_CSS . '/index.css'; ?>
@@ -71,5 +79,6 @@
     </footer>
 
     <script src="../assets/js/theme.js" defer></script>
+    <script src="/finalyearproject/assets/js/pwa.js" defer></script>
 </body>
 </html>

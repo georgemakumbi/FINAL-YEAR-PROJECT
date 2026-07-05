@@ -1,11 +1,19 @@
-<?php require_once '../bootstrap.php'; ?>
+﻿<?php require_once '../bootstrap.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - Kyambogo Guild Online Voting Portal</title>
-    <link rel="icon" href="<?php echo get_system_logo($conn, '../'); ?>" type="image/png">
+    <link rel="icon" href="<?php echo get_system_logo($conn, '../'); ?>
+    <!-- PWA -->
+    <link rel="manifest" href="/finalyearproject/public/manifest.json">
+    <meta name="theme-color" content="#1a237e">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="KU Votes">
+    <link rel="apple-touch-icon" href="/finalyearproject/assets/images/icons/icon-180.png">" type="image/png">
     <style>
         <?php include ASSETS_CSS . '/theme.css'; ?>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -271,5 +279,6 @@
         &copy; <?php echo date("Y"); ?> Kyambogo University BITC Final Year Project Team
     </footer>
     <script src="../assets/js/theme.js" defer></script>
+    <script src="/finalyearproject/assets/js/pwa.js" defer></script>
 </body>
 </html>

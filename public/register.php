@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 require_once '../bootstrap.php';
 ensure_csrf_token();
 
@@ -12,6 +12,14 @@ $success = $_GET['success'] ?? '';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - Kyambogo Voting System</title>
     <link rel="icon" href="../assets/images/image.png" type="image/png">
+    <!-- PWA -->
+    <link rel="manifest" href="/finalyearproject/public/manifest.json">
+    <meta name="theme-color" content="#1a237e">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="KU Votes">
+    <link rel="apple-touch-icon" href="/finalyearproject/assets/images/icons/icon-180.png">
     <style><?php include ASSETS_CSS . '/theme.css'; ?></style>
     <link rel="stylesheet" href="../assets/css/login.css">
     <style>
@@ -83,6 +91,7 @@ $success = $_GET['success'] ?? '';
 </div>
 
 <script src="../assets/js/theme.js" defer></script>
+    <script src="/finalyearproject/assets/js/pwa.js" defer></script>
 </body>
 </html>
 
