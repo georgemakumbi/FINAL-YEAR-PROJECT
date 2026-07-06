@@ -109,12 +109,20 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST' && isset($_FILES['csv_file'])) {
 
                 // Validate header row (first row must be header)
                 if ($row_number === 1) {
-                    $expected_headers = ['student_id', 'first_name', 'last_name', 'email', 'password', 'faculty', 'department'];
+                    // CSV Format (password column is now OPTIONAL):
+                    // Required: student_id, first_name, last_name, email, faculty, department
+                    // Optional 7th column: password (if blank, student sets via OTP registration)
+                    $expected_headers_required = ['student_id', 'first_name', 'last_name', 'email', 'faculty', 'department'];
+                    $expected_headers_with_pw  = ['student_id', 'first_name', 'last_name', 'email', 'password', 'faculty', 'department'];
                     $csv_headers = array_map('trim', $data);
-                    
-                    if ($csv_headers !== $expected_headers) {
+
+                    $has_password_col = ($csv_headers === $expected_headers_with_pw);
+                    $is_valid_headers = $has_password_col || ($csv_headers === $expected_headers_required);
+
+                    if (!$is_valid_headers) {
                         throw new Exception(
-                            'Invalid CSV headers. Expected: ' . implode(', ', $expected_headers) . 
+                            'Invalid CSV headers. Expected: ' . implode(', ', $expected_headers_required) .
+                            ' (optionally with a "password" column between email and faculty)' .
                             ' | Got: ' . implode(', ', $csv_headers)
                         );
                     }
@@ -122,27 +130,36 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST' && isset($_FILES['csv_file'])) {
                     continue; // Skip header row
                 }
 
+
                 // ==========================================================
                 // DATA EXTRACTION AND VALIDATION
                 // ==========================================================
 
-                // Ensure we have required number of columns
-                if (count($data) < 7) {
+                // Ensure we have required number of columns (6 required, 7 with optional password)
+                if (count($data) < 6) {
                     $failed_rows[] = [
-                        'row' => $row_number,
-                        'reason' => 'Insufficient columns. Expected 7, got ' . count($data)
+                        'row'    => $row_number,
+                        'reason' => 'Insufficient columns. Expected at least 6, got ' . count($data)
                     ];
                     continue;
                 }
 
-                // Extract and trim data
+                // Extract and trim data — handle both 6-col and 7-col formats
                 $student_id = trim($data[0] ?? '');
                 $first_name = trim($data[1] ?? '');
-                $last_name = trim($data[2] ?? '');
-                $email = trim($data[3] ?? '');
-                $password = trim($data[4] ?? '');
-                $faculty = trim($data[5] ?? '');
-                $department = trim($data[6] ?? '');
+                $last_name  = trim($data[2] ?? '');
+                $email      = trim($data[3] ?? '');
+
+                // Determine if this CSV has a password column
+                if (isset($has_password_col) && $has_password_col && count($data) >= 7) {
+                    $password   = trim($data[4] ?? '');
+                    $faculty    = trim($data[5] ?? '');
+                    $department = trim($data[6] ?? '');
+                } else {
+                    $password   = ''; // No password — student will self-register via OTP
+                    $faculty    = trim($data[4] ?? '');
+                    $department = trim($data[5] ?? '');
+                }
 
                 // Validate required fields
                 if (empty($student_id)) {
@@ -161,10 +178,7 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST' && isset($_FILES['csv_file'])) {
                     $failed_rows[] = ['row' => $row_number, 'reason' => 'Missing email'];
                     continue;
                 }
-                if (empty($password)) {
-                    $failed_rows[] = ['row' => $row_number, 'reason' => 'Missing password'];
-                    continue;
-                }
+
                 if (empty($faculty)) {
                     $failed_rows[] = ['row' => $row_number, 'reason' => 'Missing faculty'];
                     continue;
@@ -224,13 +238,16 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST' && isset($_FILES['csv_file'])) {
                 // DATABASE INSERT
                 // ==========================================================
 
-                // Hash password for security
-                $password_hash = password_hash($password, PASSWORD_DEFAULT);
+                // Hash password if provided, otherwise store NULL (student self-registers via OTP)
+                $password_hash = !empty($password) ? password_hash($password, PASSWORD_DEFAULT) : null;
+
+                // is_registered = TRUE only if a password was provided (admin-set)
+                $is_registered = !empty($password) ? 1 : 0;
 
                 // Prepare insert statement
                 $insert_stmt = $conn->prepare(
-                    "INSERT INTO students (student_id, first_name, last_name, email, password_hash, faculty, department) 
-                     VALUES (?, ?, ?, ?, ?, ?, ?)"
+                    "INSERT INTO students (student_id, first_name, last_name, email, password_hash, faculty, department, is_registered) 
+                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
                 );
 
                 if (!$insert_stmt) {
@@ -239,14 +256,15 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST' && isset($_FILES['csv_file'])) {
 
                 // Data is safe from SQL injection because we are using prepared statements
                 $insert_stmt->bind_param(
-                    "sssssss",
+                    "sssssssi",
                     $student_id,
                     $first_name,
                     $last_name,
                     $email,
                     $password_hash,
                     $faculty,
-                    $department
+                    $department,
+                    $is_registered
                 );
 
                 // Execute insert

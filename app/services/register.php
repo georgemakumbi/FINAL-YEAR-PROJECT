@@ -1,10 +1,33 @@
 <?php
+/**
+ * =============================================================================
+ * REGISTER — Registration Step 3 (Final Step: Set Password)
+ * =============================================================================
+ * Handles the final step of registration: setting the student's password.
+ * 
+ * SECURITY GATE: Requires $_SESSION['reg_verified_student'] which is only
+ * set after the student has successfully verified their OTP in Step 2.
+ * Without this session key, this endpoint is completely inaccessible.
+ *
+ * What this does:
+ *   1. Validates the session gate
+ *   2. Validates the password strength
+ *   3. Calls Student::activate() to set the password and mark is_registered=TRUE
+ *   4. Sends a welcome confirmation email
+ *   5. Redirects to login
+ *
+ * OLD BEHAVIOR (REMOVED):
+ *   The old register.php allowed any student to self-register by providing
+ *   any name, email, and password. This was a security hole — anyone could
+ *   register using another student's ID. That path is now gone.
+ * =============================================================================
+ */
+
 if (!defined('PROJECT_ROOT')) {
     require_once dirname(__DIR__, 2) . '/bootstrap.php';
 }
 
-
-
+// Only accept POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: register.php');
     exit();
@@ -12,98 +35,113 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 verify_csrf_or_die();
 
-$student_id = trim($_POST['student_id'] ?? '');
-$email = trim($_POST['email'] ?? '');
-$password = $_POST['password'] ?? '';
-$confirm = $_POST['confirm_password'] ?? '';
-$first_name = trim($_POST['first_name'] ?? '');
-$last_name = trim($_POST['last_name'] ?? '');
-
-if ($student_id === '') {
-    header('Location: register.php?error=Student+number+is+required');
+// ── 1. SECURITY GATE: Require OTP verification from Step 2 ───────────────────
+if (empty($_SESSION['reg_verified_student'])) {
+    header('Location: register.php?error=' . urlencode(
+        'Access denied. Please complete identity verification first.'
+    ));
     exit();
 }
 
-if (!preg_match('/^\d{7,15}@std\.kyu\.ac\.ug$/', $email)) {
-    header('Location: register.php?error=Email+must+be+in+the+format+230000000%40std.kyu.ac.ug');
-    exit();
-}
+$student_id = $_SESSION['reg_verified_student'];
+
+// ── 2. Validate password ──────────────────────────────────────────────────────
+$password = $_POST['password']         ?? '';
+$confirm  = $_POST['confirm_password'] ?? '';
 
 if ($password === '' || $confirm === '') {
-    header('Location: register.php?error=Password+is+required');
+    header('Location: register.php?step=set_password&error=' . urlencode('Password is required.'));
     exit();
 }
 
 if ($password !== $confirm) {
-    header('Location: register.php?error=Passwords+do+not+match');
+    header('Location: register.php?step=set_password&error=' . urlencode('Passwords do not match.'));
     exit();
 }
 
 if (strlen($password) < 8) {
-    header('Location: register.php?error=Password+must+be+at+least+8+characters');
+    header('Location: register.php?step=set_password&error=' . urlencode(
+        'Password must be at least 8 characters long.'
+    ));
     exit();
 }
 
-$stmt = $conn->prepare('SELECT student_id, email, first_name, last_name, password_hash FROM students WHERE email = ? OR student_id = ?');
-$stmt->bind_param('ss', $email, $student_id);
-$stmt->execute();
-$result = $stmt->get_result();
-$hashed_password = password_hash($password, PASSWORD_BCRYPT);
+// ── 3. Activate the student account ──────────────────────────────────────────
+$success = Student::activate($conn, $student_id, $password);
 
-if ($result->num_rows === 0) {
-    $faculty = '';
-    $department = '';
-    $stmt = $conn->prepare('INSERT INTO students (student_id, email, first_name, last_name, password_hash, faculty, department) VALUES (?, ?, ?, ?, ?, ?, ?)');
-    $stmt->bind_param('sssssss', $student_id, $email, $first_name, $last_name, $hashed_password, $faculty, $department);
-    if (!$stmt->execute()) {
-        $err = $conn->errno;
-        if ((int)$err === 1062) {
-            header('Location: register.php?error=Student+number+or+email+already+registered');
-            exit();
-        }
-        header('Location: register.php?error=Failed+to+create+account');
-        exit();
-    }
-    $student_first_name = $first_name;
-    $student_last_name = $last_name;
-    $to = $email;
-} else {
-    $student = $result->fetch_assoc();
-    if (!empty($student['password_hash'])) {
-        header('Location: login.php?error=Account+already+registered.+Please+log+in.');
-        exit();
-    }
-    $student_id = $student['student_id'];
-    $update = $conn->prepare(
-        "UPDATE students SET password_hash = ?, first_name = COALESCE(NULLIF(?, ''), first_name), last_name = COALESCE(NULLIF(?, ''), last_name) WHERE student_id = ?"
-    );
-    $update->bind_param('ssss', $hashed_password, $first_name, $last_name, $student_id);
-    if (!$update->execute()) {
-        header('Location: register.php?error=Failed+to+create+account');
-        exit();
-    }
-    $to = $student['email'];
-    $student_first_name = $student['first_name'];
-    $student_last_name = $student['last_name'];
+if (!$success) {
+    // This can happen if the student somehow already got activated (race condition
+    // or double-submit). Redirect to login gracefully.
+    header('Location: login.php?info=' . urlencode(
+        'Your account may already be active. Try logging in.'
+    ));
+    exit();
 }
-$subject = 'Kyambogo University Voting System - Registration Successful';
-$full_name = trim(($student_first_name ?? $first_name) . ' ' . ($student_last_name ?? $last_name));
+
+// ── 4. Send welcome email ─────────────────────────────────────────────────────
+// Fetch the student's name and email for the confirmation email
+$student = Student::findById($conn, $student_id);
+$to        = $student['email'] ?? '';
+$full_name = trim(($student['first_name'] ?? '') . ' ' . ($student['last_name'] ?? ''));
 if ($full_name === '') {
-    $full_name = $to;
+    $full_name = $student_id;
 }
 
-$html = "
+if (!empty($to)) {
+    $subject = 'Welcome to Kyambogo University Voting System 🎉';
+    $html    = "
 <html>
+<head>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f6f9; margin: 0; padding: 20px; }
+    .card { background: #fff; border-radius: 12px; max-width: 480px; margin: 0 auto; padding: 32px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+    .header { background: linear-gradient(135deg, #003366, #004d99); border-radius: 8px; padding: 20px; text-align: center; color: #fff; margin-bottom: 24px; }
+    .header h2 { margin: 0; }
+    .badge { display: inline-block; background: #e8f5e9; color: #2e7d32; border-radius: 20px; padding: 6px 16px; font-weight: 700; margin: 12px 0; }
+    .info { background: #f0f4ff; border-radius: 8px; padding: 16px; margin: 16px 0; }
+    .info p { margin: 4px 0; color: #333; }
+    .footer { text-align: center; color: #999; font-size: 0.8rem; margin-top: 24px; }
+  </style>
+</head>
 <body>
-    <h3>Kyambogo University Voting System</h3>
+  <div class='card'>
+    <div class='header'>
+      <h2>🏛️ Kyambogo University Voting System</h2>
+    </div>
     <p>Hi <strong>" . htmlspecialchars($full_name) . "</strong>,</p>
-    <p>Your account has been registered successfully.</p>
-    <p>You can now log in to the system using your student ID and the password you set.</p>
+    <p>Your account has been successfully created and verified.</p>
+    <span class='badge'>✅ Account Activated</span>
+    <div class='info'>
+      <p><strong>Student ID:</strong> " . htmlspecialchars($student_id) . "</p>
+      <p><strong>Faculty:</strong> " . htmlspecialchars($student['faculty'] ?? 'N/A') . "</p>
+      <p><strong>Department:</strong> " . htmlspecialchars($student['department'] ?? 'N/A') . "</p>
+    </div>
+    <p>You can now log in using your student ID and the password you just set.</p>
+    <p>Cast your vote during the election period to make your voice heard!</p>
+    <div class='footer'>Kyambogo University Electoral Commission</div>
+  </div>
 </body>
-</html>";
+</html>
+";
+    send_smtp_email($to, $subject, $html, $full_name);
+}
 
-send_smtp_email($to, $subject, $html, $full_name);
-header('Location: login.php?success=Account+created+successfully');
+// ── 5. Clean up registration session data ────────────────────────────────────
+unset(
+    $_SESSION['reg_verified_student'],
+    $_SESSION['reg_masked_email'],
+    $_SESSION['reg_student_name'],
+    $_SESSION['reg_student_faculty'],
+    $_SESSION['reg_student_dept']
+);
+
+// ── 6. Log the registration event ────────────────────────────────────────────
+if (function_exists('log_audit_event')) {
+    log_audit_event($conn, $student_id, 'STUDENT_REGISTERED', 'Student completed OTP-verified registration');
+}
+
+header('Location: login.php?success=' . urlencode(
+    'Account created successfully! You can now log in.'
+));
 exit();
-
 ?>

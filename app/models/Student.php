@@ -84,7 +84,7 @@ class Student
     {
         $stmt = $conn->prepare(
             "SELECT student_id, first_name, last_name, email, faculty, 
-                    department, password_hash, has_voted, registration_date
+                    department, password_hash, has_voted, is_registered, registration_date
              FROM students 
              WHERE student_id = ?"
         );
@@ -96,6 +96,81 @@ class Student
         
         // fetch_assoc() returns null if no row found, or the row as an array
         return $student ?: null;
+    }
+
+    /**
+     * Find a student by ID specifically for the registration flow.
+     *
+     * Returns the student only if they exist in the DB (pre-loaded by admin)
+     * regardless of whether they have registered yet. Used in Step 1 of
+     * the trusted registration flow to validate the entered student ID.
+     *
+     * Returns:
+     *   - The student array (with is_registered flag) if found
+     *   - null if not found
+     *
+     * @param mysqli $conn        Database connection
+     * @param string $student_id  Student ID to look up
+     * @return array|null         Student data or null
+     */
+    public static function findByIdForRegistration(mysqli $conn, string $student_id): ?array
+    {
+        $stmt = $conn->prepare(
+            "SELECT student_id, first_name, last_name, email, faculty, 
+                    department, is_registered
+             FROM students 
+             WHERE student_id = ?"
+        );
+        $stmt->bind_param("s", $student_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $student = $result->fetch_assoc();
+        $stmt->close();
+
+        return $student ?: null;
+    }
+
+    /**
+     * Check if a student has completed OTP-verified self-registration.
+     *
+     * @param mysqli $conn        Database connection
+     * @param string $student_id  Student ID to check
+     * @return bool               true if fully registered
+     */
+    public static function isRegistered(mysqli $conn, string $student_id): bool
+    {
+        $stmt = $conn->prepare(
+            "SELECT is_registered FROM students WHERE student_id = ?"
+        );
+        $stmt->bind_param("s", $student_id);
+        $stmt->execute();
+        $stmt->bind_result($is_registered);
+        $found = $stmt->fetch();
+        $stmt->close();
+
+        return $found ? (bool)$is_registered : false;
+    }
+
+    /**
+     * Return a privacy-masked version of an email address.
+     * 
+     * Examples:
+     *   230123456@std.kyu.ac.ug → 2*******6@std.kyu.ac.ug
+     *   george@kyu.ac.ug        → g*****e@kyu.ac.ug
+     *
+     * @param string $email  Full email address
+     * @return string        Masked email
+     */
+    public static function maskEmail(string $email): string
+    {
+        [$local, $domain] = explode('@', $email, 2);
+        $len = strlen($local);
+        if ($len <= 2) {
+            $masked = $local; // too short to mask meaningfully
+        } else {
+            $masked = $local[0] . str_repeat('*', $len - 2) . $local[$len - 1];
+        }
+        return $masked . '@' . $domain;
     }
 
     /**
@@ -404,6 +479,35 @@ class Student
         $success = $stmt->affected_rows === 1;
         $stmt->close();
         
+        return $success;
+    }
+
+    /**
+     * Activate a pre-imported student account after OTP-verified registration.
+     *
+     * Instead of INSERT (which create() does), this UPDATEs an existing
+     * student record that was pre-loaded by the admin via CSV import.
+     * Sets the password and marks the account as fully registered.
+     *
+     * @param mysqli $conn        Database connection
+     * @param string $student_id  Student ID (already in DB)
+     * @param string $password    Plain-text password chosen by student
+     * @return bool               true if activation succeeded
+     */
+    public static function activate(mysqli $conn, string $student_id, string $password): bool
+    {
+        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+
+        $stmt = $conn->prepare(
+            "UPDATE students
+             SET password_hash = ?, is_registered = TRUE
+             WHERE student_id = ? AND is_registered = FALSE"
+        );
+        $stmt->bind_param("ss", $password_hash, $student_id);
+        $stmt->execute();
+        $success = $stmt->affected_rows === 1;
+        $stmt->close();
+
         return $success;
     }
 

@@ -43,13 +43,14 @@
 -- =============================================================================
 CREATE TABLE IF NOT EXISTS students (
     student_id        VARCHAR(20)   PRIMARY KEY,
-    first_name        VARCHAR(50)   NOT NULL,
-    last_name         VARCHAR(50)   NOT NULL,
+    first_name        VARCHAR(50)   NULL DEFAULT NULL,   -- Nullable: admin imports may omit name
+    last_name         VARCHAR(50)   NULL DEFAULT NULL,
     email             VARCHAR(100)  UNIQUE NOT NULL,
-    password_hash     VARCHAR(255)  NOT NULL,
+    password_hash     VARCHAR(255)  NULL DEFAULT NULL,   -- Nullable: set only after OTP-verified registration
     faculty           VARCHAR(100)  NOT NULL,
     department        VARCHAR(100)  NOT NULL,
     has_voted         BOOLEAN       DEFAULT FALSE,
+    is_registered     BOOLEAN       DEFAULT FALSE,       -- TRUE once student completes OTP registration
     otp               VARCHAR(6)    DEFAULT NULL,
     otp_expiry        DATETIME      DEFAULT NULL,
     reset_token       VARCHAR(255)  DEFAULT NULL,
@@ -60,7 +61,8 @@ CREATE TABLE IF NOT EXISTS students (
     INDEX idx_email (email),
     INDEX idx_otp (otp),
     INDEX idx_faculty (faculty),
-    INDEX idx_department (department)
+    INDEX idx_department (department),
+    INDEX idx_is_registered (is_registered)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
