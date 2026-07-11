@@ -15,8 +15,9 @@ if ($election_query && $election_row = $election_query->fetch_assoc()) {
     if ($election_query && $election_row = $election_query->fetch_assoc()) {
         $deadline_str = $election_row['end_date'];
     } else {
-        // Ultimate fallback to deadline.txt if no election found
-        $deadline_str = trim(file_get_contents("deadline.txt"));
+        // Ultimate fallback: check the settings table for an admin-set deadline
+        $settings_row = $conn->query("SELECT setting_value FROM settings WHERE setting_key = 'voting_deadline' LIMIT 1");
+        $deadline_str = ($settings_row && $sr = $settings_row->fetch_assoc()) ? trim($sr['setting_value']) : '';
     }
 }
 

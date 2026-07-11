@@ -76,9 +76,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['reset_voting_action']
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['deadline'])) {
     verify_csrf_or_die();
-    
+
     $new_deadline = trim($_POST['deadline']);
-    if (file_put_contents("deadline.txt", $new_deadline) !== false) {
+    $stmt = $conn->prepare(
+        "INSERT INTO settings (setting_key, setting_value)
+         VALUES ('voting_deadline', ?)
+         ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)"
+    );
+    $stmt->bind_param('s', $new_deadline);
+    if ($stmt->execute()) {
         $settings_message = "Deadline updated successfully.";
         $settings_message_type = 'success';
         log_audit_event(
@@ -91,11 +97,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['deadline'])) {
         $settings_message = "Failed to update deadline.";
         $settings_message_type = 'error';
     }
+    $stmt->close();
 }
 
-// Current deadline
-$deadline_file_content = @file_get_contents("deadline.txt");
-$current_deadline = $deadline_file_content ? $deadline_file_content : '';
+// Current deadline — read from database (Vercel-safe, no filesystem)
+$deadline_row = $conn->query("SELECT setting_value FROM settings WHERE setting_key = 'voting_deadline' LIMIT 1");
+$current_deadline = ($deadline_row && $row = $deadline_row->fetch_assoc()) ? $row['setting_value'] : '';
 
 // Results Publishing
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['results_publish_action'])) {
