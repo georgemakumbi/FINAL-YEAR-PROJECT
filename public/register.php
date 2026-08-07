@@ -477,6 +477,7 @@ $step_num = match($url_step) {
             .otp-digit { width: 40px; height: 50px; font-size: 1.2rem; }
         }
     </style>
+    <?php include VIEWS_COMPONENTS . '/includes/speed_insights.php'; ?>
 </head>
 <body>
 <div class="card" role="main">

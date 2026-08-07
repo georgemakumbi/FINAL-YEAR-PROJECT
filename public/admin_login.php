@@ -289,6 +289,7 @@ ensure_csrf_token();
     <link rel="apple-touch-icon" href="/finalyearproject/assets/images/icons/icon-180.png">
     <style><?php include ASSETS_CSS . '/theme.css'; ?></style>
     <link rel="stylesheet" href="../assets/css/admin_login.css">
+    <?php include VIEWS_COMPONENTS . '/includes/speed_insights.php'; ?>
 </head>
 <body>
     <div class="login-container">
