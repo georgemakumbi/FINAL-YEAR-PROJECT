@@ -477,6 +477,10 @@ $step_num = match($url_step) {
             .otp-digit { width: 40px; height: 50px; font-size: 1.2rem; }
         }
     </style>
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
 <div class="card" role="main">

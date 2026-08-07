@@ -209,6 +209,10 @@ ensure_csrf_token();
     <link rel="apple-touch-icon" href="/finalyearproject/assets/images/icons/icon-180.png" type="image/png">
     <style><?php include ASSETS_CSS . '/theme.css'; ?></style>
     <link rel="stylesheet" href="../assets/css/login.css">
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
 </head>
 
 <body>
