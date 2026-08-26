@@ -317,16 +317,28 @@ ensure_csrf_token();
             </div>
             <button type="submit">Login</button>
         </form>
+        <p style="text-align: center; margin-top: 16px;">
+            <a href="admin_forgot_password.php"
+               style="color: var(--brand-primary, #003366); font-size: 0.85rem; font-weight: 600; text-decoration: none;">
+                Forgot your password?
+            </a>
+        </p>
         <p style="text-align: center;">Authorized staff only</p>
     </div>
     <script src="../assets/js/theme.js" defer></script>
     <script>
         const params = new URLSearchParams(window.location.search);
-        const error = params.get("error");
+        const error   = params.get("error");
+        const success = params.get("success");
         if (error) {
             const errorEl = document.getElementById("error");
             errorEl.textContent = error;
             errorEl.style.display = "block";
+        }
+        if (success) {
+            const msgEl = document.getElementById("error-message");
+            msgEl.textContent = success;
+            msgEl.style.display = "block";
         }
     </script>
     <script src="/finalyearproject/assets/js/pwa.js" defer></script>

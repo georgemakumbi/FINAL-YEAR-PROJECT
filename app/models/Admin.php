@@ -132,4 +132,89 @@ class Admin
         
         return $success;
     }
+
+    /**
+     * Find an admin by their username (for forgot-password lookup).
+     *
+     * @param mysqli $conn      Database connection
+     * @param string $username  Admin username
+     * @return array|null       Admin data (no password_hash) or null
+     */
+    public static function findByUsername(mysqli $conn, string $username): ?array
+    {
+        $stmt = $conn->prepare(
+            "SELECT admin_id, username, email, role FROM admin WHERE username = ? LIMIT 1"
+        );
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $admin  = $result->fetch_assoc();
+        $stmt->close();
+
+        return $admin ?: null;
+    }
+
+    /**
+     * Store a 6-digit OTP for an admin (expires in 10 minutes).
+     *
+     * @param mysqli $conn      Database connection
+     * @param int    $admin_id  Admin ID
+     * @param string $otp       6-digit code
+     * @return bool
+     */
+    public static function storeOtp(mysqli $conn, int $admin_id, string $otp): bool
+    {
+        $stmt = $conn->prepare(
+            "UPDATE admin SET otp = ?, otp_expiry = DATE_ADD(NOW(), INTERVAL 10 MINUTE)
+             WHERE admin_id = ?"
+        );
+        $stmt->bind_param("si", $otp, $admin_id);
+        $stmt->execute();
+        $success = $stmt->affected_rows === 1;
+        $stmt->close();
+
+        return $success;
+    }
+
+    /**
+     * Verify an OTP for an admin and clear it on success (one-time use).
+     *
+     * @param mysqli $conn      Database connection
+     * @param int    $admin_id  Admin ID
+     * @param string $otp       Code entered by the admin
+     * @return bool             true if valid and not expired
+     */
+    public static function verifyOtp(mysqli $conn, int $admin_id, string $otp): bool
+    {
+        $stmt = $conn->prepare(
+            "SELECT admin_id FROM admin
+             WHERE admin_id = ? AND otp = ? AND otp_expiry > NOW()"
+        );
+        $stmt->bind_param("is", $admin_id, $otp);
+        $stmt->execute();
+        $valid = $stmt->get_result()->num_rows === 1;
+        $stmt->close();
+
+        if ($valid) {
+            self::clearOtp($conn, $admin_id);
+        }
+
+        return $valid;
+    }
+
+    /**
+     * Clear an admin's OTP (after use or on lockout).
+     *
+     * @param mysqli $conn      Database connection
+     * @param int    $admin_id  Admin ID
+     */
+    public static function clearOtp(mysqli $conn, int $admin_id): void
+    {
+        $stmt = $conn->prepare(
+            "UPDATE admin SET otp = NULL, otp_expiry = NULL WHERE admin_id = ?"
+        );
+        $stmt->bind_param("i", $admin_id);
+        $stmt->execute();
+        $stmt->close();
+    }
 }

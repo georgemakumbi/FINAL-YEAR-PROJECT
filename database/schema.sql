@@ -85,6 +85,8 @@ CREATE TABLE IF NOT EXISTS admin (
     password_hash VARCHAR(255)  NOT NULL,
     email         VARCHAR(100)  UNIQUE NOT NULL,
     role          ENUM('admin', 'super_admin') DEFAULT 'admin',
+    otp           VARCHAR(6)    DEFAULT NULL,
+    otp_expiry    DATETIME      DEFAULT NULL,
     created_at    DATETIME      DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
