@@ -24,6 +24,7 @@ require_once __DIR__ . '/../common.php';
         <!-- Search Box -->
         <div class="search-box">
             <form method="get" style="display: flex; gap: 10px; width: 100%;">
+                <input type="hidden" name="section" value="students">
                 <input type="text" name="search" placeholder="Search by registration number or name..." 
                        value="<?php echo safe_output($search_term); ?>">
                 <button type="submit" class="btn btn-primary">Search</button>
