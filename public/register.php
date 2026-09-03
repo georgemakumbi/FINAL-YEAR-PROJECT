@@ -550,7 +550,7 @@ $step_num = match($url_step) {
                 type="text"
                 id="student_id"
                 name="student_id"
-                placeholder="e.g., 23/U/12345"
+                placeholder="e.g., 230000000"
                 required
                 autocomplete="username"
                 autofocus
