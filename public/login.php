@@ -209,6 +209,7 @@ ensure_csrf_token();
     <link rel="apple-touch-icon" href="/finalyearproject/assets/images/icons/icon-180.png" type="image/png">
     <style><?php include ASSETS_CSS . '/theme.css'; ?></style>
     <link rel="stylesheet" href="../assets/css/login.css">
+    <?php render_speed_insights(); ?>
 </head>
 
 <body>
