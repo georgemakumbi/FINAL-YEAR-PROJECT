@@ -153,4 +153,11 @@ if (session_status() === PHP_SESSION_NONE) {
 // Without this, PHP might use the server's timezone, which could be wrong.
 date_default_timezone_set('Africa/Kampala');
 
+// ─── STEP 8: Helper Function for Speed Insights ──────────────────────────────
+// Provides a simple function to include Vercel Speed Insights on any page.
+// Usage: Call render_speed_insights() in your page's <head> or before </body>
+function render_speed_insights() {
+    require_once VIEWS_COMPONENTS . '/includes/speed_insights.php';
+}
+
 ?>

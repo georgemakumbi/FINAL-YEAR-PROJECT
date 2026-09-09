@@ -362,6 +362,7 @@ $total_candidates = Candidate::countByStatus($conn, 'verified');
             .countdown-number { font-size: 1.3rem; min-width: 38px; padding: 8px 4px; }
         }
     </style>
+    <?php render_speed_insights(); ?>
 </head>
 <body>
 
@@ -402,7 +403,7 @@ $total_candidates = Candidate::countByStatus($conn, 'verified');
         </div>
     </section>
 
-    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!-- ══════════════════════════════════════���════════════════════════════ -->
     <!-- MAIN CONTENT                                                       -->
     <!-- ═══════════════════════════════════════════════════════════════════ -->
     <main class="main">

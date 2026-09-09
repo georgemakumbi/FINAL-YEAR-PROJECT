@@ -114,6 +114,7 @@ if ($section === 'results') {
         <?php readfile(ASSETS_CSS . '/admin_dashboard.css'); ?>
 
     </style>
+    <?php render_speed_insights(); ?>
 </head>
 <body>
     <!-- ═══════════════════════════════════════════════════════════════════ -->
@@ -186,7 +187,7 @@ if ($section === 'results') {
 
         <!-- ═══════════════════════════════════════════════════════════ -->
         <!-- DASHBOARD SECTION                                          -->
-        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- ═════════════════════════════════════════════════════════���═ -->
         <?php if ($section === 'dashboard'): ?>
         <div id="dashboard" class="section active">
             
@@ -341,7 +342,7 @@ if ($section === 'results') {
 
         <!-- ═══════════════════════════════════════════════════════════ -->
         <!-- FEEDBACK MODULE                                            -->
-        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- ═══════════════���═══════════════════════════════════════════ -->
         <?php if ($section === 'feedback'): ?>
             <div id="feedback" class="section active">
                 <?php include_once VIEWS_COMPONENTS . '/includes/modules/feedback/feedback.view.php'; ?>
@@ -458,7 +459,7 @@ if ($section === 'results') {
     <?php endif; ?>
     </script>
     <script>
-    // ─── Theme Toggle ─────────────────────────────────────────────────────────
+    // ─── Theme Toggle ���────────────────────────────────────────────────────────
     (function() {
         var storageKey = "siteTheme";
         var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
